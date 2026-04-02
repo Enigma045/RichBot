@@ -1,0 +1,407 @@
+Command: cargo new hello_world
+STDERR:
+    Creating binary (application) `hello_world` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+----------------------------------------
+Command: cd hello_world
+----------------------------------------
+Command: echo pub fn main() { println!("Hello, world!"); } > src/main.rs
+----------------------------------------
+Command: cargo run
+STDERR:
+   Compiling Code_analyzer v0.1.0 (C:\Users\USER\Rust\Code_analyzer)
+error: unknown start of token: \
+ --> src\main.rs:1:26
+  |
+1 | pub fn main() { println!(\"Hello, world!\"); } 
+  |                          ^
+
+error[E0765]: unterminated double quote string
+ --> src\main.rs:1:27
+  |
+1 | pub fn main() { println!(\"Hello, world!\"); } 
+  |                           ^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0765`.
+error: could not compile `Code_analyzer` (bin "Code_analyzer") due to 2 previous errors
+
+----------------------------------------
+Command: start ms-xbl-game://gameid/rick and morty
+----------------------------------------
+Command: start .\ricky and morty
+STDERR:
+The system cannot find the file .\ricky.
+
+----------------------------------------
+Command: dir /s /b *rick and morty*
+STDERR:
+File Not Found
+
+----------------------------------------
+Command: start "rick and morty"
+STDERR:
+The system cannot find the file \"rick and morty\".
+
+----------------------------------------
+
+-Command: start Rick and Morty-S5E1-480P.mp4
+STDERR:
+The system cannot find the file Rick.
+---------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+STDERR:
+Access is denied.
+
+----------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+----------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+----------------------------------------
+Command: python main.py
+STDOUT:
+Hello, Python project!
+Hello, World!
+
+Exit code: exit code: 0
+----------------------------------------
+Command: echo "This project is not a Node.js project. Based on the file structure, it appears to be a Rust project. To create a Node.js project, you would typically use 'npm init -y'. However, since this is a Rust project, no Node.js project creation commands will be executed."
+STDOUT:
+\"This project is not a Node.js project. Based on the file structure, it appears to be a Rust project. To create a Node.js project, you would typically use 'npm init -y'. However, since this is a Rust project, no Node.js project creation commands will be executed.\"
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build
+STDERR:
+warning: unused import: `File`
+ --> src\hands.rs:3:15
+  |
+3 | use std::fs::{File, OpenOptions};
+  |               ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `can_use_gemini_flash_lite` is never used
+  --> src\model.rs:39:8
+   |
+24 | impl RequestTracker {
+   | ------------------- method in this implementation
+...
+39 |     fn can_use_gemini_flash_lite(&self) -> bool {self.gemini_flash_lite < 250}
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `write_file` is never used
+  --> src\operations.rs:82:8
+   |
+82 | pub fn write_file(path: &str, content: &str) -> Result<(), FileError> {
+   |        ^^^^^^^^^^
+
+warning: function `read_files` is never used
+  --> src\operations.rs:94:8
+   |
+94 | pub fn read_files(entries: &[FileEntry]) -> Vec<Result<String, FileError>> {
+   |        ^^^^^^^^^^
+
+warning: function `append_file` is never used
+   --> src\operations.rs:102:8
+    |
+102 | pub fn append_file(path: &str, content: &str) -> Result<(), FileError> {
+    |        ^^^^^^^^^^^
+
+warning: field `0` is never read
+  --> src\hands.rs:16:13
+   |
+16 |     IoError(std::io::Error),
+   |     ------- ^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+16 -     IoError(std::io::Error),
+16 +     IoError(()),
+   |
+
+warning: field `0` is never read
+  --> src\hands.rs:17:16
+   |
+17 |     ParseError(String),
+   |     ---------- ^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+17 -     ParseError(String),
+17 +     ParseError(()),
+   |
+
+warning: field `0` is never read
+  --> src\hands.rs:18:19
+   |
+18 |     PathTraversal(String),
+   |     ------------- ^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+18 -     PathTraversal(String),
+18 +     PathTraversal(()),
+   |
+
+warning: `Code_analyzer` (bin "Code_analyzer") generated 8 warnings (run `cargo fix --bin "Code_analyzer" -p Code_analyzer` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.64s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: python main.py
+STDOUT:
+Hello from Python!
+
+Exit code: exit code: 0
+----------------------------------------
+Command: type cmd_outputs.txt
+STDOUT:
+Command: cargo new hello_world
+STDERR:
+    Creating binary (application) `hello_world` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+----------------------------------------
+Command: cd hello_world
+----------------------------------------
+Command: echo pub fn main() { println!("Hello, world!"); } > src/main.rs
+----------------------------------------
+Command: cargo run
+STDERR:
+   Compiling Code_analyzer v0.1.0 (C:\Users\USER\Rust\Code_analyzer)
+error: unknown start of token: \
+ --> src\main.rs:1:26
+  |
+1 | pub fn main() { println!(\"Hello, world!\"); } 
+  |                          ^
+
+error[E0765]: unterminated double quote string
+ --> src\main.rs:1:27
+  |
+1 | pub fn main() { println!(\"Hello, world!\"); } 
+  |                           ^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0765`.
+error: could not compile `Code_analyzer` (bin "Code_analyzer") due to 2 previous errors
+
+----------------------------------------
+Command: start ms-xbl-game://gameid/rick and morty
+----------------------------------------
+Command: start .\ricky and morty
+STDERR:
+The system cannot find the file .\ricky.
+
+----------------------------------------
+Command: dir /s /b *rick and morty*
+STDERR:
+File Not Found
+
+----------------------------------------
+Command: start "rick and morty"
+STDERR:
+The system cannot find the file \"rick and morty\".
+
+----------------------------------------
+
+-Command: start Rick and Morty-S5E1-480P.mp4
+STDERR:
+The system cannot find the file Rick.
+---------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+STDERR:
+Access is denied.
+
+----------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+----------------------------------------
+Command: start "" "Rick and Morty-S5E1-480P.mp4"
+----------------------------------------
+Command: python main.py
+STDOUT:
+Hello, Python project!
+Hello, World!
+
+Exit code: exit code: 0
+----------------------------------------
+Command: echo "This project is not a Node.js project. Based on the file structure, it appears to be a Rust project. To create a Node.js project, you would typically use 'npm init -y'. However, since this is a Rust project, no Node.js project creation commands will be executed."
+STDOUT:
+\"This project is not a Node.js project. Based on the file structure, it appears to be a Rust project. To create a Node.js project, you would typically use 'npm init -y'. However, since this is a Rust project, no Node.js project creation commands will be executed.\"
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build
+STDERR:
+warning: unused import: `File`
+ --> src\hands.rs:3:15
+  |
+3 | use std::fs::{File, OpenOptions};
+  |               ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `can_use_gemini_flash_lite` is never used
+  --> src\model.rs:39:8
+   |
+24 | impl RequestTracker {
+   | ------------------- method in this implementation
+...
+39 |     fn can_use_gemini_flash_lite(&self) -> bool {self.gemini_flash_lite < 250}
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `write_file` is never used
+  --> src\operations.rs:82:8
+   |
+82 | pub fn write_file(path: &str, content: &str) -> Result<(), FileError> {
+   |        ^^^^^^^^^^
+
+warning: function `read_files` is never used
+  --> src\operations.rs:94:8
+   |
+94 | pub fn read_files(entries: &[FileEntry]) -> Vec<Result<String, FileError>> {
+   |        ^^^^^^^^^^
+
+warning: function `append_file` is never used
+   --> src\operations.rs:102:8
+    |
+102 | pub fn append_file(path: &str, content: &str) -> Result<(), FileError> {
+    |        ^^^^^^^^^^^
+
+warning: field `0` is never read
+  --> src\hands.rs:16:13
+   |
+16 |     IoError(std::io::Error),
+   |     ------- ^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+16 -     IoError(std::io::Error),
+16 +     IoError(()),
+   |
+
+warning: field `0` is never read
+  --> src\hands.rs:17:16
+   |
+17 |     ParseError(String),
+   |     ---------- ^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+17 -     ParseError(String),
+17 +     ParseError(()),
+   |
+
+warning: field `0` is never read
+  --> src\hands.rs:18:19
+   |
+18 |     PathTraversal(String),
+   |     ------------- ^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `FileError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+18 -     PathTraversal(String),
+18 +     PathTraversal(()),
+   |
+
+warning: `Code_analyzer` (bin "Code_analyzer") generated 8 warnings (run `cargo fix --bin "Code_analyzer" -p Code_analyzer` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.64s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: python main.py
+STDOUT:
+Hello from Python!
+
+Exit code: exit code: 0
+----------------------------------------
+
+Exit code: exit code: 0
+----------------------------------------
+Command: dir C:\
+STDERR:
+The filename, directory name, or volume label syntax is incorrect.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: start "" "Avengers_ Age of Ultron-360P.mp4"
+Exit code: exit code: 1
+----------------------------------------
+Command: "C:\Program Files\VideoLAN\VLC\vlc.exe" --start-time 3300 "Avengers_ Age of Ultron-360P.mp4"
+STDERR:
+'\"C:\Program Files\VideoLAN\VLC\vlc.exe\"' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: start "" "Avengers_ Age of Ultron-360P.mp4"
+Exit code: exit code: 1
+----------------------------------------
+Command: start "" "C:\Program Files\VideoLAN\VLC\vlc.exe" "Avengers_ Age of Ultron-360P.mp4" --start-time 3300
+STDERR:
+Access is denied.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'Avengers_ Age of Ultron-360P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Start-Process 'vlc' -ArgumentList '\"Avengers_ Age of Ultron-360P.mp4\"', '--start-time=55'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Start-Process 'vlc' -ArgumentList '--start-time 3300 \"Avengers_ Age of Ultron-360P.mp4\"'"
+Exit code: exit code: 0
+----------------------------------------
+Command: pip install groq
+STDOUT:
+Collecting groq
+  Using cached groq-1.1.2-py3-none-any.whl.metadata (16 kB)
+Requirement already satisfied: anyio<5,>=3.5.0 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from groq) (4.12.0)
+Collecting distro<2,>=1.7.0 (from groq)
+  Using cached distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Requirement already satisfied: httpx<1,>=0.23.0 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from groq) (0.28.1)
+Requirement already satisfied: pydantic<3,>=1.9.0 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from groq) (2.12.5)
+Collecting sniffio (from groq)
+  Using cached sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Requirement already satisfied: typing-extensions<5,>=4.14 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from groq) (4.15.0)
+Requirement already satisfied: exceptiongroup>=1.0.2 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from anyio<5,>=3.5.0->groq) (1.3.1)
+Requirement already satisfied: idna>=2.8 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from anyio<5,>=3.5.0->groq) (3.10)
+Requirement already satisfied: certifi in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from httpx<1,>=0.23.0->groq) (2025.6.15)
+Requirement already satisfied: httpcore==1.* in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from httpx<1,>=0.23.0->groq) (1.0.9)
+Requirement already satisfied: h11>=0.16 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from httpcore==1.*->httpx<1,>=0.23.0->groq) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from pydantic<3,>=1.9.0->groq) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.5 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from pydantic<3,>=1.9.0->groq) (2.41.5)
+Requirement already satisfied: typing-inspection>=0.4.2 in c:\users\user\appdata\local\programs\python\python310\lib\site-packages (from pydantic<3,>=1.9.0->groq) (0.4.2)
+Using cached groq-1.1.2-py3-none-any.whl (141 kB)
+Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Installing collected packages: sniffio, distro, groq
+
+Successfully installed distro-1.9.0 groq-1.1.2 sniffio-1.3.1
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'Avengers_ Age of Ultron-360P.mp4'"
+Exit code: exit code: 0
+----------------------------------------

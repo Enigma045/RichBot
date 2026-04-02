@@ -1,0 +1,285 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/exec"
+	"os/signal"
+	"strings"
+	"sync"
+	"syscall"
+	"time"
+
+	"github.com/mdp/qrterminal/v3"
+	_ "github.com/mattn/go-sqlite3"
+	waProto "go.mau.fi/whatsmeow/binary/proto"
+	"go.mau.fi/whatsmeow"
+	"go.mau.fi/whatsmeow/store/sqlstore"
+	"go.mau.fi/whatsmeow/types/events"
+	waLog "go.mau.fi/whatsmeow/util/log"
+	"google.golang.org/protobuf/proto"
+)
+
+const (
+	maxMessageLength = 4096
+	execTimeout      = 180 * time.Second
+	maxWorkers       = 5
+	maxInputLength   = 2000
+)
+
+// ─── CHANGE THESE TWO LINES TO MATCH YOUR MACHINE ───────────────────────────
+const analyzerExe = `C:\Users\USER\Rust\Code_analyzer\target\debug\Code_analyzer.exe`
+const analyzerDir = `C:\Users\USER\Rust\Code_analyzer`
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+type Job struct {
+	ctx    context.Context
+	client *whatsmeow.Client
+	evt    *events.Message
+	msg    string
+}
+
+var (
+	jobQueue = make(chan Job, 50)
+	wg       sync.WaitGroup
+)
+
+func sanitizeInput(input string) (string, error) {
+	input = strings.TrimSpace(input)
+	if len(input) == 0 {
+		return "", fmt.Errorf("empty input")
+	}
+	if len(input) > maxInputLength {
+		return "", fmt.Errorf("input too long: %d chars (max %d)", len(input), maxInputLength)
+	}
+	return input, nil
+}
+
+func runAnalyzer(msg string) (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), execTimeout)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, analyzerExe, "--prompt", msg)
+	cmd.Dir = analyzerDir
+
+	out, err := cmd.CombinedOutput()
+	outputStr := string(out)
+
+	if ctx.Err() == context.DeadlineExceeded {
+		return "", fmt.Errorf("analyzer timed out after %v", execTimeout)
+	}
+	if err != nil {
+		return "", fmt.Errorf("analyzer error: %v\nOutput:\n%s", err, outputStr)
+	}
+
+	return outputStr, nil
+}
+
+func sendText(ctx context.Context, client *whatsmeow.Client, evt *events.Message, text string) {
+	client.SendMessage(ctx, evt.Info.Chat, &waProto.Message{
+		Conversation: proto.String(text),
+	})
+}
+
+func sendDocument(ctx context.Context, client *whatsmeow.Client, evt *events.Message, content string) error {
+	fileData := []byte(content)
+	resp, err := client.Upload(ctx, fileData, whatsmeow.MediaDocument)
+	if err != nil {
+		return fmt.Errorf("upload failed: %w", err)
+	}
+
+	client.SendMessage(ctx, evt.Info.Chat, &waProto.Message{
+		DocumentMessage: &waProto.DocumentMessage{
+			URL:           &resp.URL,
+			DirectPath:    &resp.DirectPath,
+			MediaKey:      resp.MediaKey,
+			FileEncSHA256: resp.FileEncSHA256,
+			FileSHA256:    resp.FileSHA256,
+			FileLength:    &resp.FileLength,
+			Mimetype:      proto.String("text/plain"),
+			FileName:      proto.String("response.txt"),
+		},
+	})
+	return nil
+}
+
+func processJob(job Job) {
+	ctx := job.ctx
+	client := job.client
+	evt := job.evt
+
+	var clean string
+	if audioMsg := evt.Message.GetAudioMessage(); audioMsg != nil {
+		sendText(ctx, client, evt, "🎙️ Receiving voice note...")
+		data, err := client.Download(ctx, audioMsg)
+		if err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to download audio: %v", err))
+			return
+		}
+		
+		fileName := fmt.Sprintf("audio_%d.ogg", time.Now().UnixNano())
+		if err := os.WriteFile(fileName, data, 0600); err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to save audio: %v", err))
+			return
+		}
+		defer os.Remove(fileName)
+
+		cmd := exec.Command("python", "whisper.py", fileName)
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("❌ Transcription failed: %v\n%s", err, string(out)))
+			return
+		}
+		clean = strings.TrimSpace(string(out))
+		if clean == "" {
+			sendText(ctx, client, evt, "❌ Transcription was empty")
+			return
+		}
+		sendText(ctx, client, evt, fmt.Sprintf("📝 Transcribed:\n%s", clean))
+	} else {
+		var err error
+		clean, err = sanitizeInput(job.msg)
+		if err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("❌ Invalid input: %v", err))
+			return
+		}
+	}
+
+	fmt.Println("📩 Processing prompt:", clean)
+	sendText(ctx, client, evt, "⏳ Processing request...")
+
+	output, err := runAnalyzer(clean)
+	if err != nil {
+		sendText(ctx, client, evt, fmt.Sprintf("❌ %v", err))
+		return
+	}
+
+	if len(output) > maxMessageLength {
+		if err := sendDocument(ctx, client, evt, output); err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to send document: %v", err))
+		}
+	} else {
+		sendText(ctx, client, evt, output)
+	}
+}
+
+func startWorkers() {
+	for i := 0; i < maxWorkers; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for job := range jobQueue {
+				processJob(job)
+			}
+		}()
+	}
+}
+
+func extractMessage(v *events.Message) string {
+	if msg := v.Message.GetConversation(); msg != "" {
+		return msg
+	}
+	if ext := v.Message.GetExtendedTextMessage(); ext != nil {
+		return ext.GetText()
+	}
+	return ""
+}
+
+func connectWithRetry(client *whatsmeow.Client) error {
+	backoff := time.Second
+	for {
+		err := client.Connect()
+		if err == nil {
+			return nil
+		}
+		fmt.Printf("❌ Connection failed: %v. Retrying in %v...\n", err, backoff)
+		time.Sleep(backoff)
+		if backoff < 60*time.Second {
+			backoff *= 2
+		}
+	}
+}
+
+func main() {
+	ctx := context.Background()
+
+	dbLog := waLog.Stdout("DB", "INFO", true)
+	container, err := sqlstore.New(ctx, "sqlite3", "file:store.db?_foreign_keys=on", dbLog)
+	if err != nil {
+		panic(fmt.Sprintf("DB init failed: %v", err))
+	}
+
+	deviceStore, err := container.GetFirstDevice(ctx)
+	if err != nil {
+		panic(fmt.Sprintf("Device store failed: %v", err))
+	}
+
+	client := whatsmeow.NewClient(deviceStore, waLog.Stdout("Client", "INFO", true))
+
+	client.AddEventHandler(func(evt interface{}) {
+		switch v := evt.(type) {
+		case *events.Message:
+			if v.Info.IsFromMe {
+				return
+			}
+
+			msg := extractMessage(v)
+			audioMsg := v.Message.GetAudioMessage()
+			if msg == "" && audioMsg == nil {
+				return
+			}
+
+			select {
+			case jobQueue <- Job{ctx: ctx, client: client, evt: v, msg: msg}:
+			default:
+				sendText(ctx, client, v, "⚠️ Bot is busy. Try again shortly.")
+			}
+		}
+	})
+
+	if client.Store.ID == nil {
+		qrChan, err := client.GetQRChannel(ctx)
+		if err != nil {
+			panic(fmt.Sprintf("QR channel failed: %v", err))
+		}
+		go func() {
+			for evt := range qrChan {
+				if evt.Event == "code" {
+					fmt.Println("📱 Scan QR:")
+					qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
+				} else {
+					fmt.Println("Login event:", evt.Event)
+				}
+			}
+		}()
+	}
+
+	startWorkers()
+
+	if err := connectWithRetry(client); err != nil {
+		panic(err)
+	}
+
+	fmt.Println("🚀 Bot running...")
+
+	go func() {
+		for {
+			time.Sleep(30 * time.Second)
+			if !client.IsConnected() {
+				fmt.Println("⚠️ Disconnected. Reconnecting...")
+				connectWithRetry(client)
+			}
+		}
+	}()
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	<-c
+
+	fmt.Println("🛑 Shutting down...")
+	close(jobQueue)
+	wg.Wait()
+	client.Disconnect()
+}
