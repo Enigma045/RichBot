@@ -1,0 +1,896 @@
+[2026-04-04 04:47:05] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 04:47:18] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 04:47:19] Sent to WhatsApp:
+❌ TTS failed: TTS request build failed: parse " https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts": first path segment in URL cannot contain colon
+
+[2026-04-04 04:47:20] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I cannot directly create and send an audio voice note through this text-based interface.
+
+However, I can provide the text for you to use in a text-to-speech converter, or you can simply say it yourself!
+
+The voice note would say: **"Hello there."**
+
+
+[2026-04-04 04:48:52] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 04:49:04] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 04:49:59] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_1590876913.ogg
+
+[2026-04-04 04:50:01] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+Here’s the text you can use for a voice note that says “hello there”:
+
+```
+Hello there!
+```
+
+If you’d like to turn this into an actual voice recording, you can:
+
+1. **Use a smartphone or computer:**
+   - Open your device’s voice‑recording app (e.g., Voice Memos on iPhone, Recorder on Android, or any audio‑recording software on your computer).
+   - Press the record button, say “Hello there!” clearly and at a comfortable volume, then stop the recording.
+   - Save the file and share it as needed.
+
+2. **Use an online text‑to‑speech (TTS) tool:**
+   - Visit a free TTS service such as **ttsmp3.com**, **ttsreader.com**, or **Google Cloud Text‑to‑Speech Demo**.
+   - Paste the text “Hello there!” into the input box.
+   - Choose a voice and language you prefer (e.g., a friendly male or female voice in English).
+   - Generate the audio and download the resulting MP3/WAV file.
+
+3. **Use a virtual assistant:**
+   - If you have Siri, Google Assistant, or Alexa enabled, you can ask it to “record a voice note that says ‘Hello there’,” and then retrieve the note from the corresponding app.
+
+Feel free to let me know if you need help selecting a voice style, adjusting speed/pitch, or anything else related to creating the voice note!
+
+
+[2026-04-04 04:50:49] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 04:50:59] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 04:52:00] Sent to WhatsApp:
+❌ TTS failed: TTS request failed (is Colab running?): Post "https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts": context deadline exceeded
+
+[2026-04-04 04:52:02] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I’m sorry, but I’m not able to create or send voice recordings. I can, however, share a Shakespeare poem in text for you to read or record yourself. Here’s one of his most beloved sonnets:
+
+**Sonnet 18 – “Shall I compare thee to a summer’s day?”**
+
+```
+Shall I compare thee to a summer’s day?
+Thou art more lovely and more temperate:
+Rough winds do shake the darling buds of May,
+And summer’s lease hath all too short a date;
+Sometime too hot the eye of heaven shines,
+And often is his gold complexion dimmed;
+And every fair from fair sometime declines,
+By chance, or nature’s changing course untrimmed;
+But thy eternal summer shall not fade
+Nor lose possession of that fair thou owest;
+Nor shall Death brag thou wander’st in his shade,
+When in thy lines, immortal life is closest;
+   So long as men can breathe, or eyes can see,
+   So long lives this, and this gives you—​your eternity.
+```
+
+Feel free to read it aloud, record it, or share it however you like! If you’d like a different poem or any other assistance, just let me know.
+
+
+[2026-04-04 04:53:56] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 04:54:10] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 04:55:11] Sent to WhatsApp:
+❌ TTS failed: TTS request failed (is Colab running?): Post "https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts": context deadline exceeded
+
+[2026-04-04 04:55:12] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I can't actually generate audio files directly as a text-based AI, but I can certainly *simulate* what a voice note saying "anything" might sound like, and provide the text for it!
+
+**Imagine a voice note like this:**
+
+**(Sound of a short beep, then a friendly, clear voice)**
+
+"Hey there! This is just a quick voice note to confirm I received your request. Hope you're having a fantastic day, and thanks for reaching out!"
+
+**(Another short beep, indicating the end of the message)**
+
+---
+
+**Description of the voice:** *A friendly, slightly upbeat tone, clear articulation, and a natural, conversational pace.*
+
+Let me know if you'd like me to 'generate' another one with a specific message or tone!
+
+
+[2026-04-04 06:11:36] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:11:46] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:12:47] Sent to WhatsApp:
+❌ TTS failed: TTS request failed (is Colab running?): Post "https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts": context deadline exceeded
+
+[2026-04-04 06:12:48] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I understand you'd like a voice note that says 'hello there!'
+
+As a text-based AI, I can't directly create and send audio files.
+
+However, I can tell you exactly what it would sound like: a friendly, clear voice saying:
+
+**"Hello there!"**
+
+If you'd like to hear it, I recommend using a free text-to-speech (TTS) converter online. You can simply type 'hello there' into one of these tools, and it will generate the audio for you instantly!
+
+
+[2026-04-04 06:13:59] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:14:20] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:15:58] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_2218369822.ogg
+
+[2026-04-04 06:16:01] Sent to WhatsApp:
+✍️ Auto-routed to: Content Creator
+✓ Written: .\Go-bot\hello_note.py
+All files written successfully!
+AI Response:
+[{"path":".\\Go-bot\\hello_note.py","content":"#!/usr/bin/env python3\nimport sys\ntry:\n    from gtts import gTTS\nexcept ImportError:\n    sys.exit('Please install gTTS: pip install gtts')\n\ndef main():\n    tts = gTTS(text='hello there', lang='en')\n    tts.save('hello_there.mp3')\n\nif __name__ == '__main__':\n    main()\n"}]
+
+
+[2026-04-04 06:17:36] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:17:52] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:19:56] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_2216443403.ogg
+
+[2026-04-04 06:19:58] Sent to WhatsApp:
+✍️ Auto-routed to: Content Creator
+✓ Written: ./src/voice_note.rs
+All files written successfully!
+AI Response:
+[{"path":"./src/voice_note.rs","content":"pub fn generate_voice_note() -> &'static str {\n    \"Hello, this is a voice note generated for you.\"\n}"}]
+
+
+[2026-04-04 06:21:00] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:21:22] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:21:25] Sent to WhatsApp:
+❌ TTS failed: TTS API returned 500: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+[2026-04-04 06:21:26] Sent to WhatsApp:
+✍️ Auto-routed to: Content Creator
+✓ Written: .\src\voice_note_generator.rs
+All files written successfully!
+AI Response:
+[{"path":".\\src\\voice_note_generator.rs","content":"/// Generates a placeholder response for a voice note request.\r\n/// In a real system, this would interact with a Text-to-Speech (TTS) service and a chat API.\r\n///\r\n/// Arguments:\r\n/// - `text_to_speak`: The actual text content for the voice note (e.g., \"hello there\").\r\n/// - `target_chat`: The identifier for the chat channel (e.g., \"general chat\").\r\n///\r\n/// Returns a string indicating the simulated action.\r\npub fn generate_voice_note_for_chat(text_to_speak: &str, target_chat: &str) -> String {\r\n    // Simulate interaction with a Text-to-Speech (TTS) service\r\n    // In a real scenario, this would involve an actual API call and file storage.\r\n    let audio_file_identifier = text_to_speak.replace(\" \", \"_\").to_lowercase();\r\n    let simulated_local_path = format!(\"/tmp/voice_note_{}.mp3\", audio_file_identifier);\r\n\r\n    // Simulate uploading the audio and getting a public URL\r\n    let public_audio_url = format!(\"https://example.com/audio/{}.mp3\", audio_file_identifier);\r\n\r\n    // Return a message indicating the simulated action\r\n    format!(\r\n        \"(Simulated) Voice note for \\\"{}\\\" has been generated and sent to {}. Audio available at: {}\",\r\n        text_to_speak,\r\n        target_chat,\r\n        public_audio_url\r\n    )\r\n}\r\n"}]
+
+
+[2026-04-04 06:22:47] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:23:02] Sent to WhatsApp:
+✍️ Auto-routed to: Content Creator
+✓ Written: .\poem.txt
+All files written successfully!
+AI Response:
+[{"path":".\\poem.txt","content":"When summer's breath doth wane and golden leaves doth fall, the moon in argent silence sings, and lovers' vows, once whispered, echo through the night, as stars, like watchful eyes, bear witness to the fleeting dance of time, where hearts entwined in gentle sorrow find their solace in the tender shade of memory's gentle hand."}]
+
+
+[2026-04-04 06:24:01] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:24:45] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:25:33] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_4167852687.ogg
+
+[2026-04-04 06:25:36] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 2 command(s):
+
+  → python Go-bot/tts.py poem.txt voice_note.wav
+  → powershell -c "Invoke-Item 'voice_note.wav'"
+
+⏳ Running: python Go-bot/tts.py poem.txt voice_note.wav
+(no stdout)
+--- STDERR ---
+Traceback (most recent call last):
+  File "C:\Users\USER\Rust\Code_analyzer\Go-bot\tts.py", line 7, in <module>
+    os.environ["GROQ_API_KEY"]
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python310\lib\os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'GROQ_API_KEY'
+
+⏳ Running: powershell -c "Invoke-Item 'voice_note.wav'"
+(no stdout)
+--- STDERR ---
+Invoke-Item : Cannot find path 
+'C:\Users\USER\Rust\Code_analyzer\voice_note.wav' because 
+it does not exist.
+At line:1 char:1
++ Invoke-Item 'voice_note.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\USE 
+   R\R...\voice_note.wav:String) [Invoke-Item], ItemNotFou  
+  ndException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerS 
+   hell.Commands.InvokeItemCommand
+ 
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:27:17] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:27:27] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -c "Stop-Process -Name 'wmplayer' -Force"
+
+⏳ Running: powershell -c "Stop-Process -Name 'wmplayer' -Force"
+(no stdout)
+--- STDERR ---
+Stop-Process : Cannot find a process with the name 
+"wmplayer". Verify the process name and call the cmdlet 
+again.
+At line:1 char:1
++ Stop-Process -Name 'wmplayer' -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (wmplayer:Str 
+   ing) [Stop-Process], ProcessCommandException
+    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Mi 
+   crosoft.PowerShell.Commands.StopProcessCommand
+ 
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:28:23] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:28:33] Sent to WhatsApp:
+[Document Sent (length: 4302)]:
+💬 Auto-routed to: General Chat
+I’m not able to pull a list of the programs that are currently running on your machine, but I can walk you through how to see that information yourself on the most common operating systems.
+
+---
+
+## Windows
+
+| Method | Steps |
+|--------|-------|
+| **Task Manager** | 1. Press **Ctrl + Shift + Esc** (or right‑click the taskbar and choose *Task Manager*).<br>2. Click the **Processes** tab.<br>3. You’ll see all running “Apps” and “Background processes”. |
+| **PowerShell** | ```powershell<br>Get-Process | Sort-Object CPU -Descending | Format-Table -AutoSize Id, ProcessName, CPU, WS<br>```<br>This lists processes with their PID, CPU usage, and memory (working set). |
+| **Command Prompt** | ```cmd<br>tasklist /V /FO TABLE<br>```<br>Shows a table with PID, session name, memory usage, etc. |
+| **Sysinternals Process Explorer** (advanced) | 1. Download from Microsoft: <https://learn.microsoft.com/sysinternals/downloads/process-explorer>.<br>2. Run the executable (no install needed).<br>3. It gives a detailed hierarchical view of everything that’s running. |
+
+---
+
+## macOS
+
+| Method | Steps |
+|--------|-------|
+| **Activity Monitor** | 1. Open **Applications → Utilities → Activity Monitor**.<br>2. The *CPU* tab shows all active processes, their PID, CPU%, memory, etc. |
+| **Terminal – `ps`** | ```bash<br>ps -ax | less<br>```<br>Shows every process. Add `-o pid,comm,%cpu,%mem` for a more compact view. |
+| **Terminal – `top`** | ```bash<br>top -o cpu<br>```<br>Live, updating list sorted by CPU usage. |
+| **Terminal – `htop`** (needs Homebrew) | ```bash<br>brew install htop<br>htop<br>```<br>Interactive, color‑coded view similar to Linux `htop`. |
+
+---
+
+## Linux
+
+| Method | Steps |
+|--------|-------|
+| **`top`** | ```bash<br>top<br>```<br>Shows a continuously updating list of processes, sorted by CPU by default. |
+| **`htop`** (more user‑friendly) | ```bash<br>sudo apt-get install htop   # Debian/Ubuntu<br>sudo yum install htop       # RHEL/CentOS<br>htop<br>``` |
+| **`ps`** | ```bash<br>ps -e -o pid,comm,%cpu,%mem --sort=-%cpu | head -n 20<br>```<br>Lists the top 20 CPU‑hungry processes. |
+| **`systemctl`** (for services) | ```bash<br>systemctl list-units --type=service --state=running\n``` |
+| **Desktop Environment tools** | *GNOME*: open **System Monitor**; *KDE*: open **KSysGuard**. |
+
+---
+
+### Quick “one‑liner” cheat sheet
+
+| OS | Command (run in a terminal / console) |
+|----|----------------------------------------|
+| Windows PowerShell | `Get-Process | Sort-Object CPU -Descending | ft Id, ProcessName, CPU, WS` |
+| Windows CMD | `tasklist /V` |
+| macOS / Linux (any POSIX) | `ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head -n 20` |
+| Linux (interactive) | `top` or `htop` |
+| macOS (interactive) | `top -o cpu` |
+| Linux (systemd services) | `systemctl list-units --type=service --state=running` |
+
+---
+
+## What to do with the list
+
+- **Identify resource hogs**: Look for processes with unusually high CPU or memory usage.
+- **Verify legitimacy**: Search the process name online if you’re unsure whether it belongs to a legitimate program.
+- **Terminate unwanted processes**:  
+  - Windows: In Task Manager, right‑click → *End task* (or `Stop-Process -Id <PID>` in PowerShell).  
+  - macOS: In Activity Monitor, select → *Quit* or *Force Quit*.  
+  - Linux: `kill <PID>` (or `kill -9 <PID>` for a forced kill).  
+- **Persistency check**: If a program restarts after you kill it, it may be a service/daemon. Use `services.msc` (Windows), `launchctl list` (macOS), or `systemctl` (Linux) to see if it’s set to start automatically.
+
+---
+
+### Need something more specific?
+
+- If you have a particular application you’re trying to locate (e.g., “Is Chrome running?”), let me know the name and I can suggest a targeted command.
+- If you’re working on a remote server and want to filter by user, port, or command‑line arguments, I can provide a tailored `ps`/`grep` pipeline.
+- For programmatically retrieving the list (e.g., in a script), tell me which language you’re using (PowerShell, Bash, Python, etc.) and I’ll give you sample code.
+
+Just let me know which environment you’re on or what you need the list for, and I’ll fine‑tune the instructions for you!
+
+
+[2026-04-04 06:29:32] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:29:40] Sent to WhatsApp:
+[Document Sent (length: 17673)]:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → tasklist
+
+⏳ Running: tasklist
+--- STDOUT ---
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+System Idle Process              0 Services                   0          8 K
+System                           4 Services                   0        152 K
+Secure System                   76 Services                   0     23,576 K
+Registry                       116 Services                   0     65,604 K
+smss.exe                       576 Services                   0      1,076 K
+csrss.exe                      780 Services                   0      5,040 K
+wininit.exe                    876 Services                   0      5,872 K
+csrss.exe                      896 Console                    1      6,296 K
+services.exe                   948 Services                   0      8,828 K
+LsaIso.exe                     968 Services                   0      3,284 K
+lsass.exe                      984 Services                   0     19,684 K
+svchost.exe                    712 Services                   0     29,092 K
+fontdrvhost.exe                676 Services                   0      3,248 K
+winlogon.exe                  1092 Console                    1     10,200 K
+fontdrvhost.exe               1136 Console                    1      8,556 K
+svchost.exe                   1192 Services                   0     14,248 K
+svchost.exe                   1244 Services                   0      8,044 K
+svchost.exe                   1332 Services                   0      5,040 K
+svchost.exe                   1348 Services                   0      8,100 K
+svchost.exe                   1476 Services                   0      9,540 K
+dwm.exe                       1484 Console                    1    103,776 K
+IntelCpHDCPSvc.exe            1608 Services                   0      7,024 K
+svchost.exe                   1628 Services                   0      8,272 K
+svchost.exe                   1636 Services                   0     16,036 K
+svchost.exe                   1672 Services                   0      5,504 K
+svchost.exe                   1756 Services                   0      9,580 K
+svchost.exe                   1832 Services                   0      5,712 K
+svchost.exe                   1840 Services                   0     11,852 K
+svchost.exe                   1848 Services                   0      9,056 K
+svchost.exe                   1856 Services                   0      7,364 K
+svchost.exe                   1864 Services                   0     11,652 K
+svchost.exe                   1872 Services                   0      8,076 K
+svchost.exe                   2136 Services                   0     15,748 K
+svchost.exe                   2156 Services                   0     11,808 K
+IntelCpHeciSvc.exe            2164 Services                   0      6,712 K
+svchost.exe                   2180 Services                   0      9,788 K
+NVDisplay.Container.exe       2324 Services                   0     13,952 K
+svchost.exe                   2392 Services                   0      6,148 K
+svchost.exe                   2444 Services                   0     12,992 K
+svchost.exe                   2552 Services                   0      7,120 K
+svchost.exe                   2600 Services                   0     50,516 K
+svchost.exe                   2620 Services                   0      5,672 K
+Memory Compression            2728 Services                   0    512,760 K
+svchost.exe                   2756 Services                   0      7,608 K
+svchost.exe                   2788 Services                   0      8,684 K
+igfxCUIService.exe            2808 Services                   0      8,516 K
+svchost.exe                   2848 Services                   0      7,988 K
+svchost.exe                   2864 Services                   0      7,372 K
+svchost.exe                   3012 Services                   0      9,948 K
+NVDisplay.Container.exe       3100 Console                    1     24,628 K
+svchost.exe                   3144 Services                   0     19,860 K
+svchost.exe                   3536 Services                   0     12,924 K
+svchost.exe                   3564 Services                   0      6,804 K
+svchost.exe                   3712 Services                   0      7,820 K
+svchost.exe                   3816 Services                   0     18,688 K
+svchost.exe                   3860 Services                   0      7,196 K
+svchost.exe                   3904 Services                   0     10,228 K
+svchost.exe                   4056 Services                   0      6,392 K
+svchost.exe                   4064 Services                   0     10,040 K
+svchost.exe                   3192 Services                   0      6,728 K
+svchost.exe                   3468 Services                   0      7,912 K
+svchost.exe                   3172 Services                   0     17,396 K
+svchost.exe                   4180 Services                   0     11,316 K
+svchost.exe                   4248 Services                   0      6,252 K
+spoolsv.exe                   4312 Services                   0     13,536 K
+svchost.exe                   4364 Services                   0      7,224 K
+AdminService.exe              4416 Services                   0      6,828 K
+svchost.exe                   4440 Services                   0     11,984 K
+svchost.exe                   4448 Services                   0     32,592 K
+OfficeClickToRun.exe          4456 Services                   0     39,544 K
+svchost.exe                   4468 Services                   0     25,764 K
+OneApp.IGCC.WinService.ex     4544 Services                   0     40,768 K
+TPMProvisioningService.ex     4564 Services                   0     10,048 K
+ibtrksrv.exe                  4592 Services                   0      6,908 K
+jhi_service.exe               4612 Services                   0      5,968 K
+MpDefenderCoreService.exe     4656 Services                   0     18,556 K
+NvTelemetryContainer.exe      4668 Services                   0     12,660 K
+LMS.exe                       4684 Services                   0      9,432 K
+svchost.exe                   4708 Services                   0      9,320 K
+pg_ctl.exe                    4716 Services                   0      5,708 K
+SynTPEnhService.exe           4736 Services                   0      7,796 K
+svchost.exe                   4744 Services                   0      5,204 K
+svchost.exe                   4792 Services                   0     16,060 K
+WMIRegistrationService.ex     4804 Services                   0     13,356 K
+svchost.exe                   4812 Services                   0     17,496 K
+wslservice.exe                4824 Services                   0     18,948 K
+MsMpEng.exe                   4876 Services                   0    286,568 K
+svchost.exe                   5048 Services                   0      6,508 K
+svchost.exe                   5124 Services                   0      8,820 K
+svchost.exe                   5456 Services                   0     15,612 K
+sihost.exe                    5924 Console                    1     39,596 K
+svchost.exe                   5952 Console                    1     16,780 K
+svchost.exe                   5992 Console                    1      5,608 K
+PresentationFontCache.exe     6032 Services                   0     18,448 K
+svchost.exe                   6040 Console                    1     28,100 K
+taskhostw.exe                 6112 Console                    1     17,344 K
+PowerMgr.exe                  5064 Console                    1      4,240 K
+HDSentinel.exe                5640 Console                    1     12,652 K
+SynTPEnh.exe                  6312 Console                    1     22,024 K
+postgres.exe                  6480 Services                   0     23,232 K
+conhost.exe                   6488 Services                   0      7,440 K
+svchost.exe                   6936 Services                   0      5,016 K
+svchost.exe                   7020 Services                   0      9,496 K
+svchost.exe                   7236 Services                   0     14,644 K
+postgres.exe                  7412 Services                   0      8,872 K
+SynTPHelper.exe               7588 Console                    1      4,596 K
+postgres.exe                  7732 Services                   0      9,116 K
+postgres.exe                  7740 Services                   0      9,064 K
+postgres.exe                  7748 Services                   0      9,044 K
+postgres.exe                  7756 Services                   0     10,668 K
+postgres.exe                  7764 Services                   0     10,364 K
+svchost.exe                   8036 Services                   0     16,880 K
+postgres.exe                  8076 Services                   0     13,320 K
+postgres.exe                  8084 Services                   0      9,776 K
+postgres.exe                  8092 Services                   0      9,664 K
+igfxEM.exe                     964 Console                    1     11,900 K
+ctfmon.exe                    1692 Console                    1     27,404 K
+svchost.exe                   7608 Console                    1     17,740 K
+RuntimeBroker.exe             7540 Console                    1     35,504 K
+RuntimeBroker.exe             1880 Console                    1     35,560 K
+AggregatorHost.exe            1896 Services                   0      7,900 K
+svchost.exe                   6332 Console                    1      7,460 K
+svchost.exe                   1992 Console                    1     12,060 K
+svchost.exe                    980 Services                   0     18,516 K
+dllhost.exe                   1276 Console                    1     14,420 K
+NisSrv.exe                    2500 Services                   0     12,200 K
+SecurityHealthSystray.exe     5512 Console                    1     10,388 K
+SecurityHealthService.exe     2428 Services                   0     18,084 K
+devmonsrv.exe                 2936 Services                   0     11,248 K
+rundll32.exe                  2952 Console                    1     19,084 K
+obexsrv.exe                   3492 Services                   0     10,092 K
+explorer.exe                  3664 Console                    1    261,296 K
+StartMenuExperienceHost.e     6592 Console                    1     80,084 K
+SearchHost.exe                4996 Console                    1    101,580 K
+Widgets.exe                   7864 Console                    1     47,596 K
+TextInputHost.exe             3828 Console                    1     59,924 K
+SearchIndexer.exe             5556 Services                   0     26,380 K
+svchost.exe                   5316 Services                   0     18,212 K
+svchost.exe                   3524 Services                   0      7,504 K
+svchost.exe                   2672 Services                   0     13,860 K
+chrome.exe                    7192 Console                    1    276,636 K
+chrome.exe                    1204 Console                    1      8,308 K
+chrome.exe                    5476 Console                    1    225,724 K
+chrome.exe                    1200 Console                    1     61,228 K
+chrome.exe                    5060 Console                    1     17,900 K
+svchost.exe                   8148 Services                   0     13,448 K
+chrome.exe                    1740 Console                    1    327,476 K
+chrome.exe                    3612 Console                    1     85,572 K
+chrome.exe                    7580 Console                    1     87,004 K
+chrome.exe                    2228 Console                    1     21,156 K
+chrome.exe                    2684 Console                    1     32,924 K
+chrome.exe                    8300 Console                    1    116,428 K
+chrome.exe                    8688 Console                    1     44,720 K
+chrome.exe                    8796 Console                    1     36,964 K
+svchost.exe                   6256 Services                   0     10,272 K
+ShellExperienceHost.exe       5208 Console                    1      2,732 K
+chrome.exe                    5536 Console                    1    411,372 K
+chrome.exe                    4120 Console                    1    251,588 K
+RuntimeBroker.exe             2536 Console                    1      6,572 K
+igfxext.exe                   7180 Console                    1      9,156 K
+MoUsoCoreWorker.exe           8168 Services                   0     26,736 K
+svchost.exe                   4208 Services                   0     16,960 K
+svchost.exe                   1144 Console                    1     17,692 K
+svchost.exe                   9252 Services                   0     12,760 K
+WUDFHost.exe                  3868 Services                   0     26,688 K
+dllhost.exe                   1316 Console                    1     12,912 K
+svchost.exe                  11184 Services                   0      7,124 K
+svchost.exe                  10256 Services                   0     10,256 K
+svchost.exe                  10348 Services                   0     11,620 K
+WmiPrvSE.exe                  2188 Services                   0      9,312 K
+ApplicationFrameHost.exe       132 Console                    1     33,400 K
+chrome.exe                   10196 Console                    1    223,912 K
+WindowsTerminal.exe          10592 Console                    1     74,836 K
+OpenConsole.exe               1940 Console                    1      8,728 K
+cmd.exe                       2748 Console                    1      5,136 K
+Antigravity.exe              10464 Console                    1    161,108 K
+Antigravity.exe               8388 Console                    1     36,292 K
+Antigravity.exe               4484 Console                    1    146,504 K
+Antigravity.exe               4164 Console                    1     53,696 K
+Antigravity.exe                752 Console                    1    351,000 K
+Antigravity.exe              11088 Console                    1     85,180 K
+Antigravity.exe               9928 Console                    1     98,532 K
+Antigravity.exe               8768 Console                    1     84,432 K
+Antigravity.exe               8456 Console                    1     99,372 K
+Antigravity.exe              10272 Console                    1     96,756 K
+Antigravity.exe               7600 Console                    1    172,028 K
+Antigravity.exe               9280 Console                    1    100,824 K
+gopls.exe                     6448 Console                    1    105,536 K
+conhost.exe                   9788 Console                    1      6,320 K
+gopls.exe                     1120 Console                    1     16,988 K
+chrome.exe                    1928 Console                    1     66,044 K
+chrome.exe                    3796 Console                    1     36,152 K
+chrome.exe                   10776 Console                    1     44,784 K
+svchost.exe                   9760 Services                   0     15,612 K
+chrome.exe                   11216 Console                    1    130,500 K
+chrome.exe                    3500 Console                    1     37,632 K
+chrome.exe                    9796 Console                    1     49,796 K
+WhatsApp.Root.exe            10368 Console                    1    117,524 K
+RuntimeBroker.exe             7492 Console                    1     10,504 K
+Notepad.exe                  10352 Console                    1     81,044 K
+dllhost.exe                   9320 Console                    1     16,876 K
+WidgetService.exe            11192 Console                    1     21,092 K
+msedgewebview2.exe            7940 Console                    1     94,964 K
+msedgewebview2.exe            5972 Console                    1     10,592 K
+msedgewebview2.exe            8116 Console                    1     54,560 K
+msedgewebview2.exe            6056 Console                    1     37,300 K
+msedgewebview2.exe            9324 Console                    1     18,932 K
+msedgewebview2.exe            9100 Console                    1     75,972 K
+chrome.exe                   11400 Console                    1     46,792 K
+chrome.exe                    2296 Console                    1    191,380 K
+chrome.exe                    5696 Console                    1     44,332 K
+go.exe                        9208 Console                    1     24,124 K
+main.exe                      6564 Console                    1     32,300 K
+chrome.exe                   11892 Console                    1    432,016 K
+chrome.exe                   11288 Console                    1     27,604 K
+audiodg.exe                   9824 Services                   0     13,628 K
+Microsoft.Media.Player.ex    10448 Console                    1    123,788 K
+RuntimeBroker.exe             9244 Console                    1     43,872 K
+Code_analyzer.exe             8612 Console                    1     13,972 K
+cmd.exe                      11144 Console                    1      4,152 K
+tasklist.exe                 10916 Console                    1      9,508 K
+WmiPrvSE.exe                 11284 Services                   0     10,328 K
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:31:56] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:32:06] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → taskkill /IM Microsoft.Media.Player.exe /F
+
+⏳ Running: taskkill /IM Microsoft.Media.Player.exe /F
+--- STDOUT ---
+SUCCESS: The process "Microsoft.Media.Player.exe" with PID 10448 has been terminated.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:33:47] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:34:14] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -c "Start-Process 'chrome' -ArgumentList 'https://www.pornhub.com'"
+
+⏳ Running: powershell -c "Start-Process 'chrome' -ArgumentList 'https://www.pornhub.com'"
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:41:14] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:41:24] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → cmd /c dir C:\
+
+⏳ Running: cmd /c dir C:\
+--- STDOUT ---
+ Volume in drive C has no label.
+ Volume Serial Number is 94F9-5A34
+
+ Directory of C:\
+
+12/11/2025  03:27 pm           112,472 appverifUI.dll
+28/12/2025  09:36 am    <DIR>          ChromeProfile
+08/02/2026  08:34 am            12,288 DumpStack.log
+06/03/2026  10:19 pm    <DIR>          Games
+04/04/2026  02:28 am    <DIR>          Intel
+01/08/2025  06:41 am               108 logUploaderSettings.ini
+01/08/2025  06:41 am               108 logUploaderSettings_temp.ini
+27/06/2025  01:36 pm    <DIR>          Madara
+18/06/2025  11:18 am    <DIR>          Manga
+23/05/2025  08:43 am    <DIR>          NVIDIA
+07/05/2022  07:24 am    <DIR>          PerfLogs
+27/06/2025  01:48 pm    <DIR>          poppler-windows
+02/04/2026  12:21 am    <DIR>          Program Files
+30/03/2026  06:33 pm    <DIR>          Program Files (x86)
+31/03/2026  10:08 pm    <DIR>          Python
+29/12/2025  11:48 am    <DIR>          Screen
+13/03/2026  07:55 pm    <DIR>          TDM-GCC-64
+29/05/2025  01:41 am    <DIR>          Temp
+20/03/2026  03:42 pm    <DIR>          tmp
+19/03/2026  04:29 am    <DIR>          Users
+12/11/2025  03:27 pm            68,088 vfcompat.dll
+30/03/2026  06:42 pm    <DIR>          Windows
+               5 File(s)        193,064 bytes
+              17 Dir(s)   7,403,069,440 bytes free
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:42:16] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:42:24] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📁 Creating 1 file(s)...
+  ✅ Created: filelist.txt
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → cmd /c "dir C:\\ /s /b > filelist.txt"
+
+⏳ Running: cmd /c "dir C:\\ /s /b > filelist.txt"
+(no stdout)
+--- STDERR ---
+The filename, directory name, or volume label syntax is incorrect.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 06:43:50] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:50:30] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:52:54] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 06:53:04] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 06:53:06] Sent to WhatsApp:
+❌ TTS failed: TTS API returned 404: The endpoint uncomforting-olin-unbewitchingly.ngrok-free.dev is offline.
+
+ERR_NGROK_3200
+
+
+[2026-04-04 06:53:07] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I’m not able to generate an actual audio file for you, but I can give you the exact wording you’d need for a voice note and a few quick options for turning that text into speech yourself:
+
+**Text for the voice note**
+
+```
+Hello there.
+```
+
+**How to turn it into an audio clip**
+
+| Tool / Method | How to use it |
+|---------------|---------------|
+| **Online TTS websites** (e.g., ttsmp3.com, naturalreaders.com, voicemaker.in) | Paste the text above, choose a voice (male/female, various accents), click “Generate” or “Download”. |
+| **Smartphone assistants** (Siri, Google Assistant, Alexa) | Say something like “Hey Siri, read ‘Hello there’ out loud and record it,” then use your phone’s voice‑memo app to capture the playback. |
+| **Desktop software** (Balabolka, Audacity + a TTS engine) | In Balabolka, type the phrase, select a voice, export as WAV/MP3; you can also record the playback with Audacity if needed. |
+| **Programmatic TTS** (Python `gTTS`, Azure Speech, Amazon Polly) | ```python\nfrom gtts import gTTS\ntts = gTTS('Hello there.', lang='en')\ntts.save('hello_there.mp3')\n``` |
+| **Built‑in OS features** (Windows Narrator, macOS “say” command) | macOS Terminal: `say -v Alex "Hello there" -o hello_there.aiff` |
+| **Browser extensions** (Read Aloud, SpeakIt) | Highlight the phrase, click the extension’s play button, and use a screen‑recording or audio‑capture tool to save it. |
+
+Pick whichever method feels most convenient for you, and you’ll have a short voice note that says “Hello there.” If you run into any trouble setting up a particular tool, just let me know—I’m happy to walk you through the steps!
+
+
+[2026-04-04 07:15:19] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 07:15:45] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📁 Creating 1 file(s)...
+  ✅ Created: craw.py
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → python craw.py https://example.com 1
+
+⏳ Running: python craw.py https://example.com 1
+--- STDOUT ---
+https://example.com
+https://iana.org/domains/example
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 07:17:25] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 07:17:34] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → python craw.py https://fitgirl-repacks.example.com
+
+⏳ Running: python craw.py https://fitgirl-repacks.example.com
+--- STDOUT ---
+https://fitgirl-repacks.example.com
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 07:19:20] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 07:19:31] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → python craw.py https://fitgirl-repacks.com
+
+⏳ Running: python craw.py https://fitgirl-repacks.com
+--- STDOUT ---
+https://fitgirl-repacks.com
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+
+[2026-04-04 07:24:11] Sent to WhatsApp:
+❌ analyzer timed out after 1m0s
+
+[2026-04-04 08:57:58] Sent to WhatsApp:
+❌ analyzer timed out after 1m0s
+
+[2026-04-04 14:42:50] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 14:43:02] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 14:43:03] Sent to WhatsApp:
+❌ TTS failed: TTS request build failed: parse " https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts": first path segment in URL cannot contain colon
+
+[2026-04-04 14:43:04] Sent to WhatsApp:
+💬 Auto-routed to: General Chat
+I am sorry, but I am a text-based AI and cannot generate voice notes.
+
+
+[2026-04-04 14:43:41] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 14:43:57] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 14:45:58] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_167650320.ogg
+
+[2026-04-04 14:46:03] Sent to WhatsApp:
+✍️ Auto-routed to: Content Creator
+✓ Written: .\src\my_voice_note.rs
+All files written successfully!
+AI Response:
+[{"path":".\\src\\my_voice_note.rs","content":"pub fn say_hello_to_you() {\n    println!(\"Hello to you!\");\n}\n"}]
+
+
+[2026-04-04 14:47:56] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 14:48:09] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 14:50:14] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_534996112.ogg
+
+[2026-04-04 14:50:23] Sent to WhatsApp:
+🛠️ Auto-routed to: Command Executor
+
+📁 Creating 2 file(s)...
+  ✅ Created: poem.txt
+  ✅ Created: craw.py
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → python craw.py
+
+⏳ Running: python craw.py
+(no stdout)
+--- STDERR ---
+Traceback (most recent call last):
+  File "C:\Users\USER\Rust\Code_analyzer\craw.py", line 1, in <module>
+    import pyttsx3
+ModuleNotFoundError: No module named 'pyttsx3'
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+

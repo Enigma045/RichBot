@@ -27,8 +27,8 @@ import (
 
 const (
 	maxMessageLength = 4096
-	execTimeout      = 180 * time.Second
-	ttsTimeout       = 60 * time.Second
+	execTimeout      = 60 * time.Second
+	ttsTimeout       = 180 * time.Second
 	maxWorkers       = 5
 	maxInputLength   = 2000
 )
@@ -39,7 +39,7 @@ const analyzerDir = `C:\Users\USER\Rust\Code_analyzer`
 
 // ─── PASTE YOUR NGROK URL HERE EVERY TIME YOU START COLAB ───────────────────
 // Example: "https://abcd-12-34-56-78.ngrok-free.app/tts"
-const colabTTSURL
+const colabTTSURL = "https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts"
 
 // ─────────────────────────────────────────────────────────────────────────────
 
