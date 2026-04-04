@@ -7,10 +7,10 @@ use colored::Colorize;
 use crate::styles;
 
 
-const GEMINI_KEY: &str ;
-const GROQ_KEY: &str ;
-const CEREBRAS_KEY: &str ;
-const MISTRAL_KEY: &str ;
+const GEMINI_KEY: &str = "";
+const GROQ_KEY: &str = "";
+const CEREBRAS_KEY: &str = "";
+const MISTRAL_KEY: &str = "";
 
 pub(crate) struct RequestTracker{
     pub(crate) gemini_flash: u32,

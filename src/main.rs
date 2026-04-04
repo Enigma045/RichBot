@@ -1,4 +1,3 @@
-@@ -0,0 +1,161 @@
 use std::{env, io::Write, path::Path};
 
 mod model;
@@ -33,6 +32,16 @@ fn code_analyzer_task(task: &str) {
 
     let ai_response2 = model::set_control(&prompt2);
     println!("{}", ai_response2);
+}
+
+fn filter_task(original_prompt: &str, ai_output: &str) {
+    let prompt = format!(
+        "Based on the user's original request: '{}', filter the following assistant output to return ONLY the specific information requested. Do not include metadata, explanations, or context not directly requested. Use this output as your reference:\n\n{}",
+        original_prompt, ai_output
+    );
+
+    let filtered_response = model::set_control(&prompt);
+    println!("{}", filtered_response);
 }
 
 fn content_creator_task(task: &str) {
@@ -127,6 +136,13 @@ fn main() {
     if args.len() > 2 && args[1] == "--prompt" {
         let task = &args[2];
         auto_router(task);
+        return;
+    }
+
+    if args.len() > 3 && args[1] == "--filter" {
+        let original_prompt = &args[2];
+        let ai_output = &args[3];
+        filter_task(original_prompt, ai_output);
         return;
     }
 

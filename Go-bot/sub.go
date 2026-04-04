@@ -344,3 +344,4 @@ func main() {
 	wg.Wait()
 	client.Disconnect()
 }
+*/

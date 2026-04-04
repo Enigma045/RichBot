@@ -894,3 +894,17 @@ ModuleNotFoundError: No module named 'pyttsx3'
 ✅ Done. Full output saved to cmd_outputs.txt
 
 
+[2026-04-04 15:34:46] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-04 15:34:56] Sent to WhatsApp:
+🎙️ Generating voice note...
+
+[2026-04-04 15:35:14] Sent to WhatsApp:
+[Audio Sent]: C:\Users\USER\AppData\Local\Temp\speech_3674633802.ogg
+
+[2026-04-04 15:35:17] Sent to WhatsApp:
+📝 Filtered AI Response:
+
+"Hello to me."
+

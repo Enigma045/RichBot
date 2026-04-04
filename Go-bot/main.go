@@ -86,6 +86,26 @@ func runAnalyzer(msg string) (string, error) {
 	return outputStr, nil
 }
 
+func runFilter(originalPrompt, aiOutput string) (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), execTimeout)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, analyzerExe, "--filter", originalPrompt, aiOutput)
+	cmd.Dir = analyzerDir
+
+	out, err := cmd.CombinedOutput()
+	outputStr := strings.TrimSpace(string(out))
+
+	if ctx.Err() == context.DeadlineExceeded {
+		return "", fmt.Errorf("filter timed out after %v", execTimeout)
+	}
+	if err != nil {
+		return "", fmt.Errorf("filter error: %v\nOutput:\n%s", err, outputStr)
+	}
+
+	return outputStr, nil
+}
+
 // callColabTTS sends text to the Colab Flask API and returns
 // a path to a local temp .ogg file ready for WhatsApp.
 func callColabTTS(ctx context.Context, text string) (string, error) {
@@ -254,12 +274,26 @@ func processJob(job Job) {
 
 	// ── Voice note response via Colab TTS ────────────────────
 	if strings.Contains(strings.ToLower(clean), "voice note") {
+		// New Filtering Step
+		filteredOutput, err := runFilter(clean, output)
+		if err != nil {
+			sendText(ctx, client, evt, fmt.Sprintf("⚠️ Filter failed, sending full response: %v", err))
+		} else {
+			output = "📝 Filtered AI Response:\n\n" + filteredOutput
+		}
+
 		sendText(ctx, client, evt, "🎙️ Generating voice note...")
 
 		ttsCtx, cancel := context.WithTimeout(ctx, ttsTimeout)
 		defer cancel()
 
-		audioPath, err := callColabTTS(ttsCtx, output)
+		// Use filtered output for TTS if it was successful
+		ttsInput := output
+		if err == nil {
+			ttsInput = filteredOutput
+		}
+
+		audioPath, err := callColabTTS(ttsCtx, ttsInput)
 		if err != nil {
 			sendText(ctx, client, evt, fmt.Sprintf("❌ TTS failed: %v", err))
 		} else {
