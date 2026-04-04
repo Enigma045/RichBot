@@ -7,10 +7,10 @@ use colored::Colorize;
 use crate::styles;
 
 
-const GEMINI_KEY: &str;
-const GROQ_KEY: &str;
-const CEREBRAS_KEY: &str;
-const MISTRAL_KEY: &str;
+const GEMINI_KEY: &str ;
+const GROQ_KEY: &str ;
+const CEREBRAS_KEY: &str ;
+const MISTRAL_KEY: &str ;
 
 pub(crate) struct RequestTracker{
     pub(crate) gemini_flash: u32,
@@ -128,10 +128,6 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
         .map_err(|e| format!("Failed to parse JSON: {}", e))?;
 
 
-    // ADD THIS LINE - print the raw response
-    println!("Raw Groq response: {}", result);
-
-
     result["choices"][0]["message"]["content"]
         .as_str()
         .map(|s| s.to_string())
@@ -164,55 +160,55 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
            .to_string())
      }
 
-     pub fn smart_prompt(client: &Client,tracker: &mut RequestTracker,prompt: &str) -> String {
+     pub fn smart_prompt(client: &Client,tracker: &mut RequestTracker,prompt: &str, quiet: bool) -> String {
 
         if tracker.can_use_gemini_flash() {
-            println!("📡 Using: Gemini 2.5 Flash-Lite ({}/1000)", tracker.gemini_flash_lite + 1);
+            if !quiet { println!("📡 Using: Gemini 2.5 Flash-Lite ({}/1000)", tracker.gemini_flash_lite + 1); }
             match call_gemini(client,prompt, "gemini-2.5-flash-lite") {
               Ok(response) => {tracker.gemini_flash_lite += 1; return response;}
-              Err(e) => println!("⚠️  Gemini Flash-Lite failed: {} — trying next...", e), 
+              Err(e) => if !quiet { println!("⚠️  Gemini Flash-Lite failed: {} — trying next...", e); }
             }
             
         }
 
         if tracker.can_use_gemini_flash() {
-            println!("📡 Using: Gemini 2.5 Flash ({}/250)", tracker.gemini_flash + 1);
+            if !quiet { println!("📡 Using: Gemini 2.5 Flash ({}/250)", tracker.gemini_flash + 1); }
             match call_gemini(client, prompt, "gemini-2.5-flash") {
                 Ok(response) => {tracker.gemini_flash += 1; return response;},
-                Err(e) => println!("⚠️  Gemini Flash failed: {} — trying next...", e),
+                Err(e) => if !quiet { println!("⚠️  Gemini Flash failed: {} — trying next...", e); }
             }
         }
 
         
     if tracker.can_use_groq(){
-        println!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
+        if !quiet { println!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1); }
         match call_groq(client, prompt){
             Ok(response) => {tracker.groq += 1; return response;}
-            Err(e) => println!("⚠️  Groq failed: {} — trying next...", e),
+            Err(e) => if !quiet { println!("⚠️  Groq failed: {} — trying next...", e); }
         }
     }
 
     if tracker.can_use_cerebras(){
-        println!("📡 Using: Cerebras Llama 70B ({}/500)", tracker.cerebras + 1);
+        if !quiet { println!("📡 Using: Cerebras Llama 70B ({}/500)", tracker.cerebras + 1); }
         match call_cerebras(client, prompt) {
             Ok(response) => {tracker.cerebras += 1; return response;}
-            Err(e) => println!("⚠️  Cerebras failed: {} — trying next...", e), 
+            Err(e) => if !quiet { println!("⚠️  Cerebras failed: {} — trying next...", e); }
         }
     }
 
     if tracker.can_use_mistral(){
-        println!("📡 Using: Mistral Small ({}/500)", tracker.mistral + 1);
+        if !quiet { println!("📡 Using: Mistral Small ({}/500)", tracker.mistral + 1); }
         match call_mistral(client, prompt) {
             Ok(response) => {tracker.mistral += 1; return response;}
-            Err(e) => println!("⚠️  Mistral failed: {} — trying next...", e),
+            Err(e) => if !quiet { println!("⚠️  Mistral failed: {} — trying next...", e); }
         }
     }
 
     if tracker.can_use_gemini_pro(){
-        println!("📡 Using: Gemini 2.5 Pro ({}/100)", tracker.gemini_pro + 1);
+        if !quiet { println!("📡 Using: Gemini 2.5 Pro ({}/100)", tracker.gemini_pro + 1); }
         match call_gemini(client, prompt, "gemini-2.5-pro") {
             Ok(response) => {tracker.gemini_pro += 1; return response;}
-            Err(e) => println!("⚠️  Gemini Pro failed: {}", e),
+            Err(e) => if !quiet { println!("⚠️  Gemini Pro failed: {}", e); }
         }
     }
 
@@ -243,7 +239,7 @@ pub fn control(){
         }
 
         // Normal prompt
-        let response = smart_prompt(&client, &mut tracker, input);
+        let response = smart_prompt(&client, &mut tracker, input, false);
         println!("\n{}", "AI:".green().bold());
         styles::print_styled(&response);
         println!();
@@ -265,21 +261,6 @@ pub fn control(){
         let client = Client::new();
         let mut tracker = RequestTracker::new();
 
-        let response = smart_prompt(&client, &mut tracker, prompt);
-        println!("\n{}", "AI:".green().bold());
-        styles::print_styled(&response);
-        println!();
-
-        println!("📊 Remaining today:");
-        println!(" Flash: {} | Flash-Lite: {} | Groq: {} | Cerebras: {} | Mistral: {} | Pro: {}",
-            250 - tracker.gemini_flash,
-            1000 - tracker.gemini_flash_lite,
-            500 - tracker.groq,
-            500 - tracker.cerebras,
-            500 - tracker.mistral,
-            100 - tracker.gemini_pro
-        );
-        println!();
-
+        let response = smart_prompt(&client, &mut tracker, prompt, true);
         return response;
      }

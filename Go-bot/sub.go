@@ -1,12 +1,8 @@
-package main
+/*package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -28,18 +24,13 @@ import (
 const (
 	maxMessageLength = 4096
 	execTimeout      = 180 * time.Second
-	ttsTimeout       = 60 * time.Second
 	maxWorkers       = 5
 	maxInputLength   = 2000
 )
 
-// ─── CHANGE THESE TO MATCH YOUR MACHINE ─────────────────────────────────────
+// ─── CHANGE THESE TWO LINES TO MATCH YOUR MACHINE ───────────────────────────
 const analyzerExe = `C:\Users\USER\Rust\Code_analyzer\target\debug\Code_analyzer.exe`
 const analyzerDir = `C:\Users\USER\Rust\Code_analyzer`
-
-// ─── PASTE YOUR NGROK URL HERE EVERY TIME YOU START COLAB ───────────────────
-// Example: "https://abcd-12-34-56-78.ngrok-free.app/tts"
-const colabTTSURL
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -84,47 +75,6 @@ func runAnalyzer(msg string) (string, error) {
 	}
 
 	return outputStr, nil
-}
-
-// callColabTTS sends text to the Colab Flask API and returns
-// a path to a local temp .ogg file ready for WhatsApp.
-func callColabTTS(ctx context.Context, text string) (string, error) {
-	payload, err := json.Marshal(map[string]string{"text": text})
-	if err != nil {
-		return "", fmt.Errorf("TTS payload marshal failed: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "POST", colabTTSURL, bytes.NewReader(payload))
-	if err != nil {
-		return "", fmt.Errorf("TTS request build failed: %w", err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{Timeout: ttsTimeout}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", fmt.Errorf("TTS request failed (is Colab running?): %w", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return "", fmt.Errorf("TTS API returned %d: %s", resp.StatusCode, string(body))
-	}
-
-	// Save response to a temp .ogg file
-	tmpFile, err := os.CreateTemp("", "speech_*.ogg")
-	if err != nil {
-		return "", fmt.Errorf("temp file creation failed: %w", err)
-	}
-	defer tmpFile.Close()
-
-	if _, err := io.Copy(tmpFile, resp.Body); err != nil {
-		os.Remove(tmpFile.Name())
-		return "", fmt.Errorf("saving audio failed: %w", err)
-	}
-
-	return tmpFile.Name(), nil
 }
 
 func logToAudit(text string) {
@@ -214,7 +164,7 @@ func processJob(job Job) {
 			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to download audio: %v", err))
 			return
 		}
-
+		
 		fileName := fmt.Sprintf("audio_%d.ogg", time.Now().UnixNano())
 		if err := os.WriteFile(fileName, data, 0600); err != nil {
 			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to save audio: %v", err))
@@ -252,26 +202,21 @@ func processJob(job Job) {
 		return
 	}
 
-	// ── Voice note response via Colab TTS ────────────────────
 	if strings.Contains(strings.ToLower(clean), "voice note") {
 		sendText(ctx, client, evt, "🎙️ Generating voice note...")
-
-		ttsCtx, cancel := context.WithTimeout(ctx, ttsTimeout)
-		defer cancel()
-
-		audioPath, err := callColabTTS(ttsCtx, output)
+		cmd := exec.Command("python", "tts.py", output)
+		cmd.Dir = `C:\Users\USER\Rust\Code_analyzer\Go-bot`
+		out, err := cmd.CombinedOutput()
 		if err != nil {
-			sendText(ctx, client, evt, fmt.Sprintf("❌ TTS failed: %v", err))
+			sendText(ctx, client, evt, fmt.Sprintf("❌ TTS failed: %v\n%s", err, string(out)))
 		} else {
-			defer os.Remove(audioPath)
-			if err := sendAudio(ctx, client, evt, audioPath); err != nil {
+			err = sendAudio(ctx, client, evt, `C:\Users\USER\Rust\Code_analyzer\Go-bot\speech.wav`)
+			if err != nil {
 				sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to send audio: %v", err))
 			}
 		}
-		// Still send text response below regardless of TTS result
 	}
 
-	// ── Text / document response ─────────────────────────────
 	if len(output) > maxMessageLength {
 		if err := sendDocument(ctx, client, evt, output); err != nil {
 			sendText(ctx, client, evt, fmt.Sprintf("❌ Failed to send document: %v", err))
