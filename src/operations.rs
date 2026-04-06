@@ -2,6 +2,7 @@ use std::fs;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
+use std::time::Duration;
 use walkdir::WalkDir;
 use serde::{Deserialize, Serialize};
 
@@ -22,6 +23,13 @@ pub struct FileEntry {
 pub enum EntryType {
     File,
     Directory,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SearchEntry {
+    pub rank: usize,
+    pub score: f32,
+    pub path: String,
 }
 
 // ── Errors ────────────────────────────────────────────────────────────────────
@@ -77,6 +85,41 @@ pub fn see() -> Vec<FileEntry> {
             },
         })
         .collect()
+}
+
+pub fn search_colab(query: &str, base_url: &str) -> Vec<FileEntry> {
+    if base_url.is_empty() {
+        return see();
+    }
+
+    let url = format!("{}/search", base_url.trim_end_matches('/'));
+    let client = reqwest::blocking::Client::builder()
+        .timeout(Duration::from_secs(300))
+        .use_rustls_tls()
+        .build()
+        .unwrap_or_else(|_| reqwest::blocking::Client::new());
+    
+    let body = serde_json::json!({ "query": query });
+
+    match client.post(&url)
+        .header("ngrok-skip-browser-warning", "any")
+        .json(&body)
+        .send() {
+        Ok(resp) => {
+            if let Ok(entries) = resp.json::<Vec<SearchEntry>>() {
+                return entries.into_iter().map(|s| FileEntry {
+                    path: s.path,
+                    depth: 0, // Search returns flat list
+                    entry_type: EntryType::File,
+                }).collect();
+            }
+        },
+        Err(e) => {
+            eprintln!("⚠️ Search failed ({}): falling back to local crawl...", e);
+        }
+    }
+
+    see()
 }
 
 pub fn write_file(path: &str, content: &str) -> Result<(), FileError> {

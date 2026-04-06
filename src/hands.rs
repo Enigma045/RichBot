@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use serde_json;
-use std::fs::{File, OpenOptions};
+use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 

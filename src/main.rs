@@ -5,16 +5,18 @@ mod styles;
 mod operations;
 mod hands;
 pub mod cmd_executor;
+pub mod api_keys;
+mod sport;
 
-fn code_analyzer_task(task: &str) {
-    let see = operations::see();
+fn analysis_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
+    let see = operations::search_colab(task, base_url);
     let prompt = format!(
         "Return ONLY a valid JSON array, no markdown, no explanation, no decorators.\
-         Filter this file tree to only files needed for code editing: {}",
+         Filter this file tree to only documents or projects relevant to this request: {}",
         serde_json::to_string(&see).unwrap()
     );
 
-    let ai_response = model::set_control(&prompt);
+    let ai_response = model::set_control_with_persona(&prompt, persona);
 
     let files_json = match operations::read_files_from_json(&ai_response) {
         Ok(files) => serde_json::to_string_pretty(&files).unwrap(),
@@ -25,95 +27,171 @@ fn code_analyzer_task(task: &str) {
     };
 
     let prompt2 = format!(
-        "Analyze the following project files according to this request: '{}'. \
-         Suggest edits to improve the code quality, readability, and maintainability. Project files:\n{}",
+        "Help me with this request: '{}'. Use the following project/file context if helpful:\n{}",
         task, files_json
     );
 
-    let ai_response2 = model::set_control(&prompt2);
-    println!("{}", ai_response2);
+    let ai_response2 = model::set_control_with_persona(&prompt2, persona);
+    
+    if is_headless {
+        println!("{}", ai_response2);
+    } else {
+        println!("{}", ai_response2);
+    }
 }
 
-fn filter_task(original_prompt: &str, ai_output: &str) {
+fn filter_task(original_prompt: &str, ai_output: &str, persona: &str, _is_headless: bool) {
     let prompt = format!(
-        "Based on the user's original request: '{}', filter the following assistant output to return ONLY the specific information requested. Do not include metadata, explanations, or context not directly requested. Use this output as your reference:\n\n{}",
+        "You are an expert communicator. Convert the following technical output into a clean, friendly response for the user. \
+         The user's original request was: '{}'.\n\n\
+         STRICT RULES:\n\
+         1. NEVER include base64, hex, binary data, or encoded strings. If you see long strings of random characters, IGNORE them entirely.\n\
+         2. If the output is JSON with file paths/content, extract ONLY the human-readable text message - not file paths or binary content.\n\
+         3. For voice note requests, extract and return the EXACT, FULL message that should be spoken. DO NOT output a confirmation like 'Your voice note is ready!'. The text you output will be directly read aloud by TTS. Preserve all details.\n\
+         4. If the output is already natural language, return it as-is (refined if needed, but keeping details intact).\n\
+         5. Never mention JSON, base64, binary, or technical implementation details.\n\n\
+         Technical output to process:\n{}",
         original_prompt, ai_output
     );
 
-    let filtered_response = model::set_control(&prompt);
+    let filtered_response = model::set_control_with_persona(&prompt, persona);
     println!("{}", filtered_response);
 }
 
-fn content_creator_task(task: &str) {
-    let see = operations::see();
+fn creation_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
+    let see = operations::search_colab(task, base_url);
     let prompt = format!(
         "Return ONLY a valid JSON array, no markdown, no explanation, no decorators.\
-         Filter this file tree to only files needed for code editing: {}",
+         List any documents or files related to this topic: {}",
         serde_json::to_string(&see).unwrap()
     );
 
-    let ai_response = model::set_control(&prompt);
+    let ai_response = model::set_control_with_persona(&prompt, persona);
 
     let task_prompt = format!(
-        "{}. \
-         Check this project tree: {} \
-         If main.rs exists, name the function inside the file you created \
-         something other than fn main() to avoid conflicts so i can call it in my main.rs. \
-         Do not name any file similar to the ones already in the project tree.",
+        "{}. Check this project tree for context: {}",
         task, ai_response
     );
 
     let prompt2 = format!(
-        "Return ONLY a valid JSON array of objects, each with exactly two fields: 'path' (string) and 'content' (string). \
-         No markdown, no explanation, no code blocks, no extra fields. \
-         Each 'path' must be a valid path within this project tree. \
-         Task: {}",
+        "Return ONLY a valid JSON array of objects, each with 'path' and 'content'. \
+         No markdown, no explanation. Task: {}",
         task_prompt
     );
 
-    let ai_response2 = model::set_control(&prompt2);
-
+    let ai_response2 = model::set_control_with_persona(&prompt2, persona);
+    
     let base = Path::new(".");
     match hands::write_files_from_json(base, &ai_response2) {
-        Ok(()) => println!("All files written successfully!"),
-        Err(e) => eprintln!("Error writing file: {:?}", e),
+        Ok(()) => {
+            if is_headless {
+                eprintln!("✨ Action completed successfully!");
+            } else {
+                println!("✨ Action completed successfully!");
+            }
+        },
+        Err(e) => eprintln!("❌ Error processing request: {:?}", e),
     }
 
-    println!("AI Response:\n{}", &ai_response2);
+    if is_headless {
+        println!("{}", &ai_response2);
+    } else {
+        println!("AI Response:\n{}", &ai_response2);
+    }
 }
 
-fn auto_router(task: &str) {
-    let router_prompt = format!(
-        "Categorize the following user request into one of 4 categories. Return ONLY the number 1, 2, 3, or 4. Do not include any other text, markdown, or explanation.\n\
-        1: General Chat / Question (e.g. 'how does rust work?', 'explain async')\n\
-        2: Analyze Code (e.g. 'analyze my rust code', 'review operations.rs')\n\
-        3: Run Commands / Create Project (e.g. 'run tests', 'setup a rust server', 'build the app', 'start a node server')\n\
-        4: Create/Append a single File (e.g. 'create a script to print hello world')\n\
-        Request: {}", 
-        task
-    );
+fn auto_router(task: &str, persona: &str, is_headless: bool, base_url: &str) {
+    let router_prompt = format!( r#"
+        Examine the user request and categorize it into exactly one of these 5 categories.
+        Return ONLY a JSON object with "thought" (your reasoning) and "category" (1-5).
 
-    let res = model::set_control(&router_prompt);
-    let choice = res.trim();
+        CATEGORIES:
+        1: General Chat / Quick Question
+           - Use for: Greetings, "Who are you?", simple math, or broad non-technical questions.
+           - Example: "Hello", "What time is it?", "Tell me a joke".
+        2: Research / Analysis / Synthesis
+           - Use for: Explaining concepts, summarizing projects/files, finding information, or analyzing data/logs.
+           - Example: "What does this project do?", "Summarize these logs", "Explain how the networking works".
+        3: System Tasks / Command Execution / Local Media
+           - Use for: Running commands, managing the filesystem, checking system status, or technical automation.
+           - IMPORTANT: Use this for playing LOCAL files (Movies, MP4, MKV, local MP3) and opening documents (PDF, DOCX, TXT).
+           - Example: "List files in Desktop", "Play movie.mp4", "Open report.pdf", "Run the local server".
+        4: Content Creation / Modification
+           - Use for: Writing documents, editing files, generating code, creating scripts, or fixing specific content.
+           - Example: "Write a report on today's logs", "Add a new feature", "Edit the configuration file".
+        5: Spotify API / Music Streaming
+           - Use for: ONLY controlling music playback via Spotify API, searching Spotify playlists, or managing your Spotify library.
+           - DO NOT use for local files or 'tracking' non-music items.
+           - Example: "Show my playlists on Spotify", "Search for jazz music", "Play some Chill vibes".
+
+        User Request: "{}"
+    "#, task);
+
+    let res = model::set_control_with_persona(&router_prompt, persona);
     
-    if choice.contains("2") {
-        println!("🔍 Auto-routed to: Code Analyzer");
-        code_analyzer_task(task);
-    } else if choice.contains("3") {
-        println!("🛠️ Auto-routed to: Command Executor");
-        cmd_executor::execute_task(task);
-    } else if choice.contains("4") {
-        println!("✍️ Auto-routed to: Content Creator");
-        content_creator_task(task);
+    // Attempt to extract the choice from JSON or fallback to contains
+    let choice_data: serde_json::Value = match serde_json::from_str(res.trim().trim_matches('`').trim_start_matches("json").trim()) {
+        Ok(v) => v,
+        Err(_) => {
+            // Fallback for less smart models that fail the JSON rule
+            let c = if res.contains('2') { 2 }
+                    else if res.contains('3') { 3 }
+                    else if res.contains('4') { 4 }
+                    else if res.contains('5') { 5 }
+                    else { 1 };
+            serde_json::json!({"category": c, "thought": "Fallback detection"})
+        }
+    };
+
+    let choice = choice_data["category"].as_u64().unwrap_or(1);
+    
+    if choice == 2 {
+        if is_headless { eprintln!("🔍 Enigma Analysis:"); } else { println!("🔍 Enigma Analysis:"); }
+        analysis_task(task, persona, is_headless, base_url);
+    } else if choice == 3 {
+        if is_headless { eprintln!("🛠️ Enigma Action:"); } else { println!("🛠️ Enigma Action:"); }
+        let search_results = operations::search_colab(task, base_url);
+        let context = serde_json::to_string(&search_results).unwrap_or_default();
+        cmd_executor::execute_task(task, &context);
+    } else if choice == 4 {
+        if is_headless { eprintln!("✍️ Enigma Creation:"); } else { println!("✍️ Enigma Creation:"); }
+        creation_task(task, persona, is_headless, base_url);
+    } else if choice == 5 {
+        if is_headless { eprintln!("🎵 Enigma Spotify:"); } else { println!("🎵 Enigma Spotify:"); }
+        if let Some(saved) = sport::load_tokens() {
+            let new_token = sport::refresh_access_token(&saved.refresh_token);
+            let refresh = new_token.refresh_token.unwrap_or(saved.refresh_token);
+            sport::save_tokens(&new_token.access_token, &refresh);
+            sport::process_ai_command(&new_token.access_token, task);
+        } else {
+            println!("❌ Spotify is not authorized. Please run the assistant and select option 6 first.");
+        }
     } else {
-        println!("💬 Auto-routed to: General Chat");
-        println!("{}", model::set_control(&format!("Please help with the following request: {}", task)));
+        if is_headless {
+            eprintln!("💬 Enigma Chat:");
+            let search_results = operations::search_colab(task, base_url);
+            let context = serde_json::to_string(&search_results).unwrap_or_default();
+            let prompt = format!(
+                "Assist with this request: '{}'. Use this context if relevant: {}",
+                task, context
+            );
+            println!("{}", model::set_control_with_persona(&prompt, persona));
+        } else {
+            println!("💬 Enigma Chat:");
+            let search_results = operations::search_colab(task, base_url);
+            let context = serde_json::to_string(&search_results).unwrap_or_default();
+            let prompt = format!(
+                "Assist with this request: '{}'. Use this context if relevant: {}",
+                task, context
+            );
+            println!("{}", model::set_control_with_persona(&prompt, persona));
+        }
     }
 }
 
 // Preserve interactive versions for local usage
 fn code_analyzer() {
-    code_analyzer_task("Analyze these files and suggest general improvements.");
+    analysis_task("Analyze these files and suggest general improvements.", "Quick", false, "");
 }
 
 fn content_creator() {
@@ -125,54 +203,116 @@ fn content_creator() {
     let task = task.trim();
     
     if !task.is_empty() {
-        content_creator_task(task);
+        creation_task(task, "Quick", false, "");
     }
 }
 
 fn main() {
+    // Initialize rustls crypto provider for Spotify integration (v0.23)
+    let _ = rustls::crypto::ring::default_provider().install_default();
+
     let args: Vec<String> = env::args().collect();
+    let mut persona = "Quick".to_string();
+    let mut target_url = "".to_string();
+
+    let mut task: Option<String> = None;
+    let mut filter: Option<(String, String)> = None;
+
+    // Robust CLI parsing
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--persona" if i + 1 < args.len() => {
+                persona = args[i+1].clone();
+                i += 2;
+            }
+            "--prompt" if i + 1 < args.len() => {
+                task = Some(args[i+1].clone());
+                i += 2;
+            }
+            "--filter" if i + 2 < args.len() => {
+                filter = Some((args[i+1].clone(), args[i+2].clone()));
+                i += 3;
+            }
+            "--url" if i + 1 < args.len() => {
+                target_url = args[i+1].clone();
+                i += 2;
+            }
+            _ => {
+                i += 1;
+            }
+        }
+    }
+
+
     
-    // Headless execution for Go-bot integration
-    if args.len() > 2 && args[1] == "--prompt" {
-        let task = &args[2];
-        auto_router(task);
+    // Headless execution for integration
+    if let Some(t) = task {
+        auto_router(&t, &persona, true, &target_url);
         return;
     }
 
-    if args.len() > 3 && args[1] == "--filter" {
-        let original_prompt = &args[2];
-        let ai_output = &args[3];
-        filter_task(original_prompt, ai_output);
+    if let Some((orig, out)) = filter {
+        filter_task(&orig, &out, &persona, true);
         return;
     }
 
     // Interactive Menu Mode
     loop {
-        println!("\n╔══════════════════════════════╗");
-        println!("║      Code Analyzer AI        ║");
-        println!("╠══════════════════════════════╣");
-        println!("║  1. 💬 AI Chat (free prompt) ║");
-        println!("║  2. 🔍 Analyze project files ║");
-        println!("║  3. 🛠️  Build / run commands  ║");
-        println!("║  4. ✍️  Create new files      ║");
-        println!("║  5. 🚪 Exit                  ║");
-        println!("╚══════════════════════════════╝");
-        print!("\n> ");
+        println!("\n╔══════════════════════════════════════════╗");
+        println!("║       🌌 Enigma AI Assistant 🌌         ║");
+        println!("╠══════════════════════════════════════════╣");
+        println!("║ [Mode: {:<32}] ║", format!("{} Assistant", persona));
+        println!("╠══════════════════════════════════════════╣");
+        println!("║  1. 💬 Quick AI Chat                     ║");
+        println!("║  2. 🔍 Analyze Project / Knowledge       ║");
+        println!("║  3. 🛠️  Execute Tasks                    ║");
+        println!("║  4. ✍️  Generate Content / Files          ║");
+        println!("║  5. 🎭 Switch to {} Persona      ║", if persona == "Quick" { "Helpful  " } else { "Quick    " });
+        println!("║  6. 🎵 Spotify Integration               ║");
+        println!("║  7. 🚪 Exit                              ║");
+        println!("╚══════════════════════════════════════════╝");
+        print!("\nEnigma Assistant > ");
         std::io::stdout().flush().unwrap();
-
         let mut choice = String::new();
         std::io::stdin().read_line(&mut choice).unwrap();
         
         match choice.trim() {
-            "1" => model::control(),
-            "2" => code_analyzer(),
+            "1" => {
+               println!("Chatting in {} mode...", persona);
+               // Simple wrapper to call control with persona
+               println!("(Type 'quit' to exit chat)");
+               model::control(&persona);
+            }
+            "2" => analysis_task("Provide a supportive summary and help with the project.", &persona, false, &target_url),
             "3" => cmd_executor::execute_ai_commands(),
-            "4" => content_creator(),
-            "5" | "quit" | "exit" => {
-                println!("Goodbye!");
+            "4" => {
+                print!("What should we create today? ");
+                std::io::stdout().flush().unwrap();
+                let mut task = String::new();
+                std::io::stdin().read_line(&mut task).unwrap();
+                let task = task.trim();
+                if !task.is_empty() {
+                    creation_task(task, &persona, false, &target_url);
+                }
+            },
+            "5" => {
+                if persona == "Quick" {
+                    persona = "Helpful".to_string();
+                } else {
+                    persona = "Quick".to_string();
+                }
+                println!("🎭 Switched persona to {}!", persona);
+            }
+            "6" => {
+                println!("🎵 Opening Spotify Integration...");
+                sport::control();
+            }
+            "7" | "quit" | "exit" => {
+                println!("See you later!");
                 break;
             },
-            _ => println!("Invalid choice. Please pick 1-5."),
+            _ => println!("I didn't quite catch that. Pick 1-7!"),
         }
     }
 }

@@ -27,8 +27,8 @@ import (
 
 const (
 	maxMessageLength = 4096
-	execTimeout      = 60 * time.Second
-	ttsTimeout       = 180 * time.Second
+	execTimeout      = 300 * time.Second
+	ttsTimeout       = 300 * time.Second
 	maxWorkers       = 5
 	maxInputLength   = 2000
 )
@@ -38,8 +38,8 @@ const analyzerExe = `C:\Users\USER\Rust\Code_analyzer\target\debug\Code_analyzer
 const analyzerDir = `C:\Users\USER\Rust\Code_analyzer`
 
 // ─── PASTE YOUR NGROK URL HERE EVERY TIME YOU START COLAB ───────────────────
-// Example: "https://abcd-12-34-56-78.ngrok-free.app/tts"
-const colabTTSURL = "https://uncomforting-olin-unbewitchingly.ngrok-free.dev/tts"
+// Example: "https://abcd-12-34-56-78.ngrok-free.app"
+const colabBaseURL = "https://uncomforting-olin-unbewitchingly.ngrok-free.dev"
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -70,17 +70,23 @@ func runAnalyzer(msg string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), execTimeout)
 	defer cancel()
 
-	cmd := exec.CommandContext(ctx, analyzerExe, "--prompt", msg)
+	var stdoutBuf, stderrBuf bytes.Buffer
+	cmd := exec.CommandContext(ctx, analyzerExe, "--prompt", msg, "--url", colabBaseURL)
 	cmd.Dir = analyzerDir
+	cmd.Stdout = &stdoutBuf
+	cmd.Stderr = &stderrBuf
 
-	out, err := cmd.CombinedOutput()
-	outputStr := string(out)
+	err := cmd.Run()
+	outputStr := strings.TrimSpace(stdoutBuf.String())
+	stderrStr := strings.TrimSpace(stderrBuf.String())
+
+	logToInternalAudit(outputStr, stderrStr)
 
 	if ctx.Err() == context.DeadlineExceeded {
 		return "", fmt.Errorf("analyzer timed out after %v", execTimeout)
 	}
 	if err != nil {
-		return "", fmt.Errorf("analyzer error: %v\nOutput:\n%s", err, outputStr)
+		return "", fmt.Errorf("analyzer error: %v\nStderr:\n%s", err, stderrStr)
 	}
 
 	return outputStr, nil
@@ -90,17 +96,23 @@ func runFilter(originalPrompt, aiOutput string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), execTimeout)
 	defer cancel()
 
-	cmd := exec.CommandContext(ctx, analyzerExe, "--filter", originalPrompt, aiOutput)
+	var stdoutBuf, stderrBuf bytes.Buffer
+	cmd := exec.CommandContext(ctx, analyzerExe, "--filter", originalPrompt, aiOutput, "--url", colabBaseURL)
 	cmd.Dir = analyzerDir
+	cmd.Stdout = &stdoutBuf
+	cmd.Stderr = &stderrBuf
 
-	out, err := cmd.CombinedOutput()
-	outputStr := strings.TrimSpace(string(out))
+	err := cmd.Run()
+	outputStr := strings.TrimSpace(stdoutBuf.String())
+	stderrStr := strings.TrimSpace(stderrBuf.String())
+
+	logToInternalAudit(outputStr, stderrStr)
 
 	if ctx.Err() == context.DeadlineExceeded {
 		return "", fmt.Errorf("filter timed out after %v", execTimeout)
 	}
 	if err != nil {
-		return "", fmt.Errorf("filter error: %v\nOutput:\n%s", err, outputStr)
+		return "", fmt.Errorf("filter error: %v\nStderr:\n%s", err, stderrStr)
 	}
 
 	return outputStr, nil
@@ -114,10 +126,13 @@ func callColabTTS(ctx context.Context, text string) (string, error) {
 		return "", fmt.Errorf("TTS payload marshal failed: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", colabTTSURL, bytes.NewReader(payload))
+	url := fmt.Sprintf("%s/tts", strings.TrimSuffix(colabBaseURL, "/"))
+	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(payload))
 	if err != nil {
 		return "", fmt.Errorf("TTS request build failed: %w", err)
 	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("ngrok-skip-browser-warning", "any")
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{Timeout: ttsTimeout}
@@ -158,6 +173,21 @@ func logToAudit(text string) {
 	entry := fmt.Sprintf("[%s] Sent to WhatsApp:\n%s\n\n", timestamp, text)
 	if _, err := f.WriteString(entry); err != nil {
 		fmt.Println("Error writing to audit.txt:", err)
+	}
+}
+
+func logToInternalAudit(stdout, stderr string) {
+	f, err := os.OpenFile("audit_internal.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Error opening audit_internal.txt:", err)
+		return
+	}
+	defer f.Close()
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+	entry := fmt.Sprintf("[%s] INTERNAL LOG:\nSTDOUT:\n%s\nSTDERR:\n%s\n%s\n", 
+		timestamp, stdout, stderr, strings.Repeat("-", 40))
+	if _, err := f.WriteString(entry); err != nil {
+		fmt.Println("Error writing to audit_internal.txt:", err)
 	}
 }
 
@@ -279,7 +309,7 @@ func processJob(job Job) {
 		if err != nil {
 			sendText(ctx, client, evt, fmt.Sprintf("⚠️ Filter failed, sending full response: %v", err))
 		} else {
-			output = "📝 Filtered AI Response:\n\n" + filteredOutput
+			output = "🌌 Enigma Filtered Response:\n\n" + filteredOutput
 		}
 
 		sendText(ctx, client, evt, "🎙️ Generating voice note...")

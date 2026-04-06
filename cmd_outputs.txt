@@ -349,3 +349,944 @@ ModuleNotFoundError: No module named 'pyttsx3'
 
 Exit code: exit code: 1
 ----------------------------------------
+Command: Get-Content -Raw poem.txt | python Go-bot\tts.py poem_voicenote.mp3
+STDERR:
+'Get-Content' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 255
+----------------------------------------
+Command: type poem.txt | python Go-bot\tts.py poem_voice_note.mp3
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\USER\Rust\Code_analyzer\Go-bot\tts.py", line 7, in <module>
+    os.environ["GROQ_API_KEY"]
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python310\lib\os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'GROQ_API_KEY'
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item '.\Go-bot\enigma_bot.exe' -ArgumentList 'rick and Morty season 5 episode 10'"
+STDERR:
+Invoke-Item : A parameter cannot be found that matches 
+parameter name 'ArgumentList'.
+At line:1 char:39
++ Invoke-Item '.\Go-bot\enigma_bot.exe' -ArgumentList 
+'rick and Morty s ...
++                                       ~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Invoke 
+   -Item], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Micro 
+   soft.PowerShell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item '.\Go-bot\enigma_bot.exe'"
+STDERR:
+Invoke-Item : The specified executable is not a valid 
+application for this OS platform.
+At line:1 char:1
++ Invoke-Item '.\Go-bot\enigma_bot.exe'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-It 
+   em], Win32Exception
+    + FullyQualifiedErrorId : System.ComponentModel.Win32E 
+   xception,Microsoft.PowerShell.Commands.InvokeItemComma  
+  nd
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item '.\Go-bot\enigma_bot.exe' -ArgumentList 'rick and Morty season 5 episode 10'"
+STDERR:
+Invoke-Item : A parameter cannot be found that matches 
+parameter name 'ArgumentList'.
+At line:1 char:39
++ Invoke-Item '.\Go-bot\enigma_bot.exe' -ArgumentList 
+'rick and Morty s ...
++                                       ~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Invoke 
+   -Item], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Micro 
+   soft.PowerShell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\user\Go-bot\hello_note.wav'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\user\Go-bot\hello_note.wav' because it does not 
+exist.
+At line:1 char:1
++ Invoke-Item 'C:\Users\user\Go-bot\hello_note.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\us 
+   er\Go-bot\hello_note.wav:String) [Invoke-Item], ItemNo  
+  tFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\user\hello_note.wav'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\user\hello_note.wav' because it does not exist.
+At line:1 char:1
++ Invoke-Item 'C:\Users\user\hello_note.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\us 
+   er\hello_note.wav:String) [Invoke-Item], ItemNotFoundE  
+  xception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\user\poem_voice_note.wav'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\user\poem_voice_note.wav' because it does not 
+exist.
+At line:1 char:1
++ Invoke-Item 'C:\Users\user\poem_voice_note.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\us 
+   er\poem_voice_note.wav:String) [Invoke-Item], ItemNotF  
+  oundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\user\secured_api_keys.wav'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\user\secured_api_keys.wav' because it does not 
+exist.
+At line:1 char:1
++ Invoke-Item 'C:\Users\user\secured_api_keys.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\us 
+   er\secured_api_keys.wav:String) [Invoke-Item], ItemNot  
+  FoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\user\Go-bot\hello_note.wav'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\user\Go-bot\hello_note.wav' because it does not 
+exist.
+At line:1 char:1
++ Invoke-Item 'C:\Users\user\Go-bot\hello_note.wav'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\us 
+   er\Go-bot\hello_note.wav:String) [Invoke-Item], ItemNo  
+  tFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item '.\Go-bot\hello_note.wav'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'Go-bot\enigma_bot.exe'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'Rick and Morty Season 5 Episode 10.mp4'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\USER\Rust\Code_analyzer\Rick and Morty Season 5 
+Episode 10.mp4' because it does not exist.
+At line:1 char:1
++ Invoke-Item 'Rick and Morty Season 5 Episode 10.mp4'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\US 
+   ER\R... Episode 10.mp4:String) [Invoke-Item], ItemNotF  
+  oundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'avengers'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\USER\Rust\Code_analyzer\avengers' because it 
+does not exist.
+At line:1 char:1
++ Invoke-Item 'avengers'
++ ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\US 
+   ER\R...alyzer\avengers:String) [Invoke-Item], ItemNotF  
+  oundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Invoke-Item 'Rick and Morty S05E10.mp4'"
+STDERR:
+Invoke-Item : Cannot find path 
+'C:\Users\USER\Rust\Code_analyzer\Rick and Morty 
+S05E10.mp4' because it does not exist.
+At line:1 char:1
++ Invoke-Item 'Rick and Morty S05E10.mp4'
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\US 
+   ER\R...orty S05E10.mp4:String) [Invoke-Item], ItemNotF  
+  oundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.Power 
+   Shell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Write-Host 'File \"avengers movie\" not found.'"
+STDOUT:
+File "avengers movie" not found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: echo File not found: rick and Morty season 5 episode 10
+STDOUT:
+File not found: rick and Morty season 5 episode 10
+
+Exit code: exit code: 0
+----------------------------------------
+Command: echo File not found: avengers movie
+STDOUT:
+File not found: avengers movie
+
+Exit code: exit code: 0
+----------------------------------------
+Command: File not found: rick and Morty season 5 episode 10
+STDERR:
+'File' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -c "Start-Process 'C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 5\Rick and Morty-S5E10-480P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: taskkill /IM vlc.exe /F
+STDOUT:
+SUCCESS: The process "vlc.exe" with PID 10020 has been terminated.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\\Users\\USER\\Videos\\New folder\\Movie\\Avengers_ Age of Ultron-360P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: tasklist
+STDOUT:
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+System Idle Process              0 Services                   0          8 K
+System                           4 Services                   0        148 K
+Secure System                   76 Services                   0     23,576 K
+Registry                       116 Services                   0     49,476 K
+smss.exe                       576 Services                   0        980 K
+csrss.exe                      780 Services                   0      4,812 K
+wininit.exe                    876 Services                   0      5,424 K
+csrss.exe                      896 Console                    1      5,904 K
+services.exe                   948 Services                   0      8,808 K
+LsaIso.exe                     968 Services                   0      3,572 K
+lsass.exe                      984 Services                   0     20,432 K
+svchost.exe                    712 Services                   0     31,468 K
+fontdrvhost.exe                676 Services                   0      3,164 K
+winlogon.exe                  1092 Console                    1      9,940 K
+fontdrvhost.exe               1136 Console                    1      8,868 K
+svchost.exe                   1192 Services                   0     16,096 K
+svchost.exe                   1244 Services                   0      7,736 K
+svchost.exe                   1332 Services                   0      5,004 K
+svchost.exe                   1348 Services                   0      7,636 K
+svchost.exe                   1476 Services                   0      9,536 K
+dwm.exe                       1484 Console                    1    102,748 K
+IntelCpHDCPSvc.exe            1608 Services                   0      6,724 K
+svchost.exe                   1628 Services                   0      8,516 K
+svchost.exe                   1636 Services                   0     14,412 K
+svchost.exe                   1672 Services                   0      5,448 K
+svchost.exe                   1756 Services                   0      9,512 K
+svchost.exe                   1832 Services                   0      5,780 K
+svchost.exe                   1840 Services                   0     10,316 K
+svchost.exe                   1848 Services                   0      9,040 K
+svchost.exe                   1856 Services                   0      6,984 K
+svchost.exe                   1864 Services                   0     10,556 K
+svchost.exe                   1872 Services                   0      6,348 K
+svchost.exe                   2136 Services                   0     15,828 K
+svchost.exe                   2156 Services                   0     14,332 K
+IntelCpHeciSvc.exe            2164 Services                   0      6,624 K
+svchost.exe                   2180 Services                   0     11,604 K
+NVDisplay.Container.exe       2324 Services                   0     14,284 K
+svchost.exe                   2392 Services                   0      5,928 K
+svchost.exe                   2444 Services                   0     15,116 K
+svchost.exe                   2552 Services                   0      7,100 K
+svchost.exe                   2600 Services                   0     55,780 K
+svchost.exe                   2620 Services                   0      5,576 K
+Memory Compression            2728 Services                   0    209,444 K
+svchost.exe                   2756 Services                   0      7,704 K
+svchost.exe                   2788 Services                   0      8,544 K
+igfxCUIService.exe            2808 Services                   0      8,408 K
+svchost.exe                   2848 Services                   0      8,232 K
+svchost.exe                   2864 Services                   0      8,108 K
+svchost.exe                   3012 Services                   0      8,744 K
+NVDisplay.Container.exe       3100 Console                    1     23,548 K
+svchost.exe                   3144 Services                   0     17,512 K
+svchost.exe                   3536 Services                   0     13,464 K
+svchost.exe                   3564 Services                   0      6,708 K
+svchost.exe                   3712 Services                   0      7,796 K
+svchost.exe                   3816 Services                   0     18,060 K
+svchost.exe                   3860 Services                   0      7,076 K
+svchost.exe                   3904 Services                   0      9,888 K
+svchost.exe                   4056 Services                   0      9,112 K
+svchost.exe                   4064 Services                   0      9,648 K
+svchost.exe                   3192 Services                   0      6,556 K
+svchost.exe                   3468 Services                   0      7,760 K
+svchost.exe                   3172 Services                   0     18,072 K
+svchost.exe                   4180 Services                   0     11,556 K
+svchost.exe                   4248 Services                   0      5,984 K
+spoolsv.exe                   4312 Services                   0     11,976 K
+svchost.exe                   4364 Services                   0      7,120 K
+AdminService.exe              4416 Services                   0      6,676 K
+svchost.exe                   4440 Services                   0     13,240 K
+svchost.exe                   4448 Services                   0     27,696 K
+OfficeClickToRun.exe          4456 Services                   0     41,248 K
+svchost.exe                   4468 Services                   0     32,732 K
+OneApp.IGCC.WinService.ex     4544 Services                   0     26,448 K
+TPMProvisioningService.ex     4564 Services                   0      9,440 K
+ibtrksrv.exe                  4592 Services                   0      6,720 K
+jhi_service.exe               4612 Services                   0      5,880 K
+MpDefenderCoreService.exe     4656 Services                   0     19,400 K
+NvTelemetryContainer.exe      4668 Services                   0     12,888 K
+LMS.exe                       4684 Services                   0      9,364 K
+svchost.exe                   4708 Services                   0      8,604 K
+pg_ctl.exe                    4716 Services                   0      5,624 K
+SynTPEnhService.exe           4736 Services                   0      7,700 K
+svchost.exe                   4744 Services                   0      5,116 K
+svchost.exe                   4792 Services                   0     16,032 K
+WMIRegistrationService.ex     4804 Services                   0     12,068 K
+svchost.exe                   4812 Services                   0     19,280 K
+wslservice.exe                4824 Services                   0     14,732 K
+MsMpEng.exe                   4876 Services                   0    242,752 K
+svchost.exe                   5048 Services                   0      7,608 K
+svchost.exe                   5124 Services                   0      8,544 K
+svchost.exe                   5456 Services                   0     15,848 K
+sihost.exe                    5924 Console                    1     34,980 K
+svchost.exe                   5952 Console                    1     16,624 K
+svchost.exe                   5992 Console                    1      5,532 K
+PresentationFontCache.exe     6032 Services                   0     13,572 K
+svchost.exe                   6040 Console                    1     24,108 K
+taskhostw.exe                 6112 Console                    1     18,128 K
+PowerMgr.exe                  5064 Console                    1      4,588 K
+HDSentinel.exe                5640 Console                    1     16,020 K
+SynTPEnh.exe                  6312 Console                    1     20,916 K
+postgres.exe                  6480 Services                   0     15,304 K
+conhost.exe                   6488 Services                   0      7,468 K
+svchost.exe                   7020 Services                   0      9,824 K
+svchost.exe                   7236 Services                   0     17,012 K
+postgres.exe                  7412 Services                   0      8,780 K
+SynTPHelper.exe               7588 Console                    1      4,576 K
+postgres.exe                  7732 Services                   0     10,668 K
+postgres.exe                  7740 Services                   0      8,920 K
+postgres.exe                  7748 Services                   0      8,904 K
+postgres.exe                  7756 Services                   0     11,456 K
+postgres.exe                  7764 Services                   0      9,992 K
+svchost.exe                   8036 Services                   0     16,484 K
+postgres.exe                  8076 Services                   0     10,048 K
+postgres.exe                  8084 Services                   0      9,736 K
+postgres.exe                  8092 Services                   0      9,504 K
+igfxEM.exe                     964 Console                    1     11,848 K
+ctfmon.exe                    1692 Console                    1     21,112 K
+svchost.exe                   7608 Console                    1     18,240 K
+RuntimeBroker.exe             7540 Console                    1     35,952 K
+RuntimeBroker.exe             1880 Console                    1     49,236 K
+AggregatorHost.exe            1896 Services                   0      7,852 K
+svchost.exe                   6332 Console                    1     12,216 K
+svchost.exe                   1992 Console                    1     12,004 K
+svchost.exe                    980 Services                   0     20,412 K
+dllhost.exe                   1276 Console                    1     17,316 K
+NisSrv.exe                    2500 Services                   0     12,212 K
+SecurityHealthSystray.exe     5512 Console                    1     10,412 K
+SecurityHealthService.exe     2428 Services                   0     17,816 K
+devmonsrv.exe                 2936 Services                   0     11,736 K
+rundll32.exe                  2952 Console                    1     19,012 K
+obexsrv.exe                   3492 Services                   0     10,188 K
+explorer.exe                  3664 Console                    1    366,596 K
+StartMenuExperienceHost.e     6592 Console                    1     51,876 K
+Widgets.exe                   7864 Console                    1     28,368 K
+TextInputHost.exe             3828 Console                    1     32,748 K
+SearchIndexer.exe             5556 Services                   0     37,084 K
+svchost.exe                   5316 Services                   0     18,692 K
+svchost.exe                   3524 Services                   0      7,052 K
+svchost.exe                   2672 Services                   0     19,276 K
+chrome.exe                    7192 Console                    1    246,472 K
+chrome.exe                    1204 Console                    1      8,184 K
+chrome.exe                    5476 Console                    1    163,952 K
+chrome.exe                    1200 Console                    1     55,256 K
+chrome.exe                    5060 Console                    1     16,452 K
+svchost.exe                   8148 Services                   0     12,852 K
+chrome.exe                    2228 Console                    1     19,052 K
+chrome.exe                    2684 Console                    1     24,436 K
+svchost.exe                   6256 Services                   0      9,880 K
+ShellExperienceHost.exe       5208 Console                    1     45,424 K
+chrome.exe                    5536 Console                    1     62,932 K
+chrome.exe                    4120 Console                    1    291,980 K
+RuntimeBroker.exe             2536 Console                    1     18,384 K
+igfxext.exe                   7180 Console                    1      9,104 K
+MoUsoCoreWorker.exe           8168 Services                   0     20,276 K
+svchost.exe                   4208 Services                   0     16,548 K
+svchost.exe                   1144 Console                    1     17,896 K
+svchost.exe                   9252 Services                   0     12,452 K
+dllhost.exe                   1316 Console                    1     13,220 K
+svchost.exe                  10256 Services                   0     10,168 K
+svchost.exe                  10348 Services                   0     11,556 K
+ApplicationFrameHost.exe       132 Console                    1     30,676 K
+WindowsTerminal.exe          10592 Console                    1     64,540 K
+Antigravity.exe              10464 Console                    1    154,792 K
+Antigravity.exe               8388 Console                    1     14,684 K
+Antigravity.exe               4484 Console                    1    121,984 K
+Antigravity.exe               4164 Console                    1     28,392 K
+Antigravity.exe                752 Console                    1    605,016 K
+Antigravity.exe              11088 Console                    1     38,944 K
+Antigravity.exe               9928 Console                    1     23,052 K
+Antigravity.exe               8768 Console                    1     16,148 K
+Antigravity.exe               8456 Console                    1     37,464 K
+Antigravity.exe               9280 Console                    1     24,584 K
+svchost.exe                   9760 Services                   0     15,512 K
+WhatsApp.Root.exe            10368 Console                    1     36,404 K
+RuntimeBroker.exe             7492 Console                    1     10,460 K
+dllhost.exe                   9320 Console                    1     26,348 K
+WidgetService.exe            11192 Console                    1     15,056 K
+msedgewebview2.exe            7940 Console                    1     41,424 K
+msedgewebview2.exe            5972 Console                    1     10,428 K
+msedgewebview2.exe            8116 Console                    1     34,264 K
+msedgewebview2.exe            6056 Console                    1     37,536 K
+msedgewebview2.exe            9324 Console                    1     11,652 K
+msedgewebview2.exe            9100 Console                    1     42,920 K
+chrome.exe                   11400 Console                    1     38,052 K
+SystemSettingsBroker.exe     14184 Console                    1     25,644 K
+svchost.exe                  13776 Services                   0      6,960 K
+svchost.exe                   3744 Services                   0      7,452 K
+svchost.exe                   9652 Services                   0     12,860 K
+svchost.exe                  12452 Console                    1      8,960 K
+OpenConsole.exe               5968 Console                    1      8,524 K
+cmd.exe                      10352 Console                    1      5,080 K
+SearchHost.exe                2876 Console                    1     81,276 K
+taskhostw.exe                 7812 Console                    1     18,544 K
+Antigravity.exe               6632 Console                    1     46,592 K
+Antigravity.exe              10916 Console                    1    149,776 K
+chrome.exe                    5448 Console                    1     86,352 K
+chrome.exe                    5592 Console                    1     62,156 K
+language_server_windows_x     7088 Console                    1    299,180 K
+conhost.exe                   9192 Console                    1      6,500 K
+gopls.exe                     8720 Console                    1    125,940 K
+conhost.exe                  11512 Console                    1      6,400 K
+gopls.exe                    11752 Console                    1     17,636 K
+Antigravity.exe               7848 Console                    1     30,416 K
+SystemSettings.exe            5400 Console                    1      2,496 K
+OpenConsole.exe              13764 Console                    1      8,344 K
+cmd.exe                       8252 Console                    1      4,376 K
+Antigravity.exe              14840 Console                    1     43,232 K
+backgroundTaskHost.exe        2272 Console                    1      1,592 K
+dasHost.exe                  11648 Services                   0      7,636 K
+chrome.exe                    5148 Console                    1    383,244 K
+svchost.exe                  15036 Services                   0      5,536 K
+chrome.exe                   10232 Console                    1    408,444 K
+chrome.exe                    8716 Console                    1     81,664 K
+Notepad.exe                  10672 Console                    1     80,228 K
+backgroundTaskHost.exe        8784 Console                    1     13,440 K
+WmiPrvSE.exe                 14540 Services                   0     10,084 K
+msedge.exe                    4324 Console                    1    117,092 K
+msedge.exe                   12776 Console                    1     11,848 K
+msedge.exe                   14788 Console                    1     43,900 K
+msedge.exe                    8876 Console                    1     39,128 K
+msedge.exe                    7612 Console                    1     21,252 K
+go.exe                       13008 Console                    1     22,868 K
+main.exe                     14364 Console                    1     24,020 K
+audiodg.exe                   4232 Services                   0     14,376 K
+vlc.exe                      14628 Console                    1    167,736 K
+chrome.exe                   12028 Console                    1     47,008 K
+chrome.exe                   11108 Console                    1     63,696 K
+chrome.exe                   12648 Console                    1     27,904 K
+svchost.exe                   6932 Services                   0      7,592 K
+svchost.exe                  14012 Services                   0      8,824 K
+svchost.exe                  14856 Services                   0      7,868 K
+svchost.exe                   9948 Services                   0     17,552 K
+SearchProtocolHost.exe       15172 Services                   0     12,860 K
+Code_analyzer.exe             9344 Console                    1     14,600 K
+cmd.exe                      12272 Console                    1      4,148 K
+tasklist.exe                  8852 Console                    1      9,512 K
+WmiPrvSE.exe                  3920 Services                   0     10,088 K
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'shell:AppsFolder\Microsoft.WindowsCamera_8wekyb3d8bbwe!App'"
+STDERR:
+Invoke-Item : Cannot find drive. A drive with the name 
+'shell' does not exist.
+At line:1 char:1
++ Invoke-Item 
+'shell:AppsFolder\Microsoft.WindowsCamera_8wekyb3d8bbwe!A 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (shell:Strin 
+   g) [Invoke-Item], DriveNotFoundException
+    + FullyQualifiedErrorId : DriveNotFound,Microsoft.Powe 
+   rShell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:11 char:12
++     "-i", "$videoDevice:$audioDevice",
++            ~~~~~~~~~~~~~
+Variable reference is not valid. ':' was not followed by a 
+valid variable name character. Consider using ${} to 
+delimit the name.
+    + CategoryInfo          : ParserError: (:) [], ParentC 
+   ontainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidVariableReferenceWith 
+   Drive
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\4K Video Downloader+\All Machine Learning Concepts Explained in 22 Minutes.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File run_ubaps.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+TCP Connections:
+
+LocalAddress   LocalPort       State RemoteAddress   Remote
+                                                       Port
+------------   ---------       ----- -------------   ------
+::                 56953       Bound ::                   0
+::1                56953 Established ::1               5432
+::                 49673      Listen ::                   0
+::1                49669      Listen ::                   0
+::                 49668      Listen ::                   0
+::                 49667      Listen ::                   0
+::                 49666      Listen ::                   0
+::                 49665      Listen ::                   0
+::                 49664      Listen ::                   0
+::                  8080      Listen ::                   0
+::1                 5432 Established ::1              56953
+::                  5432      Listen ::                   0
+::                   445      Listen ::                   0
+::                   135      Listen ::                   0
+0.0.0.0            65530       Bound 0.0.0.0              0
+0.0.0.0            65529       Bound 0.0.0.0              0
+0.0.0.0            64771       Bound 0.0.0.0              0
+0.0.0.0            64130       Bound 0.0.0.0              0
+0.0.0.0            62669       Bound 0.0.0.0              0
+0.0.0.0            61343       Bound 0.0.0.0              0
+0.0.0.0            60758       Bound 0.0.0.0              0
+0.0.0.0            60741       Bound 0.0.0.0              0
+0.0.0.0            60004       Bound 0.0.0.0              0
+0.0.0.0            58447       Bound 0.0.0.0              0
+0.0.0.0            58445       Bound 0.0.0.0              0
+0.0.0.0            58442       Bound 0.0.0.0              0
+0.0.0.0            58439       Bound 0.0.0.0              0
+0.0.0.0            58433       Bound 0.0.0.0              0
+0.0.0.0            57999       Bound 0.0.0.0              0
+0.0.0.0            56607       Bound 0.0.0.0              0
+0.0.0.0            55490       Bound 0.0.0.0              0
+0.0.0.0            53677       Bound 0.0.0.0              0
+0.0.0.0            53668       Bound 0.0.0.0              0
+0.0.0.0            53667       Bound 0.0.0.0              0
+0.0.0.0            53666       Bound 0.0.0.0              0
+0.0.0.0            53665       Bound 0.0.0.0              0
+0.0.0.0            53661       Bound 0.0.0.0              0
+0.0.0.0            52830       Bound 0.0.0.0              0
+0.0.0.0            52042       Bound 0.0.0.0              0
+0.0.0.0            52041       Bound 0.0.0.0              0
+0.0.0.0            52040       Bound 0.0.0.0              0
+0.0.0.0            51605       Bound 0.0.0.0              0
+0.0.0.0            51604       Bound 0.0.0.0              0
+0.0.0.0            51603       Bound 0.0.0.0              0
+0.0.0.0            51602       Bound 0.0.0.0              0
+0.0.0.0            51600       Bound 0.0.0.0              0
+0.0.0.0            49918       Bound 0.0.0.0              0
+0.0.0.0            49756       Bound 0.0.0.0              0
+192.168.191.75     65530   CloseWait 13.107.253.254     443
+192.168.191.75     65529   CloseWait 150.171.110.53     443
+192.168.191.75     64771 Established 192.178.223.188   5228
+127.0.0.1          64047      Listen 0.0.0.0              0
+192.168.191.75     62669 Established 34.54.84.110       443
+192.168.191.75     62355    TimeWait 20.42.65.85        443
+192.168.191.75     62208    TimeWait 172.217.22.106     443
+192.168.191.75     62207    TimeWait 172.217.22.106     443
+192.168.191.75     62206    TimeWait 192.178.54.10      443
+192.168.191.75     62205    TimeWait 172.217.22.106     443
+192.168.191.75     61343 Established 18.97.36.73        443
+127.0.0.1          60758 Established 127.0.0.1        53654
+192.168.191.75     60741 Established 102.132.104.60     443
+192.168.191.75     60004 Established 34.144.254.29      443
+192.168.191.75     58439   CloseWait 23.196.227.236     443
+192.168.191.75     58433   CloseWait 23.196.227.236     443
+192.168.191.75     57999 Established 34.144.254.29      443
+127.0.0.1          56607 Established 127.0.0.1        53657
+127.0.0.1          53677 Established 127.0.0.1        53676
+127.0.0.1          53676      Listen 0.0.0.0              0
+127.0.0.1          53676 Established 127.0.0.1        53677
+127.0.0.1          53668 Established 127.0.0.1        53657
+127.0.0.1          53667 Established 127.0.0.1        53664
+127.0.0.1          53666 Established 127.0.0.1        53654
+127.0.0.1          53665 Established 127.0.0.1        53654
+127.0.0.1          53664      Listen 0.0.0.0              0
+127.0.0.1          53664 Established 127.0.0.1        53667
+127.0.0.1          53661 Established 127.0.0.1        53654
+127.0.0.1          53658      Listen 0.0.0.0              0
+127.0.0.1          53657      Listen 0.0.0.0              0
+127.0.0.1          53657 Established 127.0.0.1        56607
+127.0.0.1          53657 Established 127.0.0.1        53668
+127.0.0.1          53654 Established 127.0.0.1        52041
+127.0.0.1          53654 Established 127.0.0.1        53666
+127.0.0.1          53654 Established 127.0.0.1        52042
+127.0.0.1          53654 Established 127.0.0.1        53665
+127.0.0.1          53654      Listen 0.0.0.0              0
+127.0.0.1          53654 Established 127.0.0.1        53661
+127.0.0.1          53654 Established 127.0.0.1        60758
+127.0.0.1          53654 Established 127.0.0.1        52040
+127.0.0.1          53651      Listen 0.0.0.0              0
+127.0.0.1          52042 Established 127.0.0.1        53654
+127.0.0.1          52041 Established 127.0.0.1        53654
+127.0.0.1          52040 Established 127.0.0.1        53654
+192.168.191.75     51605 Established 216.239.32.223     443
+192.168.191.75     51604 Established 142.251.47.65      443
+192.168.191.75     51603 Established 142.251.47.74      443
+192.168.191.75     51602 Established 192.178.54.10      443
+192.168.191.75     51601    TimeWait 142.251.47.74      443
+192.168.191.75     51600 Established 142.251.47.74      443
+192.168.191.75     51599    TimeWait 142.251.47.74      443
+192.168.191.75     51598    TimeWait 172.64.149.20      443
+192.168.191.75     51597    TimeWait 192.178.54.170     443
+192.168.191.75     49918 Established 98.66.133.186      443
+0.0.0.0            49673      Listen 0.0.0.0              0
+0.0.0.0            49668      Listen 0.0.0.0              0
+0.0.0.0            49667      Listen 0.0.0.0              0
+0.0.0.0            49666      Listen 0.0.0.0              0
+0.0.0.0            49665      Listen 0.0.0.0              0
+0.0.0.0            49664      Listen 0.0.0.0              0
+0.0.0.0             5432      Listen 0.0.0.0              0
+0.0.0.0             5040      Listen 0.0.0.0              0
+192.168.191.75       139      Listen 0.0.0.0              0
+0.0.0.0              135      Listen 0.0.0.0              0
+
+
+
+UDP Listeners:
+
+LocalAddress                 LocalPort
+------------                 ---------
+::1                              58381
+fe80::455a:f396:1a13:c8b1%22     58380
+::                               54484
+::                                5355
+::                                5353
+fe80::455a:f396:1a13:c8b1%22      1900
+::1                               1900
+0.0.0.0                          60902
+127.0.0.1                        58383
+192.168.191.75                   58382
+0.0.0.0                          55415
+0.0.0.0                          50060
+127.0.0.1                        49664
+0.0.0.0                           5355
+0.0.0.0                           5353
+0.0.0.0                           5050
+192.168.191.75                    1900
+127.0.0.1                         1900
+192.168.191.75                     138
+192.168.191.75                     137
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Anime\My Hero Academia\My hero Academia'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Opening http://localhost:8080 in Chrome...
+Port 8080 should now be accessible in your browser.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Playlists saved to playlists.txt
+
+STDERR:
+Invoke-RestMethod : {
+  "error": {
+    "status": 400,
+    "message": "Only valid bearer authentication supported"
+  }
+}
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:2 char:13
++ $response = Invoke-RestMethod -Headers @{Authorization = "Bearer $tok ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) 
+    [Invoke-RestMethod], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands. 
+   InvokeRestMethodCommand
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\script.ps1 : Set SPOTIFY_CLIENT_ID and 
+SPOTIFY_REDIRECT_URI environment variables.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Fetching your Spotify playlists...
+
+STDERR:
+Get-SpotifyPlaylists : Error fetching Spotify 
+playlists: The remote server returned an error: 
+(401) Unauthorized.
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:42 
+char:14
++ $playlists = Get-SpotifyPlaylists
++              ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Wri 
+   te-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.C 
+   ommands.WriteErrorException,Get-SpotifyPlaylists
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File get_spotify_playlists.ps1
+STDERR:
+Spotify.Get-SpotifyPlaylist : The term 
+'Spotify.Get-SpotifyPlaylist' is not recognized as the 
+name of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try again.
+At C:\Users\USER\Rust\Code_analyzer\get_spotify_playlists.
+ps1:9 char:14
++ $playlists = Spotify.Get-SpotifyPlaylist
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Spotify.Ge 
+   t-SpotifyPlaylist:String) [], CommandNotFoundExceptio  
+  n
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File .\get_spotify_playlists.ps1
+STDERR:
+Spotify.Get-SpotifyPlaylist : The term 
+'Spotify.Get-SpotifyPlaylist' is not recognized as the 
+name of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try again.
+At C:\Users\USER\Rust\Code_analyzer\get_spotify_playlists.
+ps1:9 char:14
++ $playlists = Spotify.Get-SpotifyPlaylist
++              ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Spotify.Ge 
+   t-SpotifyPlaylist:String) [], CommandNotFoundExceptio  
+  n
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_clone_wars.ps1
+STDOUT:
+Episode not found at D:\Media\TV Shows\Clone Wars\Season 5\Clone Wars S5 E1.mkv. Please ensure the file exists or adjust the path.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Episode not found at path: C:\Users\USER\Rust\Code_analyzer\Rick and Morty S08E01.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'movie.mp4'"
+STDERR:
+Invoke-Item : Cannot find path 'C:\Users\USER\Rust\Code_analyzer\movie.mp4' because it does not exist.
+At line:1 char:1
++ Invoke-Item 'movie.mp4'
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\USER\R...lyzer\movie.mp4:String) [Invoke-Item], ItemNotFoundEx 
+   ception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\script.ps1 : movie.mp4 not found.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Episode not found.
+
+STDERR:
+Cannot convert argument "folder", with value: "Videos", 
+for "GetFolderPath" to type 
+"System.Environment+SpecialFolder": "Cannot convert value 
+"Videos" to type "System.Environment+SpecialFolder". 
+Error: "Unable to match the identifier name Videos to a 
+valid enumerator name. Specify one of the following 
+enumerator names and try again:
+Desktop, Programs, MyDocuments, Personal, Favorites, 
+Startup, Recent, SendTo, StartMenu, MyMusic, MyVideos, 
+DesktopDirectory, MyComputer, NetworkShortcuts, Fonts, 
+Templates, CommonStartMenu, CommonPrograms, 
+CommonStartup, CommonDesktopDirectory, ApplicationData, 
+PrinterShortcuts, LocalApplicationData, InternetCache, 
+Cookies, History, CommonApplicationData, Windows, System, 
+ProgramFiles, MyPictures, UserProfile, SystemX86, 
+ProgramFilesX86, CommonProgramFiles, 
+CommonProgramFilesX86, CommonTemplates, CommonDocuments, 
+CommonAdminTools, AdminTools, CommonMusic, 
+CommonPictures, CommonVideos, Resources, 
+LocalizedResources, CommonOemLinks, CDBurning""
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:1 char:1
++ $searchPath = [Environment]::GetFolderPath('Videos')
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], Metho 
+   dException
+    + FullyQualifiedErrorId : MethodArgumentConversionInv 
+   alidCastArgument
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Test-Path : Cannot bind argument to parameter 'Path' 
+because it is null.
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:5 char:15
++ if (Test-Path $episodePath) {
++               ~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Test-Path 
+   ], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidation 
+   ErrorNullNotAllowed,Microsoft.PowerShell.Commands.Tes  
+  tPathCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\script.ps1 : File not 
+found: C:\Movies\Rick and Morty\Season 8\Episode 1.mkv
+    + CategoryInfo          : NotSpecified: (:) [Write-Er 
+   ror], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Comman 
+   ds.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 5\Rick and Morty-S5E5-480P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : This command cannot be run due to the 
+error: The system cannot find the file specified.
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:1 char:1
++ Start-Process 'vlc' -ArgumentList 
+'--start-time=3300','"C:\Users\USER ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Star 
+   t-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationException,M 
+   icrosoft.PowerShell.Commands.StartProcessCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Rick and Morty S05E10 video file not found in current directory tree.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------

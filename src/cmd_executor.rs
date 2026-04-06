@@ -87,46 +87,42 @@ pub fn execute_ai_commands() {
             break;
         }
 
-        execute_task(&task);
+        execute_task(&task, "");
     }
 }
 
-pub fn execute_task(task: &str) {
-    // Scan project file tree for context
-    let file_tree = operations::see();
-    let file_tree_json = serde_json::to_string(&file_tree).unwrap_or_else(|_| "[]".to_string());
+pub fn execute_task(task: &str, context: &str) {
+    // Scan project file tree for local fallback
+    let local_tree = operations::see();
+    let local_tree_json = serde_json::to_string(&local_tree).unwrap_or_else(|_| "[]".to_string());
 
     let prompt = format!(
-        "You are a command generator and project creator for Windows CMD/PowerShell.\n\
-         Current project file tree: {file_tree}\n\n\
-         The user wants to: {task}\n\n\
-         Respond with ONLY a valid JSON object (no markdown, no backticks) in this EXACT format:\n\
+        "You are 'Enigma Command Expert', a broad and extremely capable Windows PowerUser and DevOps Administrator.\n\
+         Your goal is to fulfill the user's request using Windows CMD or PowerShell.\n\n\
+         RESOURCES AT YOUR DISPOSAL:\n\
+         - Semantic Search Context (potential paths from indexed file system): {context}\n\
+         - Local Project Tree (fallback): {local_tree}\n\n\
+         USER REQUEST: {task}\n\n\
+         You can generate file content, multi-step command sequences, and complex scripts. Be as broad as a real terminal.\n\
+         Respond with ONLY a valid JSON object (no markdown, no explainers) in this EXACT format:\n\
          {{\n\
-           \"workdir\": \"relative/path/to/run/commands/in\",\n\
+           \"workdir\": \".\",\n\
            \"files\": [\n\
-             {{ \"path\": \"relative/path/to/file\", \"content\": \"file content here\" }}\n\
+             {{ \"path\": \"script.ps1\", \"content\": \"...\" }}\n\
            ],\n\
            \"commands\": [\n\
-             \"command to run\"\n\
+             \"powershell -ExecutionPolicy Bypass -File script.ps1\"\n\
            ]\n\
          }}\n\n\
          CRITICAL RULES:\n\
-         1. \"workdir\" is the directory where ALL commands will be run. \
-            For a project in 'server/', set workdir to \"server\". \
-            For the current directory use \".\".\n\
-         2. NEVER include 'cd' as a command — use 'workdir' instead.\n\
-         3. If you are already creating project files in 'files', do NOT run \
-            'cargo new', 'npm init', 'mkdir' or any scaffolding command — the files are created for you.\n\
-         4. After writing files for a Rust project, only run: \"cargo build\" and/or \"cargo run\".\n\
-         5. After writing files for a Python project, only run: \"python main.py\" (or relevant file).\n\
-         6. After writing files for a Node project, only run: \"npm install\" then \"node index.js\".\n\
-         7. Always quote filenames/paths with spaces in commands.\n\
-         8. For opening media files or launching UI apps, NEVER use 'start'. Use PowerShell: powershell -c \"Invoke-Item 'filename.ext'\" or powershell -c \"Start-Process 'app.exe' -ArgumentList 'args'\"\n\
-         9. Keep file content complete and functional, never use placeholders.\n\
-         10. Use relative paths only in 'files'.\n\
-         11. Escape all double quotes inside 'content' strings as \\\".\n\
-         Return ONLY the JSON object, nothing else.",
-        file_tree = file_tree_json,
+         1. You have FULL POWER. You can install software, run git, manage services, and manipulate the file system.\n\
+         2. For finding/opening specific files (movies, documents, music), PRIORITIZE the 'Semantic Search Context' paths.\n\
+         3. NEVER use 'cd' as a command. Set the 'workdir' field instead.\n\
+         4. For media/UI apps, use: powershell -c \"Invoke-Item 'path'\"\n\
+         5. If the user's request is complex, write a PowerShell script in 'files' and execute it in 'commands'.\n\
+         6. Return ONLY the JSON object, nothing else.",
+        context = context,
+        local_tree = local_tree_json,
         task = task
     );
 
