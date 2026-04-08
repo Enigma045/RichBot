@@ -93,7 +93,7 @@ pub fn execute_ai_commands() {
 
 pub fn execute_task(task: &str, context: &str) {
     // Scan project file tree for local fallback
-    let local_tree = operations::see();
+    let local_tree = operations::unified_search(task, "");
     let local_tree_json = serde_json::to_string(&local_tree).unwrap_or_else(|_| "[]".to_string());
 
     let prompt = format!(

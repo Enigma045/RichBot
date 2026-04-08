@@ -3924,3 +3924,1160 @@ Your Playlists (19 total)
 [2026-04-06 15:39:56] Sent to WhatsApp:
 [{"path":"C:\\Users\\USER\\Desktop\\OpenSpotify.cmd","content":"@echo off\r\nstart \"\" \"chrome\" \"https://open.spotify.com\""}]
 
+[2026-04-06 15:42:02] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 15:45:38] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 15:46:50] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 15:47:19] Sent to WhatsApp:
+Liked Songs (140 total)
+  Spartan Angels - *Tommy Lee Sparta* | Album: Spartan Angels | 4:14
+  Spartan Soldier - *Tommy Lee Sparta* | Album: Spartan Soldier | 4:31
+  Can't Relate - *King Von* | Album: Welcome to O'Block | 2:40
+  Crazy Story - *King Von* | Album: Grandson, Vol. 1 | 2:26
+  Don't Want to Be Me - *King Von* | Album: Levon James | 4:40
+  Pressin (feat. King Von) - *Sada Baby* | Album: Skuba Sada 2 (Deluxe) | 2:50
+  High Fashion (feat. Mustard) - *Roddy Ricch* | Album: Please Excuse Me for Being Antisocial | 3:40
+  Wrong - *Luh Kel* | Album: Mixed Emotions | 2:10
+  The Box - *Roddy Ricch* | Album: Please Excuse Me for Being Antisocial | 3:16
+  Down Below - *Roddy Ricch* | Album: Feed Tha Streets II | 3:44
+  I Fall Apart - *Post Malone* | Album: Stoney (Deluxe) | 3:43
+  Sailor Song - *Gigi Perez* | Album: Sailor Song | 3:31
+  Crazy Story, Pt. 3 - *King Von* | Album: Grandson, Vol. 1 | 3:11
+  Took Her To The O - *King Von* | Album: Levon James | 3:16
+  Why He Told - *King Von* | Album: Welcome to O'Block | 3:08
+  BIG STEPPER - *Charisma Madness* | Album: BIG STEPPER | 3:02
+  Wayne's Story - *King Von* | Album: Welcome to O'Block | 2:18
+  Tumani - Doze Remix - *DJ KENSIDE* | Album: Tumani (Doze Remix) | 4:59
+  Death Bed - *twin* | Album: #THETAKEOVER | 1:59
+  Earth Song - *Wizard Chan* | Album: Earth Song | 3:03
+  Trauma - *NF* | Album: The Search | 4:07
+  Sweater Weather - *The Neighbourhood* | Album: I Love You. | 4:00
+  Take Me To Church - *Hozier* | Album: Hozier | 4:01
+  The Winner Takes It All - From "Mamma Mia!" - *Meryl Streep* | Album: Mamma Mia! The Movie Soundtrack | 4:57
+  Obito's Theme - *Lorenzo Ferrara* | Album: Obito's Theme | 2:26
+  Move on - *Finn Askew* | Album: Move on | 2:30
+  7 Years - *Lukas Graham* | Album: Lukas Graham | 3:57
+  Japanese Denim - *Daniel Caesar* | Album: Get You - Single | 4:30
+  Cinnamon Girl - *Lana Del Rey* | Album: Norman Fucking Rockwell! | 5:00
+  Unstoppable - *Sia* | Album: This Is Acting (Deluxe Version) | 3:37
+  I SEARCHED FOR LOVE - *ZIONWAVE* | Album: I SEARCHED FOR LOVE | 4:02
+  Soft Life Is Calling Ise (Spirit Cut) - *Xploitcomedy* | Album: Soft Life Is Calling Ise (Spirit Cut) | 2:49
+  Blessings - *Soul of Afrika* | Album: Afrika Rise | 1:54
+  Your Smile Still Haunts - *EverHits-moritabari* | Album: Still in You | 4:37
+  Three Seconds To Goodbye - *ZionRay* | Album: Three Seconds To Goodbye | 6:56
+  Without Me - *Red Village* | Album: Without Me | 5:21
+  Papaoutai - Afro Soul - *Chill77* | Album: Papaoutai (Afro Soul) | 4:39
+  To Love Someone - *Benson Boone* | Album: To Love Someone | 3:16
+  In The Stars - *Benson Boone* | Album: In The Stars | 3:36
+  Work of Art - *Benson Boone* | Album: Walk Me Home... | 2:49
+  To Build A Home - *The Cinematic Orchestra* | Album: Ma Fleur | 6:11
+  All I Want - *Kodaline* | Album: In A Perfect World (Expanded Edition) | 5:05
+  Leaked - *Lil Tjay* | Album: True 2 Myself | 3:40
+  iRobot - *Jon Bellion* | Album: The Human Condition | 3:28
+  Love Is Gone - Acoustic - *SLANDER* | Album: Love Is Gone (Acoustic) | 2:56
+  Love Someone - *Lukas Graham* | Album: Love Someone | 3:25
+  The Amazing Mr. Fk Up (feat. Victoria Monét) - *T.I.* | Album: DIME TRAP | 3:48
+  Sorry, Blame It On Me - *Akon* | Album: Konvicted (Complete Edition) | 4:55
+  I Will Survive - *Gloria Gaynor* | Album: Love Tracks | 4:56
+  Like a Prayer - Choir Version From “Deadpool & Wolverine” - *I'll Take You There Choir* | Album: Deadpool & Wolverine: Madonna's "Like a Prayer" EP | 2:32
+
+[2026-04-06 15:48:27] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 15:52:01] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 15:54:16] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 15:54:34] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+Opening your liked songs in the default browser...
+Opening your Music folder...
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 15:55:38] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 15:59:31] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 16:20:03] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:21:33] Sent to WhatsApp:
+💬 Enigma: No response
+
+[2026-04-06 16:22:13] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:26:04] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 16:27:21] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:29:27] Sent to WhatsApp:
+⚠️  AI interpretation failed. Raw response: No response
+💬 Enigma: I'm not sure how to do that yet. Try 'show my playlists' or 'search Thriller in My 80s Mix'.
+
+[2026-04-06 16:30:39] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:31:37] Sent to WhatsApp:
+💬 Enigma: No response
+
+[2026-04-06 16:50:17] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:50:51] Sent to WhatsApp:
+[Document Sent (length: 7691)]:
+💬 Enigma: Below is the full list of **Liked Songs** you’ve shared from your Spotify library (items 1‑50 of the 140 total tracks). I’ve formatted it for easy reading and also included a ready‑to‑copy **CSV** version at the end in case you’d like to import it into a spreadsheet, a music‑manager app, or a custom script.
+
+---
+
+## 🎧 Your Liked Songs (1‑50)
+
+| # | Track | Artist | Album | Duration |
+|---|-------|--------|-------|----------|
+| 1 | Spartan Angels | Tommy Lee Sparta | **Spartan Angels** | 4:14 |
+| 2 | Spartan Soldier | Tommy Lee Sparta | **Spartan Soldier** | 4:31 |
+| 3 | Can't Relate | King Von | **Welcome to O'Block** | 2:40 |
+| 4 | Crazy Story | King Von | **Grandson, Vol. 1** | 2:26 |
+| 5 | Don't Want to Be Me | King Von | **Levon James** | 4:40 |
+| 6 | Pressin (feat. King Von) | Sada Baby | **Skuba Sada 2 (Deluxe)** | 2:50 |
+| 7 | High Fashion (feat. Mustard) | Roddy Ricch | **Please Excuse Me for Being Antisocial** | 3:40 |
+| 8 | Wrong | Luh Kel | **Mixed Emotions** | 2:10 |
+| 9 | The Box | Roddy Ricch | **Please Excuse Me for Being Antisocial** | 3:16 |
+|10 | Down Below | Roddy Ricch | **Feed Tha Streets II** | 3:44 |
+|11 | I Fall Apart | Post Malone | **Stoney (Deluxe)** | 3:43 |
+|12 | Sailor Song | Gigi Perez | **Sailor Song** | 3:31 |
+|13 | Crazy Story, Pt. 3 | King Von | **Grandson, Vol. 1** | 3:11 |
+|14 | Took Her To The O | King Von | **Levon James** | 3:16 |
+|15 | Why He Told | King Von | **Welcome to O'Block** | 3:08 |
+|16 | BIG STEPPER | Charisma Madness | **BIG STEPPER** | 3:02 |
+|17 | Wayne's Story | King Von | **Welcome to O'Block** | 2:18 |
+|18 | Tumani – Doze Remix | DJ KENSIDE | **Tumani (Doze Remix)** | 4:59 |
+|19 | Death Bed | twin | **#THETAKEOVER** | 1:59 |
+|20 | Earth Song | Wizard Chan | **Earth Song** | 3:03 |
+|21 | Trauma | NF | **The Search** | 4:07 |
+|22 | Sweater Weather | The Neighbourhood | **I Love You.** | 4:00 |
+|23 | Take Me To Church | Hozier | **Hozier** | 4:01 |
+|24 | The Winner Takes It All – From “Mamma Mia!” | Meryl Streep | **Mamma Mia! The Movie Soundtrack** | 4:57 |
+|25 | Obito's Theme | Lorenzo Ferrara | **Obito's Theme** | 2:26 |
+|26 | Move on | Finn Askew | **Move on** | 2:30 |
+|27 | 7 Years | Lukas Graham | **Lukas Graham** | 3:57 |
+|28 | Japanese Denim | Daniel Caesar | **Get You – Single** | 4:30 |
+|29 | Cinnamon Girl | Lana Del Rey | **Norman Fucking Rockwell!** | 5:00 |
+|30 | Unstoppable | Sia | **This Is Acting (Deluxe Version)** | 3:37 |
+|31 | I SEARCHED FOR LOVE | ZIONWAVE | **I SEARCHED FOR LOVE** | 4:02 |
+|32 | Soft Life Is Calling Ise (Spirit Cut) | Xploitcomedy | **Soft Life Is Calling Ise (Spirit Cut)** | 2:49 |
+|33 | Blessings | Soul of Afrika | **Afrika Rise** | 1:54 |
+|34 | Your Smile Still Haunts | EverHits‑moritabari | **Still in You** | 4:37 |
+|35 | Three Seconds To Goodbye | ZionRay | **Three Seconds To Goodbye** | 6:56 |
+|36 | Without Me | Red Village | **Without Me** | 5:21 |
+|37 | Papaoutai – Afro Soul | Chill77 | **Papaoutai (Afro Soul)** | 4:39 |
+|38 | To Love Someone | Benson Boone | **To Love Someone** | 3:16 |
+|39 | In The Stars | Benson Boone | **In The Stars** | 3:36 |
+|40 | Work of Art | Benson Boone | **Walk Me Home…** | 2:49 |
+|41 | To Build A Home | The Cinematic Orchestra | **Ma Fleur** | 6:11 |
+|42 | All I Want | Kodaline | **In A Perfect World (Expanded Edition)** | 5:05 |
+|43 | Leaked | Lil Tjay | **True 2 Myself** | 3:40 |
+|44 | iRobot | Jon Bellion | **The Human Condition** | 3:28 |
+|45 | Love Is Gone – Acoustic | SLANDER | **Love Is Gone (Acoustic)** | 2:56 |
+|46 | Love Someone | Lukas Graham | **Love Someone** | 3:25 |
+|47 | The Amazing Mr. F**k Up (feat. Victoria Monét) | T.I. | **DIME TRAP** | 3:48 |
+|48 | Sorry, Blame It On Me | Akon | **Konvicted (Complete Edition)** | 4:55 |
+|49 | I Will Survive | Gloria Gaynor | **Love Tracks** | 4:56 |
+|50 | Like a Prayer – Choir Version From “Deadpool & Wolverine” | I’ll Take You There Choir | **Deadpool & Wolverine: Madonna's “Like a Prayer” EP** | 2:32 |
+
+---
+
+## 📄 CSV Export (Copy‑Paste Ready)
+
+If you’d like to paste this into Excel, Google Sheets, or any CSV‑aware tool, just copy the block below (including the header row) and paste it into a blank file, then save it as `liked_songs.csv`.
+
+```csv
+Track Number,Track,Artist,Album,Duration
+1,Spartan Angels,Tommy Lee Sparta,Spartan Angels,4:14
+2,Spartan Soldier,Tommy Lee Sparta,Spartan Soldier,4:31
+3,Can't Relate,King Von,Welcome to O'Block,2:40
+4,Crazy Story,King Von,Grandson, Vol. 1,2:26
+5,Don't Want to Be Me,King Von,Levon James,4:40
+6,Pressin (feat. King Von),Sada Baby,Skuba Sada 2 (Deluxe),2:50
+7,High Fashion (feat. Mustard),Roddy Ricch,Please Excuse Me for Being Antisocial,3:40
+8,Wrong,Luh Kel,Mixed Emotions,2:10
+9,The Box,Roddy Ricch,Please Excuse Me for Being Antisocial,3:16
+10,Down Below,Roddy Ricch,Feed Tha Streets II,3:44
+11,I Fall Apart,Post Malone,Stoney (Deluxe),3:43
+12,Sailor Song,Gigi Perez,Sailor Song,3:31
+13,Crazy Story, Pt. 3,King Von,Grandson, Vol. 1,3:11
+14,Took Her To The O,King Von,Levon James,3:16
+15,Why He Told,King Von,Welcome to O'Block,3:08
+16,BIG STEPPER,Charisma Madness,BIG STEPPER,3:02
+17,Wayne's Story,King Von,Welcome to O'Block,2:18
+18,Tumani - Doze Remix,DJ KENSIDE,Tumani (Doze Remix),4:59
+19,Death Bed,twin,#THETAKEOVER,1:59
+20,Earth Song,Wizard Chan,Earth Song,3:03
+21,Trauma,NF,The Search,4:07
+22,Sweater Weather,The Neighbourhood,I Love You.,4:00
+23,Take Me To Church,Hozier,Hozier,4:01
+24,The Winner Takes It All - From "Mamma Mia!",Meryl Streep,Mamma Mia! The Movie Soundtrack,4:57
+25,Obito's Theme,Lorenzo Ferrara,Obito's Theme,2:26
+26,Move on,Finn Askew,Move on,2:30
+27,7 Years,Lukas Graham,Lukas Graham,3:57
+28,Japanese Denim,Daniel Caesar,Get You - Single,4:30
+29,Cinnamon Girl,Lana Del Rey,Norman Fucking Rockwell!,5:00
+30,Unstoppable,Sia,This Is Acting (Deluxe Version),3:37
+31,I SEARCHED FOR LOVE,ZIONWAVE,I SEARCHED FOR LOVE,4:02
+32,Soft Life Is Calling Ise (Spirit Cut),Xploitcomedy,Soft Life Is Calling Ise (Spirit Cut),2:49
+33,Blessings,Soul of Afrika,Afrika Rise,1:54
+34,Your Smile Still Haunts,EverHits-moritabari,Still in You,4:37
+35,Three Seconds To Goodbye,ZionRay,Three Seconds To Goodbye,6:56
+36,Without Me,Red Village,Without Me,5:21
+37,Papaoutai - Afro Soul,Chill77,Papaoutai (Afro Soul),4:39
+38,To Love Someone,Benson Boone,To Love Someone,3:16
+39,In The Stars,Benson Boone,In The Stars,3:36
+40,Work of Art,Benson Boone,Walk Me Home...,2:49
+41,To Build A Home,The Cinematic Orchestra,Ma Fleur,6:11
+42,All I Want,Kodaline,In A Perfect World (Expanded Edition),5:05
+43,Leaked,Lil Tjay,True 2 Myself,3:40
+44,iRobot,Jon Bellion,The Human Condition,3:28
+45,Love Is Gone - Acoustic,SLANDER,Love Is Gone (Acoustic),2:56
+46,Love Someone,Lukas Graham,Love Someone,3:25
+47,The Amazing Mr. F**k Up (feat. Victoria Monét),T.I.,DIME TRAP,3:48
+48,Sorry, Blame It On Me,Akon,Konvicted (Complete Edition),4:55
+49,I Will Survive,Gloria Gaynor,Love Tracks,4:56
+50,Like a Prayer - Choir Version From “Deadpool & Wolverine”,I'll Take You There Choir,Deadpool & Wolverine: Madonna's "Like a Prayer" EP,2:32
+```
+
+---
+
+### What would you like to do next?
+
+- **Export the full 140‑track list** (if you have the rest of the data and want it formatted the same way).  
+- **Create a Spotify playlist** from these liked songs (I can give you step‑by‑step instructions or a CSV ready for the Spotify API).  
+- **Analyze your library** (genre breakdown, most‑played artists, mood clustering, etc.).  
+- Anything else—maybe a recommendation list based on the tracks you already love?
+
+Just let me know how I can help! 🎶
+
+[2026-04-06 16:52:10] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:52:21] Sent to WhatsApp:
+💬 Enigma: I'm not sure how to do that yet. Try 'show my playlists' or 'search Thriller in My 80s Mix'.
+
+[2026-04-06 16:52:53] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 16:56:47] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 17:13:52] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 17:14:44] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 18:09:30] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:10:15] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 18:12:25] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:12:40] Sent to WhatsApp:
+💬 Enigma: I'm not sure how to do that yet. Try 'show my playlists' or 'search Thriller in My 80s Mix'.
+
+[2026-04-06 18:14:03] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:14:39] Sent to WhatsApp:
+💬 Enigma: Here’s the list of **your liked songs** with every King Von track removed (including songs that only feature him).
+
+**Remaining liked songs (42 tracks)**  
+
+1. **Spartan Angels** – *Tommy Lee Sparta*  
+2. **Spartan Soldier** – *Tommy Lee Sparta*  
+3. **High Fashion (feat. Mustard)** – *Roddy Ricch*  
+4. **Wrong** – *Luh Kel*  
+5. **The Box** – *Roddy Ricch*  
+6. **Down Below** – *Roddy Ricch*  
+7. **I Fall Apart** – *Post Malone*  
+8. **Sailor Song** – *Gigi Perez*  
+9. **BIG STEPPER** – *Charisma Madness*  
+10. **Tumani – Doze Remix** – *DJ KENSIDE*  
+11. **Death Bed** – *twin*  
+12. **Earth Song** – *Wizard Chan*  
+13. **Trauma** – *NF*  
+14. **Sweater Weather** – *The Neighbourhood*  
+15. **Take Me To Church** – *Hozier*  
+16. **The Winner Takes It All – From “Mamma Mia!”** – *Meryl Streep*  
+17. **Obito's Theme** – *Lorenzo Ferrara*  
+18. **Move on** – *Finn Askew*  
+19. **7 Years** – *Lukas Graham*  
+20. **Japanese Denim** – *Daniel Caesar*  
+21. **Cinnamon Girl** – *Lana Del Rey*  
+22. **Unstoppable** – *Sia*  
+23. **I SEARCHED FOR LOVE** – *ZIONWAVE*  
+24. **Soft Life Is Calling Ise (Spirit Cut)** – *Xploitcomedy*  
+25. **Blessings** – *Soul of Afrika*  
+26. **Your Smile Still Haunts** – *EverHits‑moritabari*  
+27. **Three Seconds To Goodbye** – *ZionRay*  
+28. **Without Me** – *Red Village*  
+29. **Papaoutai – Afro Soul** – *Chill77*  
+30. **To Love Someone** – *Benson Boone*  
+31. **In The Stars** – *Benson Boone*  
+32. **Work of Art** – *Benson Boone*  
+33. **To Build A Home** – *The Cinematic Orchestra*  
+34. **All I Want** – *Kodaline*  
+35. **Leaked** – *Lil Tjay*  
+36. **iRobot** – *Jon Bellion*  
+37. **Love Is Gone – Acoustic** – *SLANDER*  
+38. **Love Someone** – *Lukas Graham*  
+39. **The Amazing Mr. F**k Up (feat. Victoria Monét)** – *T.I.*  
+40. **Sorry, Blame It On Me** – *Akon*  
+41. **I Will Survive** – *Gloria Gaynor*  
+42. **Like a Prayer – Choir Version From “Deadpool & Wolverine”** – *I’ll Take You There Choir*  
+
+---
+
+### What was filtered out?
+The following King Von‑related tracks were removed from your liked‑songs list:
+
+- Can’t Relate – King Von  
+- Crazy Story – King Von  
+- Don’t Want to Be Me – King Von  
+- Crazy Story, Pt. 3 – King Von  
+- Took Her To The O – King Von  
+- Why He Told – King Von  
+- Wayne’s Story – King Von  
+- Pressin (feat. King Von) – Sada Baby  
+
+If you need any other tweaks (e.g., keep featured‑artist tracks, export to a playlist, etc.), just let me know!
+
+[2026-04-06 18:19:50] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:20:32] Sent to WhatsApp:
+💬 Enigma: Below are the **Spotify‑track IDs (the list numbers you provided)** for all of your liked songs **excluding any tracks by King Von**:
+
+```json
+{
+  "liked_song_ids_without_king_von": [
+    1, 2, 6, 7, 8, 9, 10, 11, 12,
+    16, 18, 19, 20, 21, 22, 23, 24, 25,
+    26, 27, 28, 29, 30, 31, 32, 33, 34,
+    35, 36, 37, 38, 39, 40, 41, 42, 43,
+    44, 45, 46, 47, 48, 49, 50
+  ]
+}
+```
+
+These IDs correspond to the songs in your “Liked Songs” list that are **not** by King Von. If you need the full list (including the remaining 90+ tracks) or the actual Spotify URI/ID strings, just let me know!
+
+[2026-04-06 18:31:05] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:31:30] Sent to WhatsApp:
+💬 Enigma: Here are the **King Von** songs that appear in your Liked Songs library:
+
+| # | Track | Album | Duration |
+|---|-------|-------|----------|
+| 3 | **Can’t Relate** | *Welcome to O'Block* | 2 min 40 sec |
+| 4 | **Crazy Story** | *Grandson, Vol. 1* | 2 min 26 sec |
+| 5 | **Don’t Want to Be Me** | *Levon James* | 4 min 40 sec |
+| 13 | **Crazy Story, Pt. 3** | *Grandson, Vol. 1* | 3 min 11 sec |
+| 14 | **Took Her To The O** | *Levon James* | 3 min 16 sec |
+| 15 | **Why He Told** | *Welcome to O'Block* | 3 min 08 sec |
+| 17 | **Wayne’s Story** | *Welcome to O'Block* | 2 min 18 sec |
+
+*(If you’d also like the track where he appears as a featured artist – “Pressin (feat. King Von)” by Sada Baby – just let me know and I can add it to the list or create a playlist for you.)*
+
+[2026-04-06 18:33:39] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:34:00] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 18:34:40] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 18:34:54] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 19:36:28] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 19:42:29] Sent to WhatsApp:
+❌ analyzer timed out after 5m0s
+
+[2026-04-06 21:37:46] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 21:38:29] Sent to WhatsApp:
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -c "Invoke-Item 'https://www.google.com/search?q=Rick+and+Morty+season+5+episode+10+watch+online'"
+
+⏳ Running: powershell -c "Invoke-Item 'https://www.google.com/search?q=Rick+and+Morty+season+5+episode+10+watch+online'"
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 21:40:03] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 21:40:40] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+Rick and Morty Season 5 Episode 10 not found on this system.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 21:54:32] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 21:56:33] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 21:57:48] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 21:59:45] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:02:06] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:02:28] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:34:03] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:34:33] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:35:10] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:36:09] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:36:15] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+OK
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:44:17] Sent to WhatsApp:
+❌ analyzer timed out after 5m0s
+
+[2026-04-06 22:52:06] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:52:31] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+No file matching 'avenger' found.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:53:12] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:53:20] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:54:02] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:54:11] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-06 22:54:36] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-06 22:54:43] Sent to WhatsApp:
+📂 Working directory: .
+
+[2026-04-07 04:18:45] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 04:21:14] Sent to WhatsApp:
+Hello! How can I help you today?
+
+[2026-04-07 04:21:41] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 04:22:25] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-07 04:22:57] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 04:23:17] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+Rick and Morty S06E10 not found.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-07 04:28:26] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 04:29:28] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+No Rick and Morty S6E10 file found.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-07 04:31:26] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 05:18:41] Sent to WhatsApp:
+❌ analyzer timed out after 5m0s
+
+[2026-04-07 05:28:28] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-07 05:28:49] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:18:48] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:19:59] Sent to WhatsApp:
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -c "Invoke-Item 'C:\\Users\\USER\\Videos\\New folder\\Anime\\Ricky and Morty\\Season 6\\Rick and Morty-S6E10-720P.mp4'"
+
+⏳ Running: powershell -c "Invoke-Item 'C:\\Users\\USER\\Videos\\New folder\\Anime\\Ricky and Morty\\Season 6\\Rick and Morty-S6E10-720P.mp4'"
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:20:47] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:21:41] Sent to WhatsApp:
+
+
+[2026-04-08 04:22:55] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:24:03] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:24:56] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:28:30] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:29:23] Sent to WhatsApp:
+
+
+[2026-04-08 04:29:49] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:31:37] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+OK
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:32:09] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:35:14] Sent to WhatsApp:
+❌ analyzer timed out after 5m0s
+
+[2026-04-08 04:37:29] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:38:25] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:39:15] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:49:29] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:50:23] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:51:46] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:52:40] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:53:39] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:54:37] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+No file matching 'Classroom of the Elite Year 3 Volume 1' was found in the current directory tree.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:56:15] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:56:37] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+File not found for 'Classroom of the Elite' Year 3 Volume 1.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 04:57:05] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 04:57:14] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+No file matching "Classroom of the Elite Year 2 Volume 2" was found.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:03:41] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:06:57] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:08:17] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:11:10] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:16:00] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:16:19] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:37:27] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:38:29] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+--- STDOUT ---
+File not found.
+
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:39:08] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:40:04] Sent to WhatsApp:
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -c "Invoke-Item 'C:\\Users\\USER\\Documents\\School\\sTUFF\\Classroom of the Elite\\Classroom of the Elite_ Year 2 Volume 5 - PDF Room.pdf'"
+
+⏳ Running: powershell -c "Invoke-Item 'C:\\Users\\USER\\Documents\\School\\sTUFF\\Classroom of the Elite\\Classroom of the Elite_ Year 2 Volume 5 - PDF Room.pdf'"
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:40:55] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:41:49] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:42:14] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:43:12] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:44:11] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:45:06] Sent to WhatsApp:
+
+
+[2026-04-08 07:45:57] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:47:07] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+
+[2026-04-08 07:51:38] Sent to WhatsApp:
+⏳ Processing request...
+
+[2026-04-08 07:52:34] Sent to WhatsApp:
+📁 Creating 1 file(s)...
+  ✅ Created: script.ps1
+
+📂 Working directory: .
+
+🤖 Running 1 command(s):
+
+  → powershell -ExecutionPolicy Bypass -File script.ps1
+
+⏳ Running: powershell -ExecutionPolicy Bypass -File script.ps1
+(no stdout)
+
+✅ Done. Full output saved to cmd_outputs.txt
+

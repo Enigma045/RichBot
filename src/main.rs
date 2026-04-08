@@ -2,14 +2,16 @@ use std::{env, io::Write, path::Path};
 
 mod model;
 mod styles;
-mod operations;
+pub mod operations;
 mod hands;
 pub mod cmd_executor;
 pub mod api_keys;
 mod sport;
+mod brain;
+pub mod eyes;
 
 fn analysis_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
-    let see = operations::search_colab(task, base_url);
+    let see = operations::unified_search(task, base_url);
     let prompt = format!(
         "Return ONLY a valid JSON array, no markdown, no explanation, no decorators.\
          Filter this file tree to only documents or projects relevant to this request: {}",
@@ -59,7 +61,7 @@ fn filter_task(original_prompt: &str, ai_output: &str, persona: &str, _is_headle
 }
 
 fn creation_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
-    let see = operations::search_colab(task, base_url);
+    let see = operations::unified_search(task, base_url);
     let prompt = format!(
         "Return ONLY a valid JSON array, no markdown, no explanation, no decorators.\
          List any documents or files related to this topic: {}",
@@ -150,7 +152,7 @@ fn auto_router(task: &str, persona: &str, is_headless: bool, base_url: &str) {
         analysis_task(task, persona, is_headless, base_url);
     } else if choice == 3 {
         if is_headless { eprintln!("🛠️ Enigma Action:"); } else { println!("🛠️ Enigma Action:"); }
-        let search_results = operations::search_colab(task, base_url);
+        let search_results = operations::unified_search(task, base_url);
         let context = serde_json::to_string(&search_results).unwrap_or_default();
         cmd_executor::execute_task(task, &context);
     } else if choice == 4 {
@@ -169,7 +171,7 @@ fn auto_router(task: &str, persona: &str, is_headless: bool, base_url: &str) {
     } else {
         if is_headless {
             eprintln!("💬 Enigma Chat:");
-            let search_results = operations::search_colab(task, base_url);
+            let search_results = operations::unified_search(task, base_url);
             let context = serde_json::to_string(&search_results).unwrap_or_default();
             let prompt = format!(
                 "Assist with this request: '{}'. Use this context if relevant: {}",
@@ -178,7 +180,7 @@ fn auto_router(task: &str, persona: &str, is_headless: bool, base_url: &str) {
             println!("{}", model::set_control_with_persona(&prompt, persona));
         } else {
             println!("💬 Enigma Chat:");
-            let search_results = operations::search_colab(task, base_url);
+            let search_results = operations::unified_search(task, base_url);
             let context = serde_json::to_string(&search_results).unwrap_or_default();
             let prompt = format!(
                 "Assist with this request: '{}'. Use this context if relevant: {}",
@@ -217,6 +219,7 @@ fn main() {
 
     let mut task: Option<String> = None;
     let mut filter: Option<(String, String)> = None;
+    let mut brain_task: Option<String> = None;
 
     // Robust CLI parsing
     let mut i = 1;
@@ -238,6 +241,10 @@ fn main() {
                 target_url = args[i+1].clone();
                 i += 2;
             }
+            "--brain" if i + 1 < args.len() => {
+                brain_task = Some(args[i+1].clone());
+                i += 2;
+            }
             _ => {
                 i += 1;
             }
@@ -249,6 +256,13 @@ fn main() {
     // Headless execution for integration
     if let Some(t) = task {
         auto_router(&t, &persona, true, &target_url);
+        return;
+    }
+
+    if let Some(t) = brain_task {
+        eprintln!("🧠 Enigma Brain Mode");
+        let result = brain::run(&t, &persona, &target_url);
+        println!("{}", result);
         return;
     }
 
@@ -270,7 +284,8 @@ fn main() {
         println!("║  4. ✍️  Generate Content / Files          ║");
         println!("║  5. 🎭 Switch to {} Persona      ║", if persona == "Quick" { "Helpful  " } else { "Quick    " });
         println!("║  6. 🎵 Spotify Integration               ║");
-        println!("║  7. 🚪 Exit                              ║");
+        println!("║  7. 🧠 Brain Mode (Multi-Step)           ║");
+        println!("║  8. 🚪 Exit                              ║");
         println!("╚══════════════════════════════════════════╝");
         print!("\nEnigma Assistant > ");
         std::io::stdout().flush().unwrap();
@@ -308,11 +323,22 @@ fn main() {
                 println!("🎵 Opening Spotify Integration...");
                 sport::control();
             }
-            "7" | "quit" | "exit" => {
+            "7" => {
+                print!("🧠 Brain Prompt > ");
+                std::io::stdout().flush().unwrap();
+                let mut bt = String::new();
+                std::io::stdin().read_line(&mut bt).unwrap();
+                let bt = bt.trim();
+                if !bt.is_empty() {
+                    let result = brain::run(bt, &persona, &target_url);
+                    println!("\n🧠 Brain Result:\n{}", result);
+                }
+            }
+            "8" | "quit" | "exit" => {
                 println!("See you later!");
                 break;
             },
-            _ => println!("I didn't quite catch that. Pick 1-7!"),
+            _ => println!("I didn't quite catch that. Pick 1-8!"),
         }
     }
 }

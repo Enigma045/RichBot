@@ -27,6 +27,12 @@ pub(crate) struct RequestTracker {
     #[serde(default)]
     pub(crate) mistral: u32,
     #[serde(default)]
+    pub(crate) openrouter: u32,
+    #[serde(default)]
+    pub(crate) openrouter_gpt: u32,
+    #[serde(default)]
+    pub(crate) eyes_calls: u32,
+    #[serde(default)]
     pub(crate) last_reset_date: String,
     #[serde(skip)]
     pub(crate) persona: String,
@@ -53,6 +59,9 @@ impl RequestTracker {
             groq: 0,
             cerebras: 0,
             mistral: 0,
+            openrouter: 0,
+            openrouter_gpt: 0,
+            eyes_calls: 0,
             last_reset_date: Local::now().format("%Y-%m-%d").to_string(),
             persona: "Quick".to_string(),
         }
@@ -79,6 +88,9 @@ impl RequestTracker {
         self.groq = 0;
         self.cerebras = 0;
         self.mistral = 0;
+        self.openrouter = 0;
+        self.openrouter_gpt = 0;
+        self.eyes_calls = 0;
         self.last_reset_date = today;
         self.save();
     }
@@ -91,6 +103,9 @@ impl RequestTracker {
     fn can_use_groq(&self) -> bool {self.groq < 250}
     fn can_use_cerebras(&self) -> bool {self.cerebras < 250}
     fn can_use_mistral(&self) -> bool {self.mistral < 250}
+    fn can_use_openrouter(&self) -> bool {self.openrouter < 250}
+    fn can_use_openrouter_gpt(&self) -> bool {self.openrouter_gpt < 250}
+    pub fn can_use_eyes(&self) -> bool {self.eyes_calls < 50}
 }
 
 pub fn call_gemini(client: &Client, prompt: &str, model: &str) -> Result<String, String>{
@@ -210,6 +225,58 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
            .to_string())
      }
 
+     pub fn call_openrouter(client: &Client, prompt: &str) -> Result<String, String> {
+        let body = json!({
+            "model": "nvidia/nemotron-3-super-120b-a12b:free",
+            "messages": [{ "role": "user", "content": prompt }]
+        });
+
+        let response = client
+            .post("https://openrouter.ai/api/v1/chat/completions")
+            .header("Authorization", format!("Bearer {}", OPEN_ROUTER_KEY))
+            .header("Content-Type", "application/json")
+            .json(&body)
+            .send()
+            .map_err(|e| e.to_string())?;
+
+        let result: serde_json::Value = response.json().map_err(|e| e.to_string())?;
+
+        if let Some(error) = result.get("error"){
+            return Err(format!("OpenRouter error: {}", error["message"]));
+        }
+
+        Ok(result["choices"][0]["message"]["content"]
+           .as_str()
+           .unwrap_or("No response")
+           .to_string())
+     }
+
+     pub fn call_openrouter_gpt(client: &Client, prompt: &str) -> Result<String, String> {
+        let body = json!({
+            "model": "openai/gpt-oss-120b:free",
+            "messages": [{ "role": "user", "content": prompt }]
+        });
+
+        let response = client
+            .post("https://openrouter.ai/api/v1/chat/completions")
+            .header("Authorization", format!("Bearer {}", OPEN_ROUTER_KEY))
+            .header("Content-Type", "application/json")
+            .json(&body)
+            .send()
+            .map_err(|e| e.to_string())?;
+
+        let result: serde_json::Value = response.json().map_err(|e| e.to_string())?;
+
+        if let Some(error) = result.get("error"){
+            return Err(format!("OpenRouter ChatGPT API error: {}", error["message"]));
+        }
+
+        Ok(result["choices"][0]["message"]["content"]
+           .as_str()
+           .unwrap_or("No response")
+           .to_string())
+     }
+
      pub fn smart_prompt(client: &Client, tracker: &mut RequestTracker, prompt: &str, _quiet: bool) -> String {
         let persona_instruction = if tracker.persona == "Helpful" {
             "You are a detailed, conversational AI collaborator. Explain your reasoning and provide thorough answers. "
@@ -224,8 +291,44 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
         } else {
             format!("{}{}{}", persona_instruction, voice_note_instruction, prompt)
         };
+        
+    if tracker.can_use_groq(){
+        eprintln!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
+        match call_groq(client, &enriched_prompt){
+            Ok(response) => {
+                tracker.groq += 1;
+                tracker.save();
+                return response;
+            }
+            Err(e) => eprintln!("⚠️  Groq failed: {} — trying next...", e),
+        }
+    }
 
-        if tracker.can_use_gemini_flash() {
+    if tracker.can_use_openrouter(){
+        eprintln!("📡 Using: Nvidia Nemotron ({}/250)", tracker.openrouter + 1);
+        match call_openrouter(client, &enriched_prompt) {
+            Ok(response) => {
+                tracker.openrouter += 1;
+                tracker.save();
+                return response;
+            }
+            Err(e) => eprintln!("⚠️  Nvidia Nemotron failed: {} — trying next...", e),
+        }
+    }
+
+    if tracker.can_use_openrouter_gpt(){
+        eprintln!("📡 Using: OpenAI GPT-OSS ({}/250)", tracker.openrouter_gpt + 1);
+        match call_openrouter_gpt(client, &enriched_prompt) {
+            Ok(response) => {
+                tracker.openrouter_gpt += 1;
+                tracker.save();
+                return response;
+            }
+            Err(e) => eprintln!("⚠️  OpenAI GPT-OSS failed: {} — trying next...", e),
+        }
+    }
+
+    if tracker.can_use_gemini_flash() {
             eprintln!("📡 Using: Gemini 2.5 Flash-Lite ({}/1000)", tracker.gemini_flash_lite + 1);
             match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite") {
               Ok(response) => {
@@ -248,19 +351,6 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
                 Err(e) => eprintln!("⚠️  Gemini Flash failed: {} — trying next...", e),
             }
         }
-
-        
-    if tracker.can_use_groq(){
-        eprintln!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
-        match call_groq(client, &enriched_prompt){
-            Ok(response) => {
-                tracker.groq += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Groq failed: {} — trying next...", e),
-        }
-    }
 
     if tracker.can_use_mistral(){
         eprintln!("📡 Using: Mistral Small ({}/500)", tracker.mistral + 1);
@@ -334,13 +424,16 @@ pub fn control(persona_name: &str) {
         println!();
 
         println!("📊 Remaining today:");
-        println!(" Flash: {} | Flash-Lite: {} | Groq: {} | Cerebras: {} | Mistral: {} | Pro: {}",
+        println!(" Flash: {} | Flash-Lite: {} | Groq: {} | Cerebras: {} | Mistral: {} | Nemotron: {} | GPT-OSS: {} | Pro: {} | Eyes: {}",
             250 - tracker.gemini_flash,
             1000 - tracker.gemini_flash_lite,
             500 - tracker.groq,
             500 - tracker.cerebras,
             500 - tracker.mistral,
-            100 - tracker.gemini_pro
+            250 - tracker.openrouter,
+            250 - tracker.openrouter_gpt,
+            100 - tracker.gemini_pro,
+            50 - tracker.eyes_calls
         );
         println!();
         }

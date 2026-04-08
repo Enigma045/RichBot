@@ -346,6 +346,68 @@ pub fn search_tracks_in_response(response: &str, query: &str) -> String {
 
 // ─── AI Intent Processing ──────────────────────────────────────────────────
 
+// ─── AI Intent Processing ──────────────────────────────────────────────────
+
+pub fn post_process_spotify(token: &str, prompt: &str, api_response: &str) {
+    let system_prompt = r#"
+        You are 'Enigma Spotify Brain'. You have the extracted data from Spotify for the user's request.
+        USER PROMPT: {PROMPT}
+        SPOTIFY DATA: {RESPONSE}
+
+        TASK:
+        1. Clean and filter the data. If the user asked for something specific (e.g., 'What is the artist of the 3rd song?'), just answer it.
+        2. Format the response beautifully using Markdown (headers, lists, bold text).
+        3. If you found a playlist ID but the user also wanted to find a song INSIDE it, output a JSON 'chain' command.
+        4. Otherwise, provide a friendly FINAL response.
+
+        RESPONSE FORMAT:
+        Respond with ONLY a valid JSON object:
+        {
+          "content": "Friendly Markdown response...",
+          "next_action": { "intent": "SEARCH_IN_PLAYLIST", "playlist_id": "...", "query": "..." } // or null
+        }
+    "#;
+
+    let ai_prompt = format!(
+        "USER PROMPT: {}\n\nSPOTIFY DATA:\n{}",
+        prompt, api_response
+    );
+
+    let raw_response = crate::model::set_control_with_persona(&ai_prompt, "SpotifyBrain");
+    let clean_res = raw_response.trim().trim_matches('`').trim_start_matches("json").trim();
+
+    let processed: serde_json::Value = match serde_json::from_str(clean_res) {
+        Ok(val) => val,
+        Err(_) => {
+            println!("💬 Enigma: {}", raw_response); // Fallback to raw text
+            return;
+        }
+    };
+
+    if let Some(content) = processed["content"].as_str() {
+        styles::print_styled(content);
+    }
+
+    if let Some(next) = processed["next_action"].as_object() {
+        let intent = next.get("intent").and_then(|v| v.as_str()).unwrap_or("UNKNOWN");
+        match intent {
+             "SEARCH_IN_PLAYLIST" | "LIST_TRACKS" => {
+                let id = next.get("playlist_id").and_then(|v| v.as_str()).unwrap_or("");
+                let query = next.get("query").and_then(|v| v.as_str()).unwrap_or("");
+                if !id.is_empty() {
+                    let res = get_playlist_tracks(token, id);
+                    if intent == "SEARCH_IN_PLAYLIST" {
+                        styles::print_styled(&search_tracks_in_response(&res, query));
+                    } else {
+                        styles::print_styled(&arrange_tracks_output(res));
+                    }
+                }
+             },
+             _ => {}
+        }
+    }
+}
+
 pub fn process_ai_command(token: &str, prompt: &str) {
     let system_prompt = r#"
         Categorize the user's Spotify request into one of these JSON formats:
@@ -373,15 +435,15 @@ pub fn process_ai_command(token: &str, prompt: &str) {
     match intent_data["intent"].as_str().unwrap_or("UNKNOWN") {
         "LIST_PLAYLISTS" => {
             let res = get_user_playlists(token);
-            styles::print_styled(&arrange_playlist_output(res));
+            post_process_spotify(token, prompt, &arrange_playlist_output(res));
         },
         "LIST_LIKED_SONGS" => {
             let res = get_liked_songs(token);
-            styles::print_styled(&arrange_liked_output(res));
+            post_process_spotify(token, prompt, &arrange_liked_output(res));
         },
         "USER_INFO" => {
             let res = get_current_user(token);
-            styles::print_styled(&format!("### Your Spotify Profile\n```json\n{}\n```", res));
+            post_process_spotify(token, prompt, &res);
         },
         "SEARCH_IN_PLAYLIST" | "LIST_TRACKS" => {
             let playlist_name = intent_data["playlist"].as_str().unwrap_or("");
@@ -389,11 +451,12 @@ pub fn process_ai_command(token: &str, prompt: &str) {
             
             if let Some(id) = find_playlist_id_by_name(token, playlist_name) {
                 let res = get_playlist_tracks(token, &id);
-                if intent_data["intent"] == "SEARCH_IN_PLAYLIST" {
-                    styles::print_styled(&search_tracks_in_response(&res, query));
+                let simplified = if intent_data["intent"] == "SEARCH_IN_PLAYLIST" {
+                    search_tracks_in_response(&res, query)
                 } else {
-                    styles::print_styled(&arrange_tracks_output(res));
-                }
+                    arrange_tracks_output(res)
+                };
+                post_process_spotify(token, prompt, &simplified);
             } else {
                 println!("❌ Could not find playlist: {}", playlist_name);
             }

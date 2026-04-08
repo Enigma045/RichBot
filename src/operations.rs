@@ -106,16 +106,20 @@ pub fn search_colab(query: &str, base_url: &str) -> Vec<FileEntry> {
         .json(&body)
         .send() {
         Ok(resp) => {
-            if let Ok(entries) = resp.json::<Vec<SearchEntry>>() {
-                return entries.into_iter().map(|s| FileEntry {
-                    path: s.path,
-                    depth: 0, // Search returns flat list
-                    entry_type: EntryType::File,
-                }).collect();
+            if resp.status().is_success() {
+                if let Ok(entries) = resp.json::<Vec<SearchEntry>>() {
+                    return entries.into_iter().map(|s| FileEntry {
+                        path: s.path,
+                        depth: 0,
+                        entry_type: EntryType::File,
+                    }).collect();
+                }
+            } else {
+                eprintln!("⚠️ search_collab: Server returned {} — falling back...", resp.status());
             }
         },
         Err(e) => {
-            eprintln!("⚠️ Search failed ({}): falling back to local crawl...", e);
+            eprintln!("⚠️ search_collab failed ({}): falling back to local crawl...", e);
         }
     }
 
@@ -140,6 +144,25 @@ pub fn read_files(entries: &[FileEntry]) -> Vec<Result<String, FileError>> {
         .filter(|e| matches!(e.entry_type, EntryType::File))
         .map(|e| read_file(&e.path))
         .collect()
+}
+
+pub fn unified_search(query: &str, base_url: &str) -> Vec<FileEntry> {
+    if !query.is_empty() {
+        match crate::eyes::search(query) {
+            Ok(results) => {
+                if !results.is_empty() {
+                    eprintln!("🔍 unified_search: eyes::search found {} results.", results.len());
+                    return results;
+                }
+            }
+            Err(e) => {
+                eprintln!("⚠️ eyes::search failed: {}. Falling back...", e);
+            }
+        }
+    }
+
+    // Fallback 1: search_collab
+    search_colab(query, base_url)
 }
 
 pub fn append_file(path: &str, content: &str) -> Result<(), FileError> {
