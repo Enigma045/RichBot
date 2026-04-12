@@ -3,14 +3,20 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::fs;
 use std::io;
+use std::time::{Duration, Instant};
 use colored::Colorize;
 use chrono::Local;
+use std::{thread, time};
 
 use crate::styles;
 
 const TRACKER_FILE: &str = "tracker.json";
 
 use crate::api_keys::*;
+
+fn default_mode() -> String {
+    "Brain".to_string()
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct RequestTracker {
@@ -34,8 +40,16 @@ pub(crate) struct RequestTracker {
     pub(crate) eyes_calls: u32,
     #[serde(default)]
     pub(crate) last_reset_date: String,
+    #[serde(default = "default_mode")]
+    pub(crate) task_mode: String,
     #[serde(skip)]
     pub(crate) persona: String,
+    /// In-process timestamp of last Cerebras call (not persisted)
+    #[serde(skip)]
+    pub(crate) last_cerebras_call: Option<Instant>,
+    /// In-process timestamp of last Mistral call (not persisted)
+    #[serde(skip)]
+    pub(crate) last_mistral_call: Option<Instant>,
 }
 
 impl RequestTracker {
@@ -63,7 +77,10 @@ impl RequestTracker {
             openrouter_gpt: 0,
             eyes_calls: 0,
             last_reset_date: Local::now().format("%Y-%m-%d").to_string(),
+            task_mode: "Brain".to_string(),
             persona: "Quick".to_string(),
+            last_cerebras_call: None,
+            last_mistral_call: None,
         }
     }
 
@@ -142,7 +159,7 @@ pub fn call_gemini(client: &Client, prompt: &str, model: &str) -> Result<String,
 pub fn call_cerebras(client: &Client,prompt: &str) -> Result<String, String> {
 
     let body = json!({
-        "model": "llama3.3-70b",
+        "model": "gpt-oss-120b",
         "messages": [{ "role": "user", "content": prompt }]
     });
 
@@ -291,18 +308,6 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
         } else {
             format!("{}{}{}", persona_instruction, voice_note_instruction, prompt)
         };
-        
-    if tracker.can_use_groq(){
-        eprintln!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
-        match call_groq(client, &enriched_prompt){
-            Ok(response) => {
-                tracker.groq += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Groq failed: {} — trying next...", e),
-        }
-    }
 
     if tracker.can_use_openrouter(){
         eprintln!("📡 Using: Nvidia Nemotron ({}/250)", tracker.openrouter + 1);
@@ -327,6 +332,20 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
             Err(e) => eprintln!("⚠️  OpenAI GPT-OSS failed: {} — trying next...", e),
         }
     }
+        
+    if tracker.can_use_groq(){
+        eprintln!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
+        match call_groq(client, &enriched_prompt){
+            Ok(response) => {
+                tracker.groq += 1;
+                tracker.save();
+                return response;
+            }
+            Err(e) => eprintln!("⚠️  Groq failed: {} — trying next...", e),
+        }
+    }
+
+    
 
     if tracker.can_use_gemini_flash() {
             eprintln!("📡 Using: Gemini 2.5 Flash-Lite ({}/1000)", tracker.gemini_flash_lite + 1);
@@ -352,50 +371,81 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
             }
         }
 
-    if tracker.can_use_mistral(){
-        eprintln!("📡 Using: Mistral Small ({}/500)", tracker.mistral + 1);
-        match call_mistral(client, &enriched_prompt) {
-            Ok(response) => {
-                tracker.mistral += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Mistral failed: {} — trying next...", e),
-        }
-    }
-
-    //lame
-    if tracker.can_use_cerebras(){
-        eprintln!("📡 Using: Cerebras Llama 70B ({}/500)", tracker.cerebras + 1);
-        match call_cerebras(client, &enriched_prompt) {
-            Ok(response) => {
-                tracker.cerebras += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Cerebras failed: {} — trying next...", e),
-        }
-    }
-    //
-
     if tracker.can_use_gemini_pro(){
         eprintln!("📡 Using: Gemini 2.5 Pro ({}/100)", tracker.gemini_pro + 1);
         match call_gemini(client, &enriched_prompt, "gemini-2.5-pro") {
             Ok(response) => {
                 tracker.gemini_pro += 1;
                 tracker.save();
+
                 return response;
             }
             Err(e) => eprintln!("⚠️  Gemini Pro failed: {}", e),
         }
     }
+        //lame
+    if tracker.can_use_cerebras(){
+        // Enforce 1 req/sec for Cerebras (60 RPM limit)
+        throttle_if_needed(&tracker.last_cerebras_call, Duration::from_millis(1100), "Cerebras");
+        eprintln!("📡 Using: Cerebras Llama 70B ({}/500)", tracker.cerebras + 1);
+        match call_cerebras(client, &enriched_prompt) {
+            Ok(response) => {
+                tracker.last_cerebras_call = Some(Instant::now());
+                tracker.cerebras += 1;
+                tracker.save();
+                //thread::sleep(time::Duration::from_secs(65));
+                return response;
+            }
+            Err(e) => {
+                tracker.last_cerebras_call = Some(Instant::now());
+                eprintln!("⚠️  Cerebras failed: {} — trying next...", e);
+            }
+        }
+    }
+
+    if tracker.can_use_mistral(){
+        // Enforce 1 req/sec for Mistral (60 RPM limit)
+        throttle_if_needed(&tracker.last_mistral_call, Duration::from_millis(1100), "Mistral");
+        eprintln!("📡 Using: Mistral Small ({}/500)", tracker.mistral + 1);
+        match call_mistral(client, &enriched_prompt) {
+            Ok(response) => {
+                tracker.last_mistral_call = Some(Instant::now());
+                tracker.mistral += 1;
+                tracker.save();
+                //thread::sleep(time::Duration::from_secs(65));
+                return response;
+            }
+            Err(e) => {
+                tracker.last_mistral_call = Some(Instant::now());
+                eprintln!("⚠️  Mistral failed: {} — trying next...", e);
+            }
+        }
+    }
+
+    
 
         // All providers exhausted
     "❌ All providers exhausted for today. Try again tomorrow!".to_string()
-     }
+}
+
+/// Sleeps until at least `min_gap` has passed since `last_call`.
+/// This enforces a per-provider rate limit (e.g. 1 req/sec for 60 RPM APIs).
+fn throttle_if_needed(last_call: &Option<Instant>, min_gap: Duration, provider: &str) {
+    if let Some(last) = last_call {
+        let elapsed = last.elapsed();
+        if elapsed < min_gap {
+            let wait = min_gap - elapsed;
+            eprintln!("⏳ Rate limiting {}: waiting {}ms...", provider, wait.as_millis());
+            std::thread::sleep(wait);
+        }
+    }
+}
 
 pub fn control(persona_name: &str) {
-    let client = Client::new();
+    let client = Client::builder()
+        .timeout(std::time::Duration::from_secs(60))
+        .build()
+        .unwrap_or_else(|_| Client::new());
     let mut tracker = RequestTracker::new();
     tracker.persona = persona_name.to_string();
 
@@ -444,7 +494,10 @@ pub fn control(persona_name: &str) {
      }
 
      pub fn set_control_with_persona(prompt: &str, persona: &str) -> String {
-        let client = Client::new();
+        let client = Client::builder()
+            .timeout(std::time::Duration::from_secs(120))
+            .build()
+            .unwrap_or_else(|_| Client::new());
         let mut tracker = RequestTracker::new();
         tracker.persona = persona.to_string();
 

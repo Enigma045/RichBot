@@ -15,7 +15,6 @@ pub struct FileWriteRequest {
 pub enum FileError {
     IoError(std::io::Error),
     ParseError(String),
-    PathTraversal(String),
 }
 
 impl From<std::io::Error> for FileError {
@@ -25,49 +24,33 @@ impl From<std::io::Error> for FileError {
 }
 
 fn safe_path(base: &Path, untrusted: &str) -> Result<PathBuf, FileError> {
-    let base = base.canonicalize()
-        .map_err(|e| FileError::IoError(e))?;
+    let untrusted_path = Path::new(untrusted);
+    
+    // If the path is absolute, respect it directly.
+    if untrusted_path.is_absolute() {
+        return Ok(untrusted_path.to_path_buf());
+    }
 
+    // Otherwise, join it with the base.
+    // We don't strictly enforce 'starts_with' anymore as per user request to allow writing outside sandbox.
     let joined = base.join(untrusted);
-
-  let (cannon, filename) = if joined.exists() {
-      (joined.canonicalize()?, None)
-  } else {
-      let parent = joined.parent()
-           .ok_or_else(|| FileError::PathTraversal("no parent dir".into()))?;
-      let parent_cannon = parent.canonicalize()
-           .map_err(|_| FileError::PathTraversal("parent dir does not exist".into()))?;
-      let filename = joined.file_name()
-           .ok_or_else(|| FileError::PathTraversal("no filename".into()))?;
-      (parent_cannon, Some(filename.to_owned()))
-  };
-
-  let final_path = match filename {
-    Some(f) => cannon.join(f),
-    None => cannon,
-  };
-
-  if !final_path.starts_with(&base) {
-    return Err(FileError::PathTraversal(format!(
-        "path '{}' escapes base dir '{}'",
-        final_path.display(),
-        base.display()
-    )));
-  }
-
-  Ok(final_path)
-
+    Ok(joined)
 }
 
 pub fn write_file(base: &Path, path: &str, content: &str) -> Result<(), FileError> {
     let safe = safe_path(base, path)?;
 
+    // Ensure parent directory exists
+    if let Some(parent) = safe.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+
     let mut file = OpenOptions::new()
+        .write(true)
         .create(true)
-        .append(true)
+        .truncate(true)
         .open(safe)?;
 
-    file.write_all(b"\n")?;
     file.write_all(content.as_bytes())?;
     Ok(())
 }

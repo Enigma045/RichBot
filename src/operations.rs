@@ -64,7 +64,12 @@ impl From<std::io::Error> for FileError {
 // ── Operations ────────────────────────────────────────────────────────────────
 
 pub fn see() -> Vec<FileEntry> {
-    WalkDir::new(".")
+    let sandbox_path = "./sandbox";
+    if !Path::new(sandbox_path).exists() {
+        let _ = fs::create_dir_all(sandbox_path);
+    }
+
+    WalkDir::new(sandbox_path)
         .max_depth(3)
         .follow_links(false)
         .into_iter()
@@ -132,8 +137,15 @@ pub fn write_file(path: &str, content: &str) -> Result<(), FileError> {
 }
 
 pub fn read_file(path: &str) -> Result<String, FileError> {
-    if !Path::new(path).exists() {
+    let p = Path::new(path);
+    if !p.exists() {
         return Err(FileError::InvalidPath(path.to_string()));
+    }
+    if p.is_dir() {
+        return Err(FileError::Io(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            format!("Path '{}' is a directory, not a file", path),
+        )));
     }
     Ok(fs::read_to_string(path)?)
 }
@@ -147,21 +159,42 @@ pub fn read_files(entries: &[FileEntry]) -> Vec<Result<String, FileError>> {
 }
 
 pub fn unified_search(query: &str, base_url: &str) -> Vec<FileEntry> {
-    if !query.is_empty() {
-        match crate::eyes::search(query) {
-            Ok(results) => {
-                if !results.is_empty() {
-                    eprintln!("🔍 unified_search: eyes::search found {} results.", results.len());
-                    return results;
-                }
+    if query.is_empty() {
+        return see();
+    }
+
+    // 1. AI Keyword Fuzzy Search (From search_model.rs)
+    let mut ai_matches = crate::search_model::search(query);
+    if !ai_matches.is_empty() {
+        eprintln!("🔍 unified_search: AI Keyword match found {} results.", ai_matches.len());
+        // Indicate the sandbox directory as a primary workspace choice
+        ai_matches.push(FileEntry {
+            path: "./sandbox".to_string(),
+            depth: 0,
+            entry_type: EntryType::Directory,
+        });
+        return ai_matches;
+    }
+
+    // 2. Semantic Rerank Search (From eyes.rs)
+    match crate::eyes::search(query) {
+        Ok(mut results) => {
+            if !results.is_empty() {
+                eprintln!("🔍 unified_search: eyes::search (Semantic) found {} results.", results.len());
+                results.push(FileEntry {
+                    path: "./sandbox".to_string(),
+                    depth: 0,
+                    entry_type: EntryType::Directory,
+                });
+                return results;
             }
-            Err(e) => {
-                eprintln!("⚠️ eyes::search failed: {}. Falling back...", e);
-            }
+        }
+        Err(e) => {
+            eprintln!("⚠️ eyes::search failed: {}. Falling back...", e);
         }
     }
 
-    // Fallback 1: search_collab
+    // 3. Collaborative / Remote Search (Falls back to see() internally if it fails)
     search_colab(query, base_url)
 }
 

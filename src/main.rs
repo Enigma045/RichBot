@@ -1,4 +1,5 @@
-use std::{env, io::Write, path::Path};
+use std::{fs, env, io::Write, path::Path};
+use colored::Colorize;
 
 mod model;
 mod styles;
@@ -9,6 +10,7 @@ pub mod api_keys;
 mod sport;
 mod brain;
 pub mod eyes;
+mod search_model;
 
 fn analysis_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
     let see = operations::unified_search(task, base_url);
@@ -77,13 +79,17 @@ fn creation_task(task: &str, persona: &str, is_headless: bool, base_url: &str) {
 
     let prompt2 = format!(
         "Return ONLY a valid JSON array of objects, each with 'path' and 'content'. \
-         No markdown, no explanation. Task: {}",
+         Use absolute paths if specified, otherwise relative. No markdown, no explanation. Task: {}",
         task_prompt
     );
 
     let ai_response2 = model::set_control_with_persona(&prompt2, persona);
     
-    let base = Path::new(".");
+    let base_str = "./sandbox";
+    let base = Path::new(base_str);
+    if !base.exists() {
+        let _ = fs::create_dir_all(base);
+    }
     match hands::write_files_from_json(base, &ai_response2) {
         Ok(()) => {
             if is_headless {
@@ -209,6 +215,89 @@ fn content_creator() {
     }
 }
 
+
+fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) {
+    let mut tracker = model::RequestTracker::new();
+    let input_lower = input.to_lowercase();
+    let mut mode_changed = false;
+    let mut cleaned_input = input.to_string();
+
+    // Check and strip keywords
+    if input_lower.contains("brain mode") {
+        tracker.task_mode = "Brain".to_string();
+        tracker.save();
+        if !is_headless {
+            println!("🧠 Switched to {} (Multi-Step Orchestration)!", "Brain Mode".bold().green());
+        }
+        mode_changed = true;
+        cleaned_input = cleaned_input.replace("brain mode", "").replace("Brain mode", "").replace("Brain Mode", "").trim().to_string();
+    } else if input_lower.contains("improvise mode") {
+        tracker.task_mode = "Improvise".to_string();
+        tracker.save();
+        if !is_headless {
+            println!("⚡ Switched to {} (Single-Step Auto-Routing)!", "Improvise Mode".bold().yellow());
+        }
+        mode_changed = true;
+        cleaned_input = cleaned_input.replace("improvise mode", "").replace("Improvise mode", "").replace("Improvise Mode", "").trim().to_string();
+    }
+
+    // Check if it was ONLY a mode switch command
+    if cleaned_input.is_empty() && mode_changed {
+        return;
+    }
+
+    // Use current task (either cleaned or original)
+    let final_task = if cleaned_input.is_empty() { input } else { &cleaned_input };
+
+    // Execute based on persistent mode
+    if tracker.task_mode == "Brain" {
+        eprintln!("🧠 {} Status: Using Brain Orchestrator...", "Enigma".bold().magenta()); 
+        
+        // Write plan header early so Go-bot knows we are planning
+        let (result, plan_path) = brain::run(final_task, persona, base_url);
+        
+        if !is_headless {
+            println!("\n📋 Plan: {}", plan_path.dimmed());
+            println!("\n🧠 Brain Result:\n{}", result);
+        } else {
+            println!("(Mode: Brain)\n{}", result);
+        }
+    } else {
+        // Clear/Update plan.txt so Go-bot doesn't send a stale one
+        let _ = std::fs::write("plans/plan.txt", "⚡ Improvise Mode: Single-step execution. No decomposition plan generated.");
+        
+        eprintln!("⚡ {} Status: Using Improvise Route...", "Enigma".bold().magenta());
+        
+        if is_headless {
+            println!("(Mode: Improvise)");
+        }
+        auto_router(final_task, persona, is_headless, base_url);
+    }
+}
+
+fn live_assistant(persona: &str, base_url: &str) {
+    let mut tracker = model::RequestTracker::new();
+    println!("\n🌌 {} Ready! Currently in [{}] mode.", "Live Assistant".bold().cyan(), tracker.task_mode.bold().green());
+    println!("{}", "💭 Keywords: 'brain mode' or 'improvise mode' to switch.".dimmed());
+    println!("{}", "(Type 'quit' to return to menu)\n".dimmed());
+
+    loop {
+        // Refresh tracker in loop to see mode changes
+        tracker = model::RequestTracker::new();
+        print!("{} [{}] > ", "Enigma".bold().magenta(), tracker.task_mode.cyan());
+        std::io::stdout().flush().unwrap();
+        let mut input = String::new();
+        std::io::stdin().read_line(&mut input).unwrap();
+        let input = input.trim();
+
+        if input.is_empty() { continue; }
+        if input == "quit" || input == "exit" { break; }
+
+        dispatch_task(input, persona, base_url, false);
+        println!(); // Add space between turns
+    }
+}
+
 fn main() {
     // Initialize rustls crypto provider for Spotify integration (v0.23)
     let _ = rustls::crypto::ring::default_provider().install_default();
@@ -220,6 +309,7 @@ fn main() {
     let mut task: Option<String> = None;
     let mut filter: Option<(String, String)> = None;
     let mut brain_task: Option<String> = None;
+    let mut send_plan = false;
 
     // Robust CLI parsing
     let mut i = 1;
@@ -245,6 +335,10 @@ fn main() {
                 brain_task = Some(args[i+1].clone());
                 i += 2;
             }
+            "--send-plan" => {
+                send_plan = true;
+                i += 1;
+            }
             _ => {
                 i += 1;
             }
@@ -253,16 +347,21 @@ fn main() {
 
 
     
-    // Headless execution for integration
-    if let Some(t) = task {
-        auto_router(&t, &persona, true, &target_url);
+    // --send-plan: print plan.txt content for the Go bot to forward via WhatsApp
+    if send_plan {
+        println!("{}", brain::read_plan());
         return;
     }
 
+    // Headless execution — respects persistent mode + keyword detection
+    if let Some(t) = task {
+        dispatch_task(&t, &persona, &target_url, true);
+        return;
+    }
+
+    // --brain flag (kept for backwards compat) — also respects unified dispatch
     if let Some(t) = brain_task {
-        eprintln!("🧠 Enigma Brain Mode");
-        let result = brain::run(&t, &persona, &target_url);
-        println!("{}", result);
+        dispatch_task(&t, &persona, &target_url, false);
         return;
     }
 
@@ -273,12 +372,13 @@ fn main() {
 
     // Interactive Menu Mode
     loop {
+        let tracker = model::RequestTracker::new();
         println!("\n╔══════════════════════════════════════════╗");
         println!("║       🌌 Enigma AI Assistant 🌌         ║");
         println!("╠══════════════════════════════════════════╣");
-        println!("║ [Mode: {:<32}] ║", format!("{} Assistant", persona));
+        println!("║ [Mode: {:<32}] ║", format!("{} ({} Mode)", persona, tracker.task_mode));
         println!("╠══════════════════════════════════════════╣");
-        println!("║  1. 💬 Quick AI Chat                     ║");
+        println!("║  1. ⚡ Live Assistant                    ║");
         println!("║  2. 🔍 Analyze Project / Knowledge       ║");
         println!("║  3. 🛠️  Execute Tasks                    ║");
         println!("║  4. ✍️  Generate Content / Files          ║");
@@ -294,10 +394,7 @@ fn main() {
         
         match choice.trim() {
             "1" => {
-               println!("Chatting in {} mode...", persona);
-               // Simple wrapper to call control with persona
-               println!("(Type 'quit' to exit chat)");
-               model::control(&persona);
+               live_assistant(&persona, &target_url);
             }
             "2" => analysis_task("Provide a supportive summary and help with the project.", &persona, false, &target_url),
             "3" => cmd_executor::execute_ai_commands(),
@@ -330,7 +427,8 @@ fn main() {
                 std::io::stdin().read_line(&mut bt).unwrap();
                 let bt = bt.trim();
                 if !bt.is_empty() {
-                    let result = brain::run(bt, &persona, &target_url);
+                    let (result, plan_path) = brain::run(bt, &persona, &target_url);
+                    println!("\n📋 Plan saved to: {}", plan_path);
                     println!("\n🧠 Brain Result:\n{}", result);
                 }
             }

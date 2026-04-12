@@ -4320,3 +4320,3018 @@ Exit code: exit code: 0
 Command: powershell -ExecutionPolicy Bypass -File script.ps1
 Exit code: exit code: 0
 ----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Exception calling "SendWait" with "1" argument(s): "Keyword 
+"VOLUME_MUTE" is not valid."
+At C:\Users\USER\Rust\Code_analyzer\script.ps1:11 char:5
++     [System.Windows.Forms.SendKeys]::SendWait('{VOLUME_MUTE}')
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvoc 
+   ationException
+    + FullyQualifiedErrorId : ArgumentException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\script.ps1 : Failed to unmute 
+audio: Exception calling "ShouldContinue" with "2" argument(s): 
+"Object reference not set to an instance of an object."
+    + CategoryInfo          : NotSpecified: (:) [Write-Error],  
+   WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.Wri 
+   teErrorException,script.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : A positional parameter cannot be found that 
+accepts argument 'System.Object[]'.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:2 char:1
++ Start-Process -FilePath 'vlc.exe' -ArgumentList 
+"\"$videoPath\"", '-- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Start-Proce 
+   ss], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Micro 
+   soft.PowerShell.Commands.StartProcessCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Movie\Avengers_ Age of Ultron-360P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Downloads\Classroom of the Elite_ Year 2 Volume 2 - PDF Room.pdf'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1 "<output_path>"
+STDOUT:
+Screenshot saved to <output_path>
+
+STDERR:
+Exception calling "Save" with "2" argument(s): "Illegal 
+characters in path."
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:13 char:1
++ $bitmap.Save($OutputPath, 
+[System.Drawing.Imaging.ImageFormat]::Png)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvoc 
+   ationException
+    + FullyQualifiedErrorId : ArgumentException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Screenshot saved to C:\Users\USER\Desktop\screenshot.png
+
+STDERR:
+Unable to find type [System.Windows.Forms.Screen].
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 char:11
++ $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
++           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Windows 
+   .Forms.Screen:TypeName) [], RuntimeException
+    + FullyQualifiedErrorId : TypeNotFound
+ 
+New-Object : Exception calling ".ctor" with "2" argument(s): 
+"Value of 'null' is not valid for 'stream'."
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:3 char:11
++ $bitmap = New-Object System.Drawing.Bitmap $bounds.Width, 
+$bounds.Hei ...
++           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [New-Object 
+   ], MethodInvocationException
+    + FullyQualifiedErrorId : ConstructorInvokedThrowException, 
+   Microsoft.PowerShell.Commands.NewObjectCommand
+ 
+Exception calling "FromImage" with "1" argument(s): "Value 
+cannot be null.
+Parameter name: image"
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:4 char:1
++ $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvoc 
+   ationException
+    + FullyQualifiedErrorId : ArgumentNullException
+ 
+You cannot call a method on a null-valued expression.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:5 char:1
++ $graphics.CopyFromScreen($bounds.Location, 
+[System.Drawing.Point]::Em ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], Runtime 
+   Exception
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 
+You cannot call a method on a null-valued expression.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:8 char:1
++ $bitmap.Save($savePath, 
+[System.Drawing.Imaging.ImageFormat]::Png)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], Runtime 
+   Exception
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 
+You cannot call a method on a null-valued expression.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:9 char:1
++ $graphics.Dispose()
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], Runtime 
+   Exception
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 
+You cannot call a method on a null-valued expression.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:10 char:1
++ $bitmap.Dispose()
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], Runtime 
+   Exception
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\Users\USER\Downloads\Classroom of the Elite_ Year 2 Volume 2 - PDF Room (1).pdf
+C:\Users\USER\Downloads\Classroom of the Elite_ Year 2 Volume 2 - PDF Room.pdf
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Listing contents of Desktop:
+
+C:\Users\USER\Desktop\New folder
+C:\Users\USER\Desktop\New folder (2)
+C:\Users\USER\Desktop\RESEARCH
+C:\Users\USER\Desktop\Antigravity.lnk
+C:\Users\USER\Desktop\Classroom of the Elite_ Year 2 Volume 2 - PDF Room.pdf
+C:\Users\USER\Desktop\context.exe
+C:\Users\USER\Desktop\Cyberspace reviewed, edited and scored first screening.docx
+C:\Users\USER\Desktop\DDD_presentantions [Autosaved].pptx
+C:\Users\USER\Desktop\DDD_presentantions.pptx
+C:\Users\USER\Desktop\Docker Desktop.lnk
+C:\Users\USER\Desktop\Eclipse IDE for Java Developers - 2025-06.lnk
+C:\Users\USER\Desktop\git.txt
+C:\Users\USER\Desktop\Group 1 - Re-engineering the Cyberspace in Africa A Systematic Review of Ethical Issues and Cyber Crimes - Updated.docx
+C:\Users\USER\Desktop\Hard Disk Sentinel.lnk
+C:\Users\USER\Desktop\LECTURE 1 - INTRODUCTION TO PROJECT MANAGEMENT.pptx
+C:\Users\USER\Desktop\LECTURE 2 - PM FRAMEWORK.pptx
+C:\Users\USER\Desktop\Lemillion - Chrome.lnk
+C:\Users\USER\Desktop\New Text Document (2).txt
+C:\Users\USER\Desktop\New Text Document.txt
+C:\Users\USER\Desktop\ngrok_token.txt
+C:\Users\USER\Desktop\NOZO.docx
+C:\Users\USER\Desktop\omar DDD final.pdf
+C:\Users\USER\Desktop\output.ts
+C:\Users\USER\Desktop\playlist.m3u8
+C:\Users\USER\Desktop\Registrar letter.docx
+C:\Users\USER\Desktop\Richard SAMBO - Simulation of an Agro- Individual assignement.pdf
+C:\Users\USER\Desktop\Secrets.txt
+C:\Users\USER\Desktop\seg_57IWfmlLVTk.ts
+C:\Users\USER\Desktop\Task4_DataExtraction_Findings-1.docx
+C:\Users\USER\Desktop\Task4_DataExtraction_Findings-1.pdf
+C:\Users\USER\Desktop\USER - Shortcut.lnk
+C:\Users\USER\Desktop\uTorrent Web.lnk
+C:\Users\USER\Desktop\Visual Studio Code.lnk
+C:\Users\USER\Desktop\VOL DDD V1.1.4-marked and is corrected.pdf
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Screenshot saved to C:\Users\USER\Rust\Code_analyzer\sandbox\screenshot.png
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+�o. screenshot.png exists in the working directory.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+All files:
+screenshot.png
+script.ps1
+Image files:
+screenshot.png
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+[
+    "screenshot.png",
+    "script.ps1"
+]
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Movie\Avengers_ Age of Ultron-360P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 5\Rick and Morty-S5E10-480P.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\\Users\\USER\\Videos\\New folder\\Anime\\Ricky and Morty\\Season 5\\Rick and Morty-S5E10-480P.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 6\Rick and Morty-S6E5-720P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:25 
+char:59
++ ...  Write-Error "Failed to connect to VLC RC 
+interface on $host:$port. E ...
++                                                      
+      ~~~~~~
+Variable reference is not valid. ':' was not followed 
+by a valid variable name character. Consider using ${} 
+to delimit the name.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:25 
+char:125
++ ... . Ensure VLC is running with '--extraintf rc 
+--rc-host $host:$port'."
++                                                      
+      ~~~~~~
+Variable reference is not valid. ':' was not followed 
+by a valid variable name character. Consider using ${} 
+to delimit the name.
+    + CategoryInfo          : ParserError: (:) [], Par 
+   entContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidVariableReference 
+   WithDrive
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+Handles NPM(K)  PM(K)  WS(K) CPU(s)    Id SI ProcessNam
+                                             e         
+------- ------  -----  ----- ------    -- -- ----------
+    155      9   2112   6716         5308  0 AdminSe...
+    141      9   2036   7796         6320  0 Aggrega...
+    676     55 460376 370456 195.73    88  3 Antigra...
+    467     64 193996 211060  15.69  1392  3 Antigra...
+    370     30  91564 114180  19.50  4340  3 Antigra...
+    255     12  10712  89388   0.02  5196  3 Antigra...
+    351     28  87240 113028  17.31  7376  3 Antigra...
+    835     33 162044 215632  52.16  7496  3 Antigra...
+    322     26 102828 125180   3.05  8820  3 Antigra...
+   1334    117 167488 201828  27.88  9868  3 Antigra...
+    563     23  21812 106648   0.31 15020  3 Antigra...
+    374     21  14264  97408   3.84 15256  3 Antigra...
+    195     19  32764 106164   0.34 16680  3 Antigra...
+    376     33  97912 125864   1.25 16856  3 Antigra...
+    280     16  11864  91692   0.13 17680  3 Antigra...
+    233     12   7144  13856   4.95  7484  0 audiodg   
+     65      5   4036   4044   0.00 10604  3 cmd       
+     89      6   2308   5044   0.02 13080  3 cmd       
+    257     10   2712  14260   0.70 12628  3 Code_an...
+    158     10   5656   7468         7220  0 conhost   
+    110      8   1292   7000   0.02  9724  3 conhost   
+    116      7   5364  11012   0.02  9892  3 conhost   
+    116      7   5380   6420   0.00 18128  3 conhost   
+    619     64  21396  66104   3.47  9504  3 CrossDe...
+    814     27   2292   5524          768  0 csrss     
+    716     24   2884   7448         8744  3 csrss     
+    538     21   7768  26300   5.92  9476  3 ctfmon    
+    263     15   3608  10644         7192  0 devmonsrv 
+    284     25   5940  14424   0.28 16748  3 dllhost   
+   1260     64  83668  85724        15580  3 dwm       
+    141      9   2264   9368        14208  0 elevati...
+   5031    153 196720 221804  44.33  9900  3 explorer  
+     42      7   1908   3428         1128  0 fontdrv...
+     42      9   4188   8904        16488  3 fontdrv...
+    371     40  24072  23240   2.48  9896  3 go        
+    429     39  31040  11972  10.63  9264  3 HDSentinel
+    342     23   9356  16848   0.55 14764  3 helper    
+    155      9   1796   7232         6056  0 ibtrksrv  
+      0      0     60      8            0  0 Idle      
+    188     11   2004   8876         3076  0 igfxCUI...
+    293     14   3532  13528   0.23  6016  3 igfxEM    
+    170     12   3000  10312   0.06 16008  3 igfxext   
+    152      9   1420   6828         1516  0 IntelCp...
+    166      8   1556   6984         1648  0 IntelCp...
+    147      9   1332   5740         5460  0 jhi_ser...
+    461     39 220916 195716  28.16 16408  3 languag...
+    225     12   3000   8672         5760  0 LMS       
+     65     17   1824   3536          984  0 LsaIso    
+   1465     28  10024  20892          996  0 lsass     
+    310     14  22024  23344   0.09  9812  3 main      
+      0      0   1344  88016         3012  0 Memory ...
+    412     22  14044  35468         4872  0 MoUsoCo...
+    525     18  11716  19776         6596  0 MpDefen...
+    148     10   2396   8328   0.00  3636  3 msedge    
+    182     11   8988  17660   0.20  5620  3 msedge    
+   1242     43  49312 109380   1.70 12224  3 msedge    
+    342     18  13232  36360   0.41 15796  3 msedge    
+    351     18  30780  35292   0.33 17192  3 msedge    
+    365     20  13068  37588   1.58  1564  3 msedgew...
+    356     18  13052  35088   1.17  2428  3 msedgew...
+   1295     47 104500 135912  11.83  2808  3 msedgew...
+   1245     45  40420  95480   1.73  4244  3 msedgew...
+    188     11  10316  17684   0.14  5088  3 msedgew...
+    370     44 212080 191328  24.05  5936  3 msedgew...
+    152      9   2376   7228   0.02  6888  3 msedgew...
+   1229     45  44076 101584   3.09  7244  3 msedgew...
+    350     18  12228  31232   0.48  8204  3 msedgew...
+    186     11   9188  17068   0.08  9076  3 msedgew...
+    452     22  30784  40008   0.33 10736  3 msedgew...
+    152      9   2344   7188   0.05 10956  3 msedgew...
+    346     22  49316  75940   2.64 11792  3 msedgew...
+    256     27  65804  74560   5.59 12424  3 msedgew...
+    512     22  53488  53704   0.98 13228  3 msedgew...
+    307     23  43240  72112   0.97 13704  3 msedgew...
+    184     11   9076  17052   0.17 14296  3 msedgew...
+    435     21  30480  39736   0.41 17564  3 msedgew...
+    159      9   2364   7360   0.02 17576  3 msedgew...
+    881    240 366188 308272         6048  0 MsMpEng   
+    227     13   5360  12368         4116  0 NisSrv    
+    321     19   5992  14568         1960  0 NVDispl...
+    510     24  24660  27444         9576  3 NVDispl...
+    253     15   3928  12592         5648  0 NvTelem...
+    223     14   3200   9644         4356  0 obexsrv   
+    949     31  46464  54616        15436  0 OfficeC...
+    818     32  37332  28748         5384  0 OneApp....
+    163     10   2152   8356   0.09  3224  3 OpenCon...
+    514     14   3156  14908         7212  0 postgres  
+    463     11   2656   8600         8008  0 postgres  
+    464     11   2964   8744         8096  0 postgres  
+    464     11   2960   8760         8104  0 postgres  
+    483     11   2972   9852         8112  0 postgres  
+    467     11   3052  10800         8132  0 postgres  
+    464     11   3004  10044         8140  0 postgres  
+    465     11   2964  13256         8804  0 postgres  
+    467     11   3480  10212         8812  0 postgres  
+    467     11   3504   9980         8840  0 postgres  
+    385     21   3540   6148   1.23  9484  3 PowerMgr  
+    559     27  52220  64372   0.83 10184  3 powershell
+    528     27  59956  65964   0.39 16728  3 powershell
+    245     27  24396  12384         4520  0 Present...
+    139      9   1572   7368   0.02  5148  3 PWRISOVM  
+    194     14 779976 686988   2.53 11092  3 pyrefly   
+      0     19  10768  63924          116  0 Registry  
+    317     17   3668  20424   0.33 15136  3 rundll32  
+    490     22   6664  30408   0.67 11616  3 Runtime...
+    331     20   6388  24304   0.42 12908  3 Runtime...
+    155     10   2164  10256   0.02 13900  3 Runtime...
+    163     11   2224  10756   0.09 14368  3 Runtime...
+   1385     90  98308 104232   3.70  3968  3 SearchHost
+   1006     33  29452  28748         4992  0 SearchI...
+      0      0    184  23576           76  0 Secure ...
+    511     20   8220  18672         6644  0 Securit...
+    188     10   1852  10424   0.06 17688  3 Securit...
+    787     13   5924   9112          940  0 services  
+    645     21   5964  32616   1.39 10316  3 sihost    
+     58      3   1108   1152          576  0 smss      
+    492     27   9008  21020         2276  0 spoolsv   
+    869     42  54632  87856   2.63 10164  3 StartMe...
+    272     11   3032  12112         1020  0 svchost   
+   1440     25  15444  34264         1092  0 svchost   
+   1686     22  11712  18476         1228  0 svchost   
+    346     13   2908   8712         1280  0 svchost   
+    110      8   1132   4944         1360  0 svchost   
+    196     12   2240   7812         1368  0 svchost   
+    264     13   3052  10360         1480  0 svchost   
+    340     11   2720   8320         1528  0 svchost   
+    122      8   1388   5468         1596  0 svchost   
+    306     12   3548  10680         1720  0 svchost   
+    266     13   5956  15120         1796  0 svchost   
+    365     16   4336  17788   0.22  1940  3 svchost   
+    191     13   2020   8460         1944  0 svchost   
+    212     11   2392  10160         1988  0 svchost   
+    428     20   6672  16252         2140  0 svchost   
+    362     30   8788  16748         2256  0 svchost   
+    134      8   1420   7860   0.05  2408  3 svchost   
+    123      8   1224   6120         2448  0 svchost   
+    183      7   2252   5736         2576  0 svchost   
+    294     21   3168  10884         2584  0 svchost   
+    195     13   2772  10320         2592  0 svchost   
+    197     14   1860   7300         2600  0 svchost   
+    476     14  17944  16256         2608  0 svchost   
+    281     10   2212   9280         2616  0 svchost   
+    158     27   6004   9568         2624  0 svchost   
+    354     19   5088  17584         2736  0 svchost   
+    248     16  53452  54868         2740  0 svchost   
+    192     10   2084   7756         2748  0 svchost   
+    255      8   1360   5600         2764  0 svchost   
+   1076     21  10032  18652         2800  0 svchost   
+    178     11   1836   7388         2896  0 svchost   
+    122      8   1296   6256         3028  0 svchost   
+    201     11   1928   8144         3124  0 svchost   
+    161      9   1604   6468         3192  0 svchost   
+    395     13   3292  13644         3352  0 svchost   
+    121      8   1276   6096         3372  0 svchost   
+    167      9   1444   6780         3388  0 svchost   
+    297     11  12080  16584         3540  0 svchost   
+    238     12   3700   8092         3568  0 svchost   
+    306     15   3360   8352         3692  0 svchost   
+    185     10   1712   7256         3768  0 svchost   
+    218     11   2180   9828         3792  0 svchost   
+   1514     14   3440  10776         3800  0 svchost   
+    312     13   3060  13636         3824  0 svchost   
+    504     36  24672  33136         3840  0 svchost   
+    186     10   1980   7252         3940  0 svchost   
+    430     18   7008  27932   1.33  3960  3 svchost   
+    522     31   6532  18500         4056  0 svchost   
+    307     22   2896  11588         4080  0 svchost   
+    244     12   2628   7984         4120  0 svchost   
+    703     16  16216  21632         4752  0 svchost   
+    243     13   3676  15404         4892  0 svchost   
+    208     12   2240   8804         5052  0 svchost   
+    222     15   1996   7676         5100  0 svchost   
+    374     20   2856  10764         5220  0 svchost   
+    772     34  27272  39288         5260  0 svchost   
+    415     21  29636  45036         5292  0 svchost   
+    225     13   3008  10292         5376  0 svchost   
+    293     14   3548  16164         5568  0 svchost   
+    136      8   1264   5100         5636  0 svchost   
+    216     11   2224   8916         5668  0 svchost   
+    135      9   1472   6840         5704  0 svchost   
+    417     19  10904  19112         5748  0 svchost   
+    463     22   5596  21632         5788  0 svchost   
+    400     20   7212  21832         5940  0 svchost   
+    360     12   2632  12528         6088  0 svchost   
+    142      9   1392   6240         6460  0 svchost   
+    409     24   5372  18880         6652  0 svchost   
+    284     16   4072  15256         6784  0 svchost   
+    328     18   4332  18668         6952  0 svchost   
+    216     12   2104   7456         7080  0 svchost   
+    260     15   2872  12504   0.14  7148  3 svchost   
+    259     12   3152  15708   0.13  8240  3 svchost   
+    199     15   6392  10348         8288  0 svchost   
+    186    112   2176   7380         9416  0 svchost   
+    111      8   1320   6312   0.02  9916  3 svchost   
+    480     30  10124  20728        10348  0 svchost   
+    172      9   1592   7616        10880  0 svchost   
+    117      8   1332   6108        12532  0 svchost   
+    159     42   1692   6916        12844  0 svchost   
+    437     27   3788  13536        14372  0 svchost   
+    265     13   2636  11576        14840  0 svchost   
+    382     16   3800  16864        16588  0 svchost   
+    528     20   5212  25100   0.06 11992  3 SynTPEnh  
+    314     11   2128   7680         5656  0 SynTPEn...
+     97      8   1124   5796   0.03  8212  3 SynTPHe...
+   4397      0     52    156            4  0 System    
+    383     21   6832  18752   0.30  8624  3 taskhostw 
+    325     33   6340  17580   0.53 11152  3 taskhostw 
+    987     36  26376  64400   2.25 13304  3 TextInp...
+    204     11   2160   9560         5428  0 TPMProv...
+    121      9   2080   7040         1704  0 updater   
+    554     51  17276  29208   4.47 12132  3 utweb     
+    601     51 162884 174396  49.70  6924  3 vlc       
+   1483    137  63072 176164   7.67  6424  3 WhatsAp...
+    846     35  11080  49024   1.45   636  3 Widgets   
+    318     18   4724  20420   0.58  3632  3 WidgetS...
+    823     36  28472  76640   5.45  4100  3 Windows...
+    151     12   1596   6048          868  0 wininit   
+    269     11   2320  10060         7572  3 winlogon  
+    181     13   3112   9816         6756  0 WmiPrvSE  
+    168     11   3752  11240        10436  0 WmiPrvSE  
+    276     14   2832   9984         5740  0 WMIRegi...
+    465     20   6500  20712         6072  0 wslservice
+
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+VLC process terminated successfully.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : This command cannot be run due to the 
+error: The system cannot find the file specified.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:2 
+char:1
++ Start-Process -FilePath 'vlc.exe' -ArgumentList 
+"`"$videoPath`"", '-- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [S 
+   tart-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationExceptio 
+   n,Microsoft.PowerShell.Commands.StartProcessComman  
+  d
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+   Id ProcessName     MainWindowTitle                  
+   -- -----------     ---------------                  
+ 9868 Antigravity     Code_analyzer - Antigravity - ...
+ 9900 explorer                                         
+13304 TextInputHost   Windows Input Experience         
+ 4100 WindowsTerminal Command Prompt - go  run main.go 
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+Host Name:                 DESKTOP-NPQR4JL
+OS Name:                   Microsoft Windows 11 Pro
+OS Version:                10.0.22621 N/A Build 22621
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          USER
+Registered Organization:   
+Product ID:                00331-10000-00001-AA166
+Original Install Date:     27/11/2024, 9:50:32 pm
+System Boot Time:          06/04/2026, 5:49:51 am
+System Manufacturer:       Dell Inc.
+System Model:              Latitude 3570
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 78 Stepping 3 GenuineIntel ~1100 Mhz
+BIOS Version:              Dell Inc. 1.19.0, 11/01/2021
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+02:00) Cairo
+Total Physical Memory:     7,927 MB
+Available Physical Memory: 2,308 MB
+Virtual Memory: Max Size:  13,710 MB
+Virtual Memory: Available: 5,674 MB
+Virtual Memory: In Use:    8,036 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              \\DESKTOP-NPQR4JL
+Hotfix(s):                 3 Hotfix(s) Installed.
+                           [01]: KB5044033
+                           [02]: KB5044285
+                           [03]: KB5046247
+Network Card(s):           3 NIC(s) Installed.
+                           [01]: Bluetooth Device (Personal Area Network)
+                                 Connection Name: Bluetooth Network Connection 2
+                                 Status:          Media disconnected
+                           [02]: Dell Wireless 1802 802.11a/b/g/n Adapter
+                                 Connection Name: Wi-Fi 3
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     192.168.197.203
+                                 IP address(es)
+                                 [01]: 192.168.197.75
+                                 [02]: fe80::455a:f396:1a13:c8b1
+                           [03]: Realtek(R) PCI(e) Ethernet Controller
+                                 Connection Name: Ethernet 3
+                                 Status:          Media disconnected
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+VLC exited with code 
+Full log saved to: C:\Users\USER\Rust\Code_analyzer\sandbox\vlc_output.txt
+
+STDERR:
+& : The term 'vlc' is not recognized as the name of a 
+cmdlet, function, script file, or operable program. 
+Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try 
+again.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:3 
+char:3
++ & vlc -vvv *>&1 | Out-File -FilePath $logPath 
+-Encoding utf8
++   ~~~
+    + CategoryInfo          : ObjectNotFound: (vlc:Str 
+   ing) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+
+STDERR:
+The argument 'script.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+
+Exit code: exit code: 0xfffd0000
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+
+STDERR:
+The argument 'script.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+
+Exit code: exit code: 0xfffd0000
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Invoke-Item : A positional parameter cannot be found 
+that accepts argument 'S3E10�?480P.mp4'.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:1
++ Invoke-Item 'C:\Users\USER\Videos\New 
+folder\Anime\Ricky and Morty\Se ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [In 
+   voke-Item], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFo 
+   und,Microsoft.PowerShell.Commands.InvokeItemComman  
+  d
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File search_classroom.ps1
+STDOUT:
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+
+STDERR:
+The argument 'search_classroom.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+
+Exit code: exit code: 0xfffd0000
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_classroom_elite_year2.ps1
+STDOUT:
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+
+STDERR:
+The argument 'open_classroom_elite_year2.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+
+Exit code: exit code: 0xfffd0000
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+File not found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Anime\Classroom of the Elite\Season 2\Classroom of the Elite - S02E04.mkv'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Downloads\Classroom of the Elite_ Year 2 Volume 2 - PDF Room (1).pdf'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\Users\USER\Videos\New folder\Movie\Avengers_ Age of Ultron-360P.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+
+Name=Python 3.13.5 Add to Path (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.13.5 Core Interpreter (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.13.5 pip Bootstrap (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.10.6 Add to Path (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.13.5 Executables (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.10.6 Standard Library (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.10.6 Test Suite (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.10.6 Executables (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.10.6 Utility Scripts (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.13.5 Standard Library (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.10.6 Documentation (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.13.5 Tcl/Tk Support (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.10.6 Tcl/Tk Support (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.10.6 Core Interpreter (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.10.6 Development Libraries (64-bit)
+Version=3.10.6150.0
+
+
+Name=Python 3.13.5 Documentation (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.13.5 Test Suite (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.13.5 Development Libraries (64-bit)
+Version=3.13.5150.0
+
+
+Name=Python 3.10.6 pip Bootstrap (64-bit)
+Version=3.10.6150.0
+
+
+Name=Office 16 Click-to-Run Extensibility Component
+Version=16.0.19822.20104
+
+
+Name=Windows SDK Modern Versioned Developer Tools
+Version=10.1.26100.7175
+
+
+Name=Microsoft Visual Studio Setup WMI Provider
+Version=3.12.2140.44225
+
+
+Name=Windows SDK Desktop Headers x64
+Version=10.1.22000.832
+
+
+Name=Windows SDK for Windows Store Apps Metadata
+Version=10.1.26100.7175
+
+
+Name=Intel(R) Wireless Bluetooth(R)
+Version=23.160.0.9
+
+
+Name=Windows SDK for Windows Store Apps Metadata
+Version=10.1.22000.832
+
+
+Name=CMake
+Version=4.2.1
+
+
+Name=WinRT Intellisense Desktop - Other Languages
+Version=10.1.22000.832
+
+
+Name=Windows SDK for Windows Store Apps Contracts
+Version=10.1.22000.832
+
+
+Name=Windows SDK Desktop Headers arm
+Version=10.1.22000.832
+
+
+Name=Node.js
+Version=24.11.1
+
+
+Name=Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=SDK ARM64 Additions
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense Desktop - Other Languages
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Facade Windows WinMD Versioned
+Version=10.1.22000.832
+
+
+Name=Windows IoT Extension SDK Contracts
+Version=10.1.26100.7175
+
+
+Name=NVIDIA Nsight Compute 2025.3.0
+Version=25.3.0.0
+
+
+Name=Windows App Certification Kit x64
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps Headers
+Version=10.1.26100.7175
+
+
+Name=Intel(R) PROSet/Wireless Software for Bluetooth(R) Technology
+Version=3.1.1309.0390
+
+
+Name=WinRT Intellisense Desktop - en-us
+Version=10.1.22000.832
+
+
+Name=Windows IoT Extension SDK Contracts
+Version=10.1.22000.832
+
+
+Name=Windows SDK Desktop Tools x64
+Version=10.1.22000.832
+
+
+Name=vs_filehandler_x86
+Version=17.14.36024
+
+
+Name=Microsoft Visual C++ 2022 X86 Debug Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=Windows SDK Desktop Libs x86
+Version=10.1.22000.832
+
+
+Name=Windows SDK Signing Tools
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps Contracts
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps
+Version=10.1.26100.7175
+
+
+Name=Windows SDK DirectX x86 Remote
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense PPI - en-us
+Version=10.1.22000.832
+
+
+Name=Microsoft Visual C++ 2022 X86 Additional Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=eSpeak NG Text-to-Speech 64-bit
+Version=1.51.0
+
+
+Name=Python Launcher
+Version=3.13.5150.0
+
+
+Name=WinAppDeploy
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Headers x86
+Version=10.1.22000.832
+
+
+Name=Windows App Certification Kit Native Components
+Version=10.1.26100.7175
+
+
+Name=VS Script Debugging Common
+Version=17.0.157.0
+
+
+Name=Windows SDK Facade Windows WinMD Versioned
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps Libs
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense IoT - Other Languages
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Tools arm64
+Version=10.1.22000.832
+
+
+Name=4K Video Downloader+
+Version=25.0.2.0185
+
+
+Name=Windows SDK ARM Desktop Tools
+Version=10.1.22000.832
+
+
+Name=Windows Team Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Windows Team Extension SDK
+Version=10.1.22000.832
+
+
+Name=Universal CRT Extension SDK
+Version=10.1.22000.832
+
+
+Name=Windows Mobile Extension SDK
+Version=10.1.22000.832
+
+
+Name=WinRT Intellisense UAP - Other Languages
+Version=10.1.26100.7175
+
+
+Name=WinAppDeploy
+Version=10.1.22000.832
+
+
+Name=Windows SDK Desktop Libs arm
+Version=10.1.22000.832
+
+
+Name=WinRT Intellisense UAP - Other Languages
+Version=10.1.22000.832
+
+
+Name=Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=Windows SDK Desktop Libs x64
+Version=10.1.26100.7175
+
+
+Name=Universal CRT Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Windows Team Extension SDK Contracts
+Version=10.1.22000.832
+
+
+Name=vs_vswebprotocolselectormsi
+Version=17.14.36323
+
+
+Name=vs_minshellinteropmsi
+Version=17.14.36015
+
+
+Name=vs_minshellx64msi
+Version=17.14.36015
+
+
+Name=WinRT Intellisense Mobile - en-us
+Version=10.1.22000.832
+
+
+Name=Windows IoT Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Windows SDK EULA
+Version=10.1.26100.7175
+
+
+Name=Windows Mobile Extension SDK Contracts
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Libs x86
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense Desktop - en-us
+Version=10.1.26100.7175
+
+
+Name=Windows SDK DirectX x64 Remote
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense IoT - en-us
+Version=10.1.22000.832
+
+
+Name=Windows Subsystem for Linux
+Version=2.6.3.0
+
+
+Name=Windows SDK Desktop Tools x86
+Version=10.1.22000.832
+
+
+Name=Windows Mobile Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Kits Configuration Installer
+Version=10.1.26100.7175
+
+
+Name=vs_communitysharedmsi
+Version=17.14.36025
+
+
+Name=Windows SDK Desktop Tools x86
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Libs x64
+Version=10.1.22000.832
+
+
+Name=Windows Team Extension SDK Contracts
+Version=10.1.26100.7175
+
+
+Name=NVIDIA Nsight Visual Studio Edition 2025.3.0.25168
+Version=25.3.0.25168
+
+
+Name=Chocolatey (Install Only)
+Version=2.6.0.0
+
+
+Name=Windows SDK for Windows Store Apps Tools
+Version=10.1.22000.832
+
+
+Name=Windows SDK OnecoreUap Headers x64
+Version=10.1.26100.7175
+
+
+Name=Windows SDK OnecoreUap Headers arm64
+Version=10.1.26100.7175
+
+
+Name=vs_FileTracker_Singleton
+Version=17.14.36015
+
+
+Name=vcpp_crt.redist.clickonce
+Version=14.44.35211
+
+
+Name=Windows Desktop Extension SDK Contracts
+Version=10.1.22000.832
+
+
+Name=Windows SDK
+Version=10.1.26100.7175
+
+
+Name=Application Verifier x64 External Package (OnecoreUAP)
+Version=10.1.26100.7175
+
+
+Name=vs_minshellmsires
+Version=17.14.36015
+
+
+Name=Universal CRT Redistributable
+Version=10.1.22000.832
+
+
+Name=Universal General MIDI DLS Extension SDK
+Version=10.1.22000.832
+
+
+Name=Windows Desktop Extension SDK
+Version=10.1.22000.832
+
+
+Name=Windows Desktop Extension SDK Contracts
+Version=10.1.26100.7175
+
+
+Name=vs_minshellinteropsharedmsi
+Version=17.14.36015
+
+
+Name=vs_minshellsharedmsi
+Version=17.14.36024
+
+
+Name=Windows SDK for Windows Store Apps DirectX x86 Remote
+Version=10.1.22000.832
+
+
+Name=vs_filehandler_amd64
+Version=17.14.36024
+
+
+Name=Microsoft_VC80_CRT_x86
+Version=8.0.50727.4053
+
+
+Name=Windows SDK Desktop Tools arm64
+Version=10.1.26100.7175
+
+
+Name=Microsoft Visual C++ 2022 X64 Debug Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=WinRT Intellisense PPI - en-us
+Version=10.1.26100.7175
+
+
+Name=Windows SDK OnecoreUap Headers x86
+Version=10.1.26100.7175
+
+
+Name=
+Version=
+
+
+Name=Windows SDK Modern Non-Versioned Developer Tools
+Version=10.1.26100.7175
+
+
+Name=MSI Development Tools
+Version=10.1.22000.832
+
+
+Name=Microsoft Visual C++ 2022 X64 Additional Runtime - 14.44.35211
+Version=14.44.35211
+
+
+Name=NVIDIA Nsight Systems 2025.3.2
+Version=25.3.2.367
+
+
+Name=Application Verifier x64 External Package (DesktopEditions)
+Version=10.1.26100.7175
+
+
+Name=Go Programming Language amd64 go1.25.6
+Version=1.25.6
+
+
+Name=Windows SDK for Windows Store Apps Headers
+Version=10.1.22000.832
+
+
+Name=Universal CRT Headers Libraries and Sources
+Version=10.1.22000.832
+
+
+Name=Microsoft Visual Studio Setup Configuration
+Version=3.12.2140.44225
+
+
+Name=Universal CRT Headers Libraries and Sources
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense IoT - en-us
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Redistributables
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Headers x64
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Modern Versioned Developer Tools
+Version=10.1.22000.832
+
+
+Name=Windows SDK EULA
+Version=10.1.22000.832
+
+
+Name=Windows IoT Extension SDK
+Version=10.1.22000.832
+
+
+Name=Windows App Certification Kit SupportedApiList x86
+Version=10.1.26100.7175
+
+
+Name=vs_communitymsires
+Version=17.14.36015
+
+
+Name=Windows SDK Desktop Tools x64
+Version=10.1.26100.7175
+
+
+Name=Windows Mobile Extension SDK Contracts
+Version=10.1.22000.832
+
+
+Name=Windows App Certification Kit x64 (OnecoreUAP)
+Version=10.1.26100.7175
+
+
+Name=Universal CRT Redistributable
+Version=10.0.26624
+
+
+Name=WinRT Intellisense PPI - Other Languages
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense IoT - Other Languages
+Version=10.1.22000.832
+
+
+Name=DiagnosticsHub_CollectionService
+Version=17.14.36412
+
+
+Name=vs_communityx64msi
+Version=17.14.36025
+
+
+Name=Windows SDK Desktop Libs arm64
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense Mobile - en-us
+Version=10.1.26100.7175
+
+
+Name=SDK ARM64 Redistributables
+Version=10.1.26100.7175
+
+
+Name=Paint.NET
+Version=5.1.9
+
+
+Name=Windows SDK for Windows Store Managed Apps Libs
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense UAP - en-us
+Version=10.1.22000.832
+
+
+Name=Windows SDK for Windows Store Apps Libs
+Version=10.1.22000.832
+
+
+Name=Windows SDK Signing Tools
+Version=10.1.22000.832
+
+
+Name=vcpp_crt.redist.clickonce
+Version=14.44.35208
+
+
+Name=Universal CRT Tools x86
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Libs arm64
+Version=10.1.22000.832
+
+
+Name=vs_minshellmsi
+Version=17.14.36301
+
+
+Name=Windows SDK Desktop Headers arm64
+Version=10.1.26100.7175
+
+
+Name=MSI Development Tools
+Version=10.1.26100.7175
+
+
+Name=vs_CoreEditorFonts
+Version=17.7.40001
+
+
+Name=Windows SDK Desktop Headers arm64
+Version=10.1.22000.832
+
+
+Name=Microsoft Update Health Tools
+Version=5.72.0.0
+
+
+Name=Universal CRT Redistributable
+Version=10.1.26100.7175
+
+
+Name=Universal CRT Tools x64
+Version=10.1.26100.7175
+
+
+Name=Universal General MIDI DLS Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Windows SDK Desktop Headers x86
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps DirectX x86 Remote
+Version=10.1.26100.7175
+
+
+Name=WinRT Intellisense PPI - Other Languages
+Version=10.1.22000.832
+
+
+Name=vs_githubprotocolhandlermsi
+Version=17.14.36015
+
+
+Name=WinRT Intellisense UAP - en-us
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Managed Apps Libs
+Version=10.1.22000.832
+
+
+Name=Application Verifier x64 External Package
+Version=10.1.22000.832
+
+
+Name=Windows SDK ARM64 Desktop Tools
+Version=10.1.26100.7175
+
+
+Name=Windows SDK AddOn
+Version=10.1.0.0
+
+
+Name=Windows Desktop Extension SDK
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps Headers OnecoreUap
+Version=10.1.26100.7175
+
+
+Name=Windows SDK for Windows Store Apps Tools
+Version=10.1.26100.7175
+
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+Handles NPM(K)  PM(K)  WS(K) CPU(s)    Id SI ProcessNam
+                                             e         
+------- ------  -----  ----- ------    -- -- ----------
+    155      9   2112   6716         5308  0 AdminSe...
+    141      9   2036   7760         6320  0 Aggrega...
+    280     16  11932 103336   0.14  1704  3 Antigra...
+   1286    116 173692 215416  20.02  1824  3 Antigra...
+    356     29  84708 123648   3.70  1828  3 Antigra...
+    358     20  14176 108868   0.50  6688  3 Antigra...
+    248     12  10808 101644   0.02  8860  3 Antigra...
+    342     29  84180 121572   0.84  9156  3 Antigra...
+    608     53 449008 348236 163.33 10300  3 Antigra...
+    316     26 103224 126476   2.03 11820  3 Antigra...
+    562     23  21388 119160   0.25 12948  3 Antigra...
+    441     64 163848 192100  18.97 13428  3 Antigra...
+    337     28  86408 125592   2.70 14060  3 Antigra...
+    829     32 148800 212820  31.03 17944  3 Antigra...
+    281     16   6356  25140   0.16  8448  3 Applica...
+    240     12   7140  14952   1.13 10880  0 audiodg   
+    186     10   2768   2228   0.02 18052  3 backgro...
+     65      5   4024   4044   0.00  9684  3 cmd       
+     89      6   2308   5024   0.02 13080  3 cmd       
+    257     10   3008  14496   1.03 13264  3 Code_an...
+    116      7   5380   6600   0.06  4576  3 conhost   
+    158     10   5656   7452         7220  0 conhost   
+    116      7   5388   8548   0.02  7468  3 conhost   
+    736     72  23836  77664   3.77  9504  3 CrossDe...
+    803     27   2292   5524          768  0 csrss     
+    738     24   2976   7460         8744  3 csrss     
+    546     22   7932  28276   8.03  9476  3 ctfmon    
+    263     15   3612  10216         7192  0 devmonsrv 
+    151      9   2196  11152   0.23  6404  3 dllhost   
+    283     25   5940  14328   0.30 16748  3 dllhost   
+   1291     65  92824  91176        15580  3 dwm       
+   5096    155 200036 228296  69.75  9900  3 explorer  
+     42      7   1908   3428         1128  0 fontdrv...
+     42      9   4188   8256        16488  3 fontdrv...
+    365     40  24524  23444   1.20   656  3 go        
+    427     39  31040  11920  17.69  9264  3 HDSentinel
+    338     23   9356  16480   1.06 14764  3 helper    
+    155      9   1796   6848         6056  0 ibtrksrv  
+      0      0     60      8            0  0 Idle      
+    188     11   2004   8428         3076  0 igfxCUI...
+    293     14   3532  12812   0.23  6016  3 igfxEM    
+    170     12   3000   9688   0.06 16008  3 igfxext   
+    152      9   1420   6824         1516  0 IntelCp...
+    166      8   1556   6608         1648  0 IntelCp...
+    147      9   1332   5740         5460  0 jhi_ser...
+    350     36 191552 175616   8.52  7744  3 languag...
+    484     39 205016 193468  14.33 16756  3 languag...
+    225     12   3000   8188         5760  0 LMS       
+     65     17   1824   3168          984  0 LsaIso    
+   1466     28  10032  20392          996  0 lsass     
+    316     14  21880  23604   0.05 11176  3 main      
+      0      0   1444 265884         3012  0 Memory ...
+    424     21  14508  37772         4872  0 MoUsoCo...
+    514     17  11188  19388         6596  0 MpDefen...
+    368     20  13064  37236   2.17  1564  3 msedgew...
+    354     18  13028  34420   1.52  2428  3 msedgew...
+   1295     47 195884 152264  19.92  2808  3 msedgew...
+   1246     45  40896  97896   2.19  4244  3 msedgew...
+    188     11  11064  18856   0.14  5088  3 msedgew...
+    368     48 275960 245316  50.92  5936  3 msedgew...
+    152      9   2376   7196   0.03  6888  3 msedgew...
+   1229     45  44200 102092   3.84  7244  3 msedgew...
+    357     18  13196  36884   0.83  8204  3 msedgew...
+    186     11   9192  17068   0.13  9076  3 msedgew...
+    452     22  30788  39908   0.34 10736  3 msedgew...
+    152      9   2344   7132   0.05 10956  3 msedgew...
+    346     22  49032  75888   4.83 11792  3 msedgew...
+    256     31  52432  64856   9.61 12424  3 msedgew...
+    605     23  67244  68736   1.67 13228  3 msedgew...
+    417     28  92944 131460   3.73 13704  3 msedgew...
+    184     11   9080  17048   0.17 14296  3 msedgew...
+    435     21  30472  39784   0.45 17564  3 msedgew...
+    159      9   2364   7224   0.02 17576  3 msedgew...
+    162      9   6072   9736         5032  0 msiexec   
+    789    240 368284 312016         6048  0 MsMpEng   
+    227     12   5480  12428         4116  0 NisSrv    
+    321     19   5992  13832         1960  0 NVDispl...
+    513     24  24672  25364         9576  3 NVDispl...
+    253     15   3928  12540         5648  0 NvTelem...
+    223     14   3200   9444         4356  0 obexsrv   
+    840     30  46424  46884        15436  0 OfficeC...
+    933     32  37372  31072         5384  0 OneApp....
+    163     10   2152   8360   0.16  3224  3 OpenCon...
+    156     10   2120   8440   0.03  3688  3 OpenCon...
+    514     14   3156  14860         7212  0 postgres  
+    463     11   2656   8584         8008  0 postgres  
+    464     11   2964   8728         8096  0 postgres  
+    464     11   2960   8744         8104  0 postgres  
+    483     11   2972   9832         8112  0 postgres  
+    467     11   3052  10764         8132  0 postgres  
+    464     11   3004  10012         8140  0 postgres  
+    465     11   2964  13224         8804  0 postgres  
+    467     11   3480  10196         8812  0 postgres  
+    467     11   3504   9964         8840  0 postgres  
+    385     21   3540   4956   1.95  9484  3 PowerMgr  
+    529     27  61064  66796   0.53  1576  3 powershell
+    473     27  57836  56072   0.70  8044  3 powershell
+    245     27  24396  12384         4520  0 Present...
+    139      9   1572   7276   0.02  5148  3 PWRISOVM  
+      0     19  11636  66412          116  0 Registry  
+    317     17   3668  19796   0.33 15136  3 rundll32  
+    490     22   6680  30056   0.73 11616  3 Runtime...
+    331     20   6388  24124   0.42 12908  3 Runtime...
+    155     10   2164  10204   0.02 13900  3 Runtime...
+    163     11   2224  10680   0.09 14368  3 Runtime...
+   1385     90  98308 104160   3.70  3968  3 SearchHost
+   1004     33  29860  33980         4992  0 SearchI...
+      0      0    184  23576           76  0 Secure ...
+    511     20   8220  18144         6644  0 Securit...
+    188     10   1852   9840   0.06 17688  3 Securit...
+    784     13   5824   9104          940  0 services  
+    700     22   6604  36860   1.91 10316  3 sihost    
+     58      3   1108   1152          576  0 smss      
+    492     27   9008  20116         2276  0 spoolsv   
+    866     42  55032  85176   2.78 10164  3 StartMe...
+    272     11   2968  12116         1020  0 svchost   
+   1461     25  15516  34740         1092  0 svchost   
+   1722     22  11704  18188         1228  0 svchost   
+    342     14   3044   8760         1280  0 svchost   
+    110      8   1132   4944         1360  0 svchost   
+    196     12   2240   7720         1368  0 svchost   
+    262     13   3048   9700         1480  0 svchost   
+    340     11   2704   8816         1528  0 svchost   
+    122      8   1388   5444         1596  0 svchost   
+    306     12   3548  10132         1720  0 svchost   
+    255     12   5672  14904         1796  0 svchost   
+    363     16   4336  17628   0.34  1940  3 svchost   
+    187     13   1912   7744         1944  0 svchost   
+    212     11   2356  10412         1988  0 svchost   
+    420     20   6488  16040         2140  0 svchost   
+    362     30   8840  16732         2256  0 svchost   
+    134      8   1420   7764   0.05  2408  3 svchost   
+    123      8   1224   5700         2448  0 svchost   
+    185      7   2264   5868         2576  0 svchost   
+    292     21   3120  10892         2584  0 svchost   
+    199     13   2788  10836         2592  0 svchost   
+    197     14   1860   7112         2600  0 svchost   
+    474     14  17440  15520         2608  0 svchost   
+    274     10   2096   9352         2616  0 svchost   
+    157     26   5932   6392         2624  0 svchost   
+    354     19   5104  17244         2736  0 svchost   
+    246     15  55284  55432         2740  0 svchost   
+    186      9   2000   7140         2748  0 svchost   
+    253      8   1308   5584         2764  0 svchost   
+   1025     20   9852  16892         2800  0 svchost   
+    178     11   1836   7528         2896  0 svchost   
+    122      8   1296   6112         3028  0 svchost   
+    201     11   1928   7960         3124  0 svchost   
+    161      9   1604   6464         3192  0 svchost   
+    405     13   3376  13828         3352  0 svchost   
+    121      8   1276   6096         3372  0 svchost   
+    167      9   1476   6784         3388  0 svchost   
+    298     11  13448  18376         3540  0 svchost   
+    236     12   3804   7932         3568  0 svchost   
+    306     15   3364   8196         3692  0 svchost   
+    185     10   1712   7220         3768  0 svchost   
+    218     11   2212  10036         3792  0 svchost   
+   1540     14   3448  10240         3800  0 svchost   
+    310     13   2992  13560         3824  0 svchost   
+    499     35  24484  18780         3840  0 svchost   
+    223     13   2496  14364   0.19  3880  3 svchost   
+    186     10   1856   7148         3940  0 svchost   
+    427     18   6972  26444   1.36  3960  3 svchost   
+    518     31   6392  17912         4056  0 svchost   
+    307     22   2896  11464         4080  0 svchost   
+    244     12   2628   7896         4120  0 svchost   
+    702     16  16808  21656         4752  0 svchost   
+    243     13   3684  15556         4892  0 svchost   
+    208     12   2232   8792         5052  0 svchost   
+    222     15   2048   7120         5100  0 svchost   
+    374     20   2792   9944         5220  0 svchost   
+    683     33  27136  39504         5260  0 svchost   
+    417     21  34244  46700         5292  0 svchost   
+    225     13   3044   9868         5376  0 svchost   
+    293     14   3524  16096         5568  0 svchost   
+    136      8   1264   5088         5636  0 svchost   
+    216     11   2224   8752         5668  0 svchost   
+    135      9   1472   6724         5704  0 svchost   
+    435     19   9080  19728         5748  0 svchost   
+    450     20   5408  20100         5788  0 svchost   
+   1037     20   9476  27260         5940  0 svchost   
+    360     12   2620  11956         6088  0 svchost   
+    142      9   1392   6232         6460  0 svchost   
+    407     24   5372  18796         6652  0 svchost   
+    290     16   3968  15496         6784  0 svchost   
+    324     18   4232  18756         6952  0 svchost   
+    216     12   2104   7392         7080  0 svchost   
+    260     15   2872  12308   0.14  7148  3 svchost   
+    280     14   3456  18328   0.16  8240  3 svchost   
+    200     15   6392  10244         8288  0 svchost   
+    186    112   2180   6712         9416  0 svchost   
+    111      8   1268   6300   0.02  9916  3 svchost   
+    475     30  10140  19484        10348  0 svchost   
+    172      9   1580   7580        11372  0 svchost   
+    159     42   1692   6916        12844  0 svchost   
+    143      8   1436   6952        13524  0 svchost   
+    437     27   3772  13012        14372  0 svchost   
+    265     13   2636  11456        14840  0 svchost   
+    526     20   5208  24828   0.22 11992  3 SynTPEnh  
+    314     11   2128   7680         5656  0 SynTPEn...
+     97      8   1124   5704   0.03  8212  3 SynTPHe...
+   4370      0     52    156            4  0 System    
+    378     21   6900  17356   0.30  8624  3 taskhostw 
+    324     33   6408  17428   0.91 11152  3 taskhostw 
+    985     36  26352  64420   3.00 13304  3 TextInp...
+    204     11   2160   9560         5428  0 TPMProv...
+    554     51  17276  28636   9.00 12132  3 utweb     
+    568     40 158128 172316   7.95 16616  3 vlc       
+    630     53  92524  97248  13.59 17076  3 vlc       
+   1486    144  62684 180672   9.42  6424  3 WhatsAp...
+    854     35  11088  48888   1.66   636  3 Widgets   
+    320     18   4708  20432   0.63  3632  3 WidgetS...
+    868     39  36776  81972   7.83  4100  3 Windows...
+    151     12   1596   6048          868  0 wininit   
+    269     11   2320  10068         7572  3 winlogon  
+    274     17   5192  17128         6756  0 WmiPrvSE  
+    276     14   2832   9984         5740  0 WMIRegi...
+    461     20   6496  19640         6072  0 wslservice
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+VLC processes terminated.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : This command cannot be run due to the 
+error: The system cannot find the file specified.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:3 
+char:1
++ Start-Process $uri
++ ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [S 
+   tart-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationExceptio 
+   n,Microsoft.PowerShell.Commands.StartProcessComman  
+  d
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+File not found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+File not found
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_video.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\\Users\\USER\\Videos\\New folder\\Anime\\Ricky and Morty\\Season 7\\Rick and Morty-S7E5-720P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: echo "Error: Rick and Morty S08E01 file not found in the provided context."
+STDOUT:
+"Error: Rick and Morty S08E01 file not found in the provided context."
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 8\Rick and Morty-S8E1-480P.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_vlc.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 8\Rick and Morty-S8E1-480P.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File findRickMorty.ps1
+STDOUT:
+Not found
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File findRickMorty.ps1
+STDOUT:
+No matching video file found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+[0000025247337070] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+[000002524aa1ede0] avcodec decoder: Using D3D11VA (Intel(R) HD Graphics 520, vendor 8086(Intel), device 1916, revision 7) for hardware decoding
+[000002524aa1ede0] main decoder error: Timestamp conversion failed for 95720626: no reference clock
+[000002524aa1ede0] main decoder error: Could not convert timestamp 0 for FFmpeg
+[000002524aa1ede0] main decoder error: Timestamp conversion failed for 105605501: no reference clock
+[000002524aa1ede0] main decoder error: Could not convert timestamp 0 for FFmpeg
+[000002524aa1ede0] main decoder error: Timestamp conversion failed for 116074292: no reference clock
+[000002524aa1ede0] main decoder error: Could not convert timestamp 0 for FFmpeg
+[000002524aa1ede0] main decoder error: Timestamp conversion failed for 136010876: no reference clock
+[000002524aa1ede0] main decoder error: Could not convert timestamp 0 for FFmpeg
+[000002524aa1ede0] main decoder error: Timestamp conversion failed for 185977459: no reference clock
+[000002524aa1ede0] main decoder error: Could not convert timestamp 0 for FFmpeg
+[h264 @ 000002524ac40b80] get_buffer() failed
+[h264 @ 000002524ac40b80] thread_get_buffer() failed
+[h264 @ 000002524ac40b80] decode_slice_header error
+[h264 @ 000002524ac40b80] no frame!
+[000002524aaa5350] direct3d11 vout display error: SetThumbNailClip failed: 0x800706f4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_with_vlc.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\open_with_vlc.
+ps1 : Video file not found at 
+C:\Path\To\Your\Rick_and_Morty_S03E03.mkv
+    + CategoryInfo          : NotSpecified: (:) [Write 
+   -Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Com 
+   mands.WriteErrorException,open_with_vlc.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+No matching video file found to open with VLC.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Video file not found: C:\Path\To\Rick and Morty - S03E03.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File search_rickmorty.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File open_vlc.ps1
+STDOUT:
+Launching VLC with Not found
+
+STDERR:
+[000002606d733e30] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+[000002606d824590] dvdnav demux error: Could not open C:\Users\USER\Rust\Code_analyzer\sandbox\Not found with libdvdcss.
+[000002606d824590] dvdnav demux error: Can't open C:\Users\USER\Rust\Code_analyzer\sandbox\Not found for reading
+[000002606d824590] dvdnav demux error: vm: failed to open/read the DVD
+[000002606d843d30] filesystem stream error: cannot open file C:\Users\USER\Rust\Code_analyzer\sandbox\Not found (No error)
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Invoke-Item : Cannot find path 'C:\Media\Rick and 
+Morty\Season 03\Episode 10 - The Rickchurian 
+Mortydate.mkv' because it does not exist.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:1
++ Invoke-Item 'C:\Media\Rick and Morty\Season 
+03\Episode 10 - The Rickc ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Medi 
+   a\Rick a...n Mortydate.mkv:String) [Invoke-Item],   
+  ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.P 
+   owerShell.Commands.InvokeItemCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : This command cannot be run due to the 
+error: The system cannot find the file specified.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:5 
+char:1
++ Start-Process -FilePath $vlcExe -ArgumentList @('"' 
++ $videoPath + '" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [S 
+   tart-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationExceptio 
+   n,Microsoft.PowerShell.Commands.StartProcessComman  
+  d
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+File not found
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : 
+File not found: Not found
+    + CategoryInfo          : NotSpecified: (:) [Write 
+   -Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Com 
+   mands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1 "C:\Path\To\Your-File-Name.ext"
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : 
+File not found: C:\Path\To\Your-File-Name.ext
+    + CategoryInfo          : NotSpecified: (:) [Write 
+   -Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Com 
+   mands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+No matching file found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : 
+Unable to locate the requested file.
+    + CategoryInfo          : NotSpecified: (:) [Write 
+   -Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Com 
+   mands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Test-Path : Cannot bind argument to parameter 'Path' 
+because it is null.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:2 
+char:15
++ if (Test-Path $mediaPath) {
++               ~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Test-P 
+   ath], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidat 
+   ionErrorNullNotAllowed,Microsoft.PowerShell.Comman  
+  ds.TestPathCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+WARNING: �s��,?  No matching files found under 
+'D:\Media'.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Test-Path : Cannot bind argument to parameter 'Path' 
+because it is null.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:2 
+char:15
++ if (Test-Path $path) {
++               ~~~~~
+    + CategoryInfo          : InvalidData: (:) [Test-P 
+   ath], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidat 
+   ionErrorNullNotAllowed,Microsoft.PowerShell.Comman  
+  ds.TestPathCommand
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:95
++ ... der\Anime\Ricky and Morty\Season 3\Rick and 
+Morty�?`S3E10�?`480P.mp4'
++                                                      
+   ~~~~~~~~~~~~~~~~~
+Unexpected token 'S3E10�?`480P.mp4'' in expression or 
+statement.
+    + CategoryInfo          : ParserError: (:) [], Par 
+   entContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+No matching video files found.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+No media file path found from step 1.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Video file not found at C:\Path\To\Your\Video.mp4
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:112
++ ... \\Ricky and Morty\\Season 3\\Rick and 
+Morty-S3E10-480P.mp4'\n& \"vlc. ...
++                                                      
+          ~~
+Unexpected token '\n' in expression or statement.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:114
++ ... \Ricky and Morty\\Season 3\\Rick and 
+Morty-S3E10-480P.mp4'\n& \"vlc.e ...
++                                                      
+           ~
+The ampersand (&) character is not allowed. The & 
+operator is reserved for future use; wrap an ampersand 
+in double quotation marks ("&") to pass it as part of 
+a string.
+    + CategoryInfo          : ParserError: (:) [], Par 
+   entContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+& : The term 'vlc.exe' is not recognized as the name 
+of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path 
+was included, verify that the path is correct and try 
+again.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 
+char:3
++ & "vlc.exe" "C:/Users/USER/Videos/New 
+folder/Anime/Ricky and Morty/Se ...
++   ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (vlc.exe 
+   :String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'script.ps1'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : 
+Video file not found at: 
+./sandbox/some_rick_and_morty_episode.mp4. Please 
+ensure the file exists.
+    + CategoryInfo          : NotSpecified: (:) [Write 
+   -Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Com 
+   mands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Error: Episode file not found at [Located Episode File Path].
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: "C:\Program Files\VideoLAN\VLC\vlc.exe" "C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 2\Rick.and.Morty.S02E01.720p.BluRay.x264-GalaxyTV_360P.mp4"
+STDERR:
+'C:\Program' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+Start-Process : A positional parameter cannot be found 
+that accepts argument 'C:\Users\USER\Videos\New 
+folder\Anime\Ricky and Morty\Season 2\Rick.and.Morty.S0
+2E01.720p.BluRay.x264-GalaxyTV_360P.mp4\'.
+At 
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:2 
+char:1
++ Start-Process -FilePath 'vlc' -ArgumentList 
+"\"$mediaPath\""
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [St 
+   art-Process], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFo 
+   und,Microsoft.PowerShell.Commands.StartProcessComm  
+  and
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Improvise mode enabled
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\\Users\\USER\\Videos\\New folder\\Anime\\Ricky and Morty\\Season 7\\Rick and Morty-S7E5-720P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -c "Invoke-Item 'C:\Users\USER\Videos\New folder\Anime\Ricky and Morty\Season 3\Rick and Morty-S3E1-480P.mp4'"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : Failed 
+to download driver: The remote server returned an error: 
+(404) Not Found.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error] 
+   , WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.W 
+   riteErrorException,script.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Found installer:
+C:\Users\USER\AppData\Local\Temp\go-build267689235\b001\exe\main.exe
+Attempting silent install with argument: /quiet
+Installer completed successfully with argument: /quiet
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Attempting to stop Bluetooth Support Service (bthserv)...
+WARNING: Failed to stop service: Service 'Bluetooth Support 
+Service (bthserv)' cannot be stopped due to the following 
+error: Cannot open bthserv service on computer '.'.
+Attempting to start Bluetooth Support Service (bthserv)...
+WARNING: Failed to start service: Service 'Bluetooth Support 
+Service (bthserv)' cannot be started due to the following 
+error: Cannot open bthserv service on computer '.'.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Reinstalling driver for device: Qualcomm QCA9462 Bluetooth 4.0 (InstanceId: USB\VID_0CF3&PID_E006\5&33490C3&0&8)
+Microsoft PnP Utility  Adding driver package:  iBtFltCoexHs.inf Driver package added successfully. Published Name:         oem81.inf  Total driver packages:  1 Added driver packages:  1
+Restarting Bluetooth Support Service...
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Uninstalling Bluetooth device: Microsoft Bluetooth Enumerator (InstanceId: BTH\MS_BTHBRB\6&81B73A4&0&1)
+Microsoft PnP Utility
+
+Removing device:          BTH\MS_BTHBRB\6&81b73a4&0&1
+Device removed successfully.
+
+Uninstalling Bluetooth device: Microsoft Bluetooth LE Enumerator (InstanceId: BTH\MS_BTHLE\6&81B73A4&0&3)
+Microsoft PnP Utility
+
+Removing device:          BTH\MS_BTHLE\6&81b73a4&0&3
+Device removed successfully.
+
+Uninstalling Bluetooth device: Bluetooth Device (RFCOMM Protocol TDI) (InstanceId: BTH\MS_RFCOMM\6&81B73A4&0&0)
+Microsoft PnP Utility
+
+Removing device:          BTH\MS_RFCOMM\6&81b73a4&0&0
+Device removed successfully.
+
+Uninstalling Bluetooth device: Qualcomm QCA9462 Bluetooth 4.0 (InstanceId: USB\VID_0CF3&PID_E006\5&33490C3&0&8)
+Microsoft PnP Utility
+
+Removing device:          USB\VID_0CF3&PID_E006\5&33490c3&0&8
+System reboot is needed to complete configuration operations!
+
+Initiating Windows Update to locate and install updated Bluetooth drivers...
+WARNING: PSWindowsUpdate method failed, falling back to legacy wuauclt commands.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File ./Download-BluetoothDriver.ps1
+STDOUT:
+Detected Manufacturer: Unknown
+Detected Model: Unknown
+Could not automatically determine the best download source. Please search manually for drivers for 'Unknown Unknown' on your operating system.
+Note: This script provides guidance on finding the driver. Automated download requires specific knowledge of the driver source URL and download mechanism for each manufacturer, which can change frequently.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File ./Download-BluetoothDriver.ps1
+STDOUT:
+Downloading Bluetooth driver from https://download.lenovo.com/consumer/options/intel_bluetooth_driver_win64_22.130.0.2.exe to .\Intel_Bluetooth_Driver.exe...
+
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\Download-BluetoothDriver.ps1 : Failed to download the driver: The remote 
+server returned an error: (404) Not Found.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,Download-BluetoothDriver.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+
+Name                                        DeviceID                                                                   
+----                                        --------                                                                   
+Microsoft Bluetooth Enumerator              BTH\MS_BTHBRB\6&81B73A4&1&1                                                
+Bluetooth                                   SWD\RADIO\BLUETOOTH_B0C090BC7E12                                           
+Microsoft Bluetooth LE Enumerator           BTH\MS_BTHLE\6&81B73A4&1&3                                                 
+Bluetooth Device (RFCOMM Protocol TDI)      BTH\MS_RFCOMM\6&81B73A4&1&0                                                
+Bluetooth Server                            BTHENUM\{F0B2DD71-FB14-4E30-A62D-931874BF282F}_LOCALMFG&0000\7&9093749&0...
+Qualcomm QCA9462 Bluetooth 4.0              USB\VID_0CF3&PID_E006\5&33490C3&0&8                                        
+Bluetooth Device (Personal Area Network) #3 BTH\MS_BTHPAN\6&81B73A4&1&2                                                
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Processing device: Microsoft Bluetooth Enumerator (InstanceId: BTH\MS_BTHBRB\6&81B73A4&1&1)
+WARNING: INF path could not be determined for Microsoft Bluetooth Enumerator. Falling back to device disable/enable 
+cycle.
+Restarting device...
+
+STDERR:
+C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1 : An unexpected error occurred: The term 'Restart-PnpDevice' is 
+not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or 
+if a path was included, verify that the path is correct and try again.
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,script.ps1
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Bluetooth not configured correctly. Attempting to enable...
+Windows Bluetooth service (bthserv) started.
+Created/updated C:\Users\USER\Rust\Code_analyzer\sandbox\bt_config.ini
+
+STDERR:
+/bin/sh: bash: not found
+/bin/sh: bash: not found
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -NoProfile -ExecutionPolicy Bypass -File list.ps1
+STDOUT:
+bt_config.ini
+Download-BluetoothDriver.ps1
+list.ps1
+output.txt
+PowerShell_Troubleshooting.md
+script.ps1
+store.db
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File read_output.ps1
+STDOUT:
+
+Status  Class     FriendlyName                           InstanceId                          
+------  -----     ------------                           ----------                          
+OK      Bluetooth Microsoft Bluetooth Enumerator         BTH\MS_BTHBRB\6&81B73A4&1&1         
+OK      Bluetooth Microsoft Bluetooth LE Enumerator      BTH\MS_BTHLE\6&81B73A4&1&3          
+OK      Bluetooth Bluetooth Device (RFCOMM Protocol TDI) BTH\MS_RFCOMM\6&81B73A4&1&0         
+Unknown Bluetooth Microsoft Bluetooth Enumerator         BTH\MS_BTHBRB\6&6B2E448&0&1         
+Unknown Bluetooth Microsoft Bluetooth LE Enumerator      BTH\MS_BTHLE\6&6B2E448&0&3          
+OK      Bluetooth Qualcomm QCA9462 Bluetooth 4.0         USB\VID_0CF3&PID_E006\5&33490C3&0&8 
+Unknown Bluetooth Intel(R) Wireless Bluetooth(R)         USB\VID_8087&PID_0A2B\5&2B1D7621&0&7
+Unknown Bluetooth Bluetooth Device (RFCOMM Protocol TDI) BTH\MS_RFCOMM\6&6B2E448&0&0         
+
+
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo new yt_downloader --bin
+STDERR:
+    Creating binary (application) `yt_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build
+STDERR:
+   Compiling yt_downloader v0.1.0 (C:\Users\USER\Rust\Code_analyzer\sandbox\yt_downloader)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.58s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo run -- https://www.youtube.com/watch?v=GjY8XGv77bU
+STDOUT:
+Hello, world!
+
+STDERR:
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target\debug\yt_downloader.exe https://www.youtube.com/watch?v=GjY8XGv77bU`
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+    Creating binary (application) `yt_downloader` package
+error: destination `C:\Users\USER\Rust\Code_analyzer\sandbox\yt_downloader` already exists
+
+Use `cargo init` to initialize the directory
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:49 char:76
++ ... o DownloadUrl specified for device: $friendlyName 
+($vendorId:$deviceI ...
++                                                        ~~~~~~~~~~
+Variable reference is not valid. ':' was not followed by a valid 
+variable name character. Consider using ${} to delimit the name.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRe 
+   cordException
+    + FullyQualifiedErrorId : InvalidVariableReferenceWithDrive
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Creating new Rust binary project...
+Project 'youtube_downloader' created successfully.
+
+STDERR:
+    Creating binary (application) `youtube_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+    Creating binary (application) `yt_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build --release
+STDERR:
+   Compiling yt_downloader v0.1.0 (C:\Users\USER\Rust\Code_analyzer\sandbox\games\yt_downloader)
+    Finished `release` profile [optimized] target(s) in 43.57s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File run_yt_downloader.ps1
+STDOUT:
+Running yt_downloader with URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+Hello, world!
+yt_downloader completed successfully.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Rust project created at C:\yt_downloader
+
+STDERR:
+    Creating binary (application) `yt_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build
+STDERR:
+   Compiling yt_downloader v0.1.0 (C:\yt_downloader)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.99s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+    Creating binary (application) `youtube_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo run -- <YOUTUBE_URL>
+STDERR:
+The syntax of the command is incorrect.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File run_yt_downloader.ps1
+STDOUT:
+Running yt_downloader with URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+STDERR:
+Resolve-Path : Cannot find path 'C:\Users\USER\Rust\Code_analyzer\sandbox\games\yt_downloader\target\release' because 
+it does not exist.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\run_yt_downloader.ps1:1 char:32
++ ... Path -Path (Resolve-Path "./games/yt_downloader/target/release") -Chi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\USER\R...\target\release:String) [Resolve-Path], ItemNotFoundE 
+   xception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ResolvePathCommand
+ 
+Join-Path : Cannot bind argument to parameter 'Path' because it is null.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\run_yt_downloader.ps1:1 char:31
++ ... -Path -Path (Resolve-Path "./games/yt_downloader/target/release") -Ch ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Join-Path], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorNullNotAllowed,Microsoft.PowerShell.Commands.JoinPathCom 
+   mand
+ 
+Test-Path : Cannot bind argument to parameter 'Path' because it is null.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\run_yt_downloader.ps1:2 char:21
++ if (-not (Test-Path $binaryPath)) {
++                     ~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Test-Path], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorNullNotAllowed,Microsoft.PowerShell.Commands.TestPathCom 
+   mand
+ 
+The expression after '&' in a pipeline element produced an object that was not valid. It must result in a command 
+name, a script block, or a CommandInfo object.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\run_yt_downloader.ps1:10 char:3
++ & $binaryPath $url
++   ~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : BadExpression
+ 
+C:\Users\USER\Rust\Code_analyzer\sandbox\run_yt_downloader.ps1 : yt_downloader exited with code 
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,run_yt_downloader.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo new youtube_downloader --bin
+STDERR:
+    Creating binary (application) `youtube_downloader` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo run --quiet
+STDOUT:
+Hello, world!
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -Class Bluetooth | Format-Table -AutoSize"
+STDOUT:
+
+Status  Class     FriendlyName                           InstanceId                          
+------  -----     ------------                           ----------                          
+OK      Bluetooth Microsoft Bluetooth Enumerator         BTH\MS_BTHBRB\6&81B73A4&1&1         
+OK      Bluetooth Microsoft Bluetooth LE Enumerator      BTH\MS_BTHLE\6&81B73A4&1&3          
+OK      Bluetooth Bluetooth Device (RFCOMM Protocol TDI) BTH\MS_RFCOMM\6&81B73A4&1&0         
+Unknown Bluetooth Microsoft Bluetooth Enumerator         BTH\MS_BTHBRB\6&6B2E448&0&1         
+Unknown Bluetooth Microsoft Bluetooth LE Enumerator      BTH\MS_BTHLE\6&6B2E448&0&3          
+OK      Bluetooth Qualcomm QCA9462 Bluetooth 4.0         USB\VID_0CF3&PID_E006\5&33490C3&0&8 
+Unknown Bluetooth Intel(R) Wireless Bluetooth(R)         USB\VID_8087&PID_0A2B\5&2B1D7621&0&7
+Unknown Bluetooth Bluetooth Device (RFCOMM Protocol TDI) BTH\MS_RFCOMM\6&6B2E448&0&0         
+
+
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Installing Bluetooth module...
+Searching for device "itel a80"...
+WARNING: Device not found. Make sure "itel a80" is in pairing mode and discoverable.
+
+STDERR:
+Exception calling "ShouldContinue" with "2" argument(s): "Object reference not set to an instance of an object."
+At C:\Program Files\WindowsPowerShell\Modules\PowerShellGet\1.0.0.1\PSModule.psm1:7455 char:8
++     if($Force -or $psCmdlet.ShouldContinue($shouldContinueQueryMessag ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : NullReferenceException
+ 
+Install-Module : NuGet provider is required to interact with NuGet-based repositories. Please ensure that '2.8.5.201' 
+or newer version of NuGet provider is installed.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:7 char:5
++     Install-Module -Name Bluetooth -Scope CurrentUser -Force -AllowCl ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Install-Module], InvalidOperationException
+    + FullyQualifiedErrorId : CouldNotInstallNuGetProvider,Install-Module
+ 
+Import-Module : The specified module 'Bluetooth' was not loaded because no valid module file was found in any module 
+directory.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:9 char:1
++ Import-Module Bluetooth
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (Bluetooth:String) [Import-Module], FileNotFoundException
+    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand
+ 
+Get-BluetoothDevice : The term 'Get-BluetoothDevice' is not recognized as the name of a cmdlet, function, script file, 
+or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and 
+try again.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:12 char:11
++ $device = Get-BluetoothDevice | Where-Object { $_.Name -eq 'itel a80' ...
++           ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-BluetoothDevice:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+Service is Running. Restarting...
+Service restarted successfully.
+
+Exit code: exit code: 0
+----------------------------------------
+Command: bluetoothctl power on
+STDERR:
+'bluetoothctl' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -NoProfile -Command "Get-PnpDevice -Class Bluetooth | Where-Object {$_.FriendlyName -like '*itel a80*'}"
+Exit code: exit code: 0
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File pair_itel.ps1
+STDERR:
+At C:\Users\USER\Rust\Code_analyzer\sandbox\pair_itel.ps1:25 char:19
++     Write-Warning "Device 'itel a80' not found in scan results.
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The string is missing the terminator: ".
+At C:\Users\USER\Rust\Code_analyzer\sandbox\pair_itel.ps1:24 char:8
++ } else {
++        ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordExcep 
+   tion
+    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File ./sandbox/script.ps1
+STDOUT:
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+
+STDERR:
+The argument './sandbox/script.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+
+Exit code: exit code: 0xfffd0000
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDOUT:
+WARNING: Device itel a80 not found.
+
+STDERR:
+bluetoothctl : The term 'bluetoothctl' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if 
+a path was included, verify that the path is correct and try again.
+At C:\Users\USER\Rust\Code_analyzer\sandbox\script.ps1:1 char:12
++ $devices = bluetoothctl devices
++            ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (bluetoothctl:String) [], CommandNo 
+   tFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+Exit code: exit code: 1
+----------------------------------------
+Command: cargo new file-transfer-server --bin
+STDERR:
+    Creating binary (application) `file-transfer-server` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: New-Item -Path .\uploads -ItemType Directory
+STDERR:
+'New-Item' is not recognized as an internal or external command,
+operable program or batch file.
+
+Exit code: exit code: 1
+----------------------------------------
+Command: cargo build
+STDERR:
+    Updating crates.io index
+     Locking 163 packages to latest compatible versions
+      Adding generic-array v0.14.7 (available: v0.14.9)
+ Downloading crates ...
+  Downloaded impl-more v0.1.9
+  Downloaded actix-macros v0.2.4
+  Downloaded bytestring v1.5.0
+  Downloaded actix-utils v3.0.1
+  Downloaded actix-codec v0.5.2
+  Downloaded actix-web-codegen v4.3.0
+  Downloaded local-channel v0.1.5
+  Downloaded convert_case v0.10.0
+  Downloaded local-waker v0.1.4
+  Downloaded actix-rt v2.11.0
+  Downloaded actix-service v2.0.3
+  Downloaded semver v1.0.28
+  Downloaded cookie v0.16.2
+  Downloaded actix-server v2.6.0
+  Downloaded language-tags v0.3.2
+  Downloaded actix-router v0.5.4
+  Downloaded rand v0.9.3
+  Downloaded indexmap v2.14.0
+  Downloaded regex-lite v0.1.9
+  Downloaded derive_more v2.1.1
+  Downloaded cc v1.2.60
+  Downloaded derive_more-impl v2.1.1
+  Downloaded hashbrown v0.17.0
+  Downloaded actix-http v3.12.0
+  Downloaded actix-web v4.13.0
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling cfg-if v1.0.4
+   Compiling pin-project-lite v0.2.17
+   Compiling getrandom v0.3.4
+   Compiling smallvec v1.15.1
+   Compiling log v0.4.29
+   Compiling stable_deref_trait v1.2.1
+   Compiling windows-link v0.2.1
+   Compiling version_check v0.9.5
+   Compiling bytes v1.11.1
+   Compiling parking_lot_core v0.9.12
+   Compiling windows-sys v0.61.2
+   Compiling futures-core v0.3.32
+   Compiling scopeguard v1.2.0
+   Compiling lock_api v0.4.14
+   Compiling jobserver v0.1.34
+   Compiling serde_core v1.0.228
+   Compiling find-msvc-tools v0.1.9
+   Compiling itoa v1.0.18
+   Compiling syn v2.0.117
+   Compiling shlex v1.3.0
+   Compiling typenum v1.19.0
+   Compiling parking_lot v0.12.5
+   Compiling mio v1.2.0
+   Compiling socket2 v0.6.3
+   Compiling cc v1.2.60
+   Compiling generic-array v0.14.7
+   Compiling litemap v0.8.2
+   Compiling pkg-config v0.3.32
+   Compiling synstructure v0.13.2
+   Compiling memchr v2.8.0
+   Compiling zerovec-derive v0.11.3
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling displaydoc v0.2.5
+   Compiling zerofrom v0.1.7
+   Compiling tokio-macros v2.7.0
+   Compiling yoke v0.8.2
+   Compiling once_cell v1.21.4
+   Compiling writeable v0.6.3
+   Compiling zerovec v0.11.6
+   Compiling zerotrie v0.2.4
+   Compiling tokio v1.51.1
+   Compiling tracing-core v0.1.36
+   Compiling tinystr v0.8.3
+   Compiling potential_utf v0.1.5
+   Compiling zstd-sys v2.0.16+zstd.1.5.7
+   Compiling icu_locale_core v2.2.0
+   Compiling tracing-attributes v0.1.31
+   Compiling icu_normalizer_data v2.2.0
+   Compiling icu_properties_data v2.2.0
+   Compiling utf8_iter v1.0.4
+   Compiling zerocopy v0.8.48
+   Compiling serde v1.0.228
+   Compiling windows_x86_64_msvc v0.52.6
+   Compiling icu_provider v2.2.0
+   Compiling icu_collections v2.2.0
+   Compiling tracing v0.1.44
+   Compiling futures-sink v0.3.32
+   Compiling percent-encoding v2.3.2
+   Compiling local-waker v0.1.4
+   Compiling crc32fast v1.5.0
+   Compiling fnv v1.0.7
+   Compiling futures-task v0.3.32
+   Compiling zstd-safe v7.2.4
+   Compiling slab v0.4.12
+   Compiling unicode-segmentation v1.13.2
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling alloc-stdlib v0.2.2
+   Compiling convert_case v0.10.0
+   Compiling futures-util v0.3.32
+   Compiling http v0.2.12
+   Compiling ppv-lite86 v0.2.21
+   Compiling windows-targets v0.52.6
+   Compiling tokio-util v0.7.18
+   Compiling icu_properties v2.2.0
+   Compiling icu_normalizer v2.2.0
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling aho-corasick v1.1.4
+   Compiling rand_core v0.9.5
+   Compiling simd-adler32 v0.3.9
+   Compiling hashbrown v0.17.0
+   Compiling adler2 v2.0.1
+   Compiling regex-lite v0.1.9
+   Compiling httparse v1.10.1
+   Compiling powerfmt v0.2.0
+   Compiling zmij v1.0.21
+   Compiling equivalent v1.0.2
+   Compiling time-core v0.1.8
+   Compiling regex-syntax v0.8.10
+   Compiling unicode-xid v0.2.6
+   Compiling num-conv v0.2.1
+   Compiling time-macros v0.2.27
+   Compiling bytestring v1.5.0
+   Compiling derive_more-impl v2.1.1
+   Compiling indexmap v2.14.0
+   Compiling regex-automata v0.4.14
+   Compiling deranged v0.5.8
+   Compiling miniz_oxide v0.8.9
+   Compiling rand_chacha v0.9.0
+   Compiling digest v0.10.7
+   Compiling idna_adapter v1.2.1
+   Compiling windows-sys v0.52.0
+   Compiling brotli-decompressor v5.0.0
+   Compiling actix-utils v3.0.1
+   Compiling actix-rt v2.11.0
+   Compiling form_urlencoded v1.2.2
+   Compiling actix-service v2.0.3
+   Compiling cookie v0.16.2
+   Compiling serde_json v1.0.149
+   Compiling bitflags v2.11.0
+   Compiling cpufeatures v0.2.17
+   Compiling actix-codec v0.5.2
+   Compiling sha1 v0.10.6
+   Compiling brotli v8.0.2
+   Compiling socket2 v0.5.10
+   Compiling regex v1.12.3
+   Compiling flate2 v1.1.9
+   Compiling idna v1.1.0
+   Compiling rand v0.9.3
+   Compiling derive_more v2.1.1
+   Compiling zstd v0.13.3
+   Compiling time v0.3.47
+   Compiling actix-router v0.5.4
+   Compiling h2 v0.3.27
+   Compiling local-channel v0.1.5
+   Compiling encoding_rs v0.8.35
+   Compiling httpdate v1.0.3
+   Compiling base64 v0.22.1
+   Compiling ryu v1.0.23
+   Compiling foldhash v0.1.5
+   Compiling language-tags v0.3.2
+   Compiling mime v0.3.17
+   Compiling serde_urlencoded v0.7.1
+   Compiling actix-http v3.12.0
+   Compiling actix-web-codegen v4.3.0
+   Compiling url v2.5.8
+   Compiling actix-server v2.6.0
+   Compiling actix-macros v0.2.4
+   Compiling impl-more v0.1.9
+   Compiling actix-web v4.13.0
+   Compiling file-transfer-server v0.1.0 (C:\Users\USER\Go\Ubaps\sandbox\file-transfer-server)
+error[E0432]: unresolved import `actix_files`
+ --> src\main.rs:2:5
+  |
+2 | use actix_files::NamedFile;
+  |     ^^^^^^^^^^^ use of unresolved module or unlinked crate `actix_files`
+  |
+  = help: if you wanted to use a crate named `actix_files`, use `cargo add actix_files` to add it to your `Cargo.toml`
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `futures_util`
+ --> src\main.rs:5:5
+  |
+5 | use futures_util::stream::StreamExt as _;
+  |     ^^^^^^^^^^^^ use of unresolved module or unlinked crate `futures_util`
+  |
+  = help: if you wanted to use a crate named `futures_util`, use `cargo add futures_util` to add it to your `Cargo.toml`
+
+error[E0432]: unresolved import `actix_multipart`
+ --> src\main.rs:3:5
+  |
+3 | use actix_multipart::Multipart;
+  |     ^^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `actix_multipart`
+  |
+  = help: if you wanted to use a crate named `actix_multipart`, use `cargo add actix_multipart` to add it to your `Cargo.toml`
+
+error[E0282]: type annotations needed
+  --> src\main.rs:18:13
+   |
+18 |         let mut field = item?;
+   |             ^^^^^^^^^
+19 |         let disposition = field.content_disposition();
+   |                           ----- type must be known at this point
+   |
+help: consider giving `field` an explicit type
+   |
+18 |         let mut field: /* Type */ = item?;
+   |                      ++++++++++++
+
+error[E0593]: closure is expected to take 0 arguments, but it takes 1 argument
+  --> src\main.rs:39:17
+   |
+39 |               f = web::block(move |mut file| {
+   |                   ^          --------------- takes 1 argument
+   |  _________________|
+   | |
+40 | |                 file.write_all(&data).map(|_| file)
+41 | |             })
+   | |______________^ expected closure that takes 0 arguments
+
+Some errors have detailed explanations: E0282, E0432, E0433, E0593.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `file-transfer-server` (bin "file-transfer-server") due to 5 previous errors
+
+Exit code: exit code: 101
+----------------------------------------
+Command: cargo run
+STDERR:
+   Compiling file-transfer-server v0.1.0 (C:\Users\USER\Go\Ubaps\sandbox\file-transfer-server)
+error[E0432]: unresolved import `actix_files`
+ --> src\main.rs:2:5
+  |
+2 | use actix_files::NamedFile;
+  |     ^^^^^^^^^^^ use of unresolved module or unlinked crate `actix_files`
+  |
+  = help: if you wanted to use a crate named `actix_files`, use `cargo add actix_files` to add it to your `Cargo.toml`
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `futures_util`
+ --> src\main.rs:5:5
+  |
+5 | use futures_util::stream::StreamExt as _;
+  |     ^^^^^^^^^^^^ use of unresolved module or unlinked crate `futures_util`
+  |
+  = help: if you wanted to use a crate named `futures_util`, use `cargo add futures_util` to add it to your `Cargo.toml`
+
+error[E0432]: unresolved import `actix_multipart`
+ --> src\main.rs:3:5
+  |
+3 | use actix_multipart::Multipart;
+  |     ^^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `actix_multipart`
+  |
+  = help: if you wanted to use a crate named `actix_multipart`, use `cargo add actix_multipart` to add it to your `Cargo.toml`
+
+error[E0282]: type annotations needed
+  --> src\main.rs:18:13
+   |
+18 |         let mut field = item?;
+   |             ^^^^^^^^^
+19 |         let disposition = field.content_disposition();
+   |                           ----- type must be known at this point
+   |
+help: consider giving `field` an explicit type
+   |
+18 |         let mut field: /* Type */ = item?;
+   |                      ++++++++++++
+
+error[E0593]: closure is expected to take 0 arguments, but it takes 1 argument
+  --> src\main.rs:39:17
+   |
+39 |               f = web::block(move |mut file| {
+   |                   ^          --------------- takes 1 argument
+   |  _________________|
+   | |
+40 | |                 file.write_all(&data).map(|_| file)
+41 | |             })
+   | |______________^ expected closure that takes 0 arguments
+
+Some errors have detailed explanations: E0282, E0432, E0433, E0593.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `file-transfer-server` (bin "file-transfer-server") due to 5 previous errors
+
+Exit code: exit code: 101
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File script.ps1
+STDERR:
+    Creating binary (application) package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo build
+STDERR:
+   Compiling file_transfer v0.1.0 (C:\Users\USER\Rust\Code_analyzer\sandbox\file_transfer)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.47s
+
+Exit code: exit code: 0
+----------------------------------------
+Command: cargo run
+STDERR:
+   Compiling file_transfer v0.1.0 (C:\Users\USER\Rust\Code_analyzer\sandbox\file_transfer)
+error: expected one of `::`, `;`, or `as`, found `,`
+ --> src\main.rs:6:37
+  |
+6 | use actix_multipart::form::Multipart,;
+  |                                     ^ expected one of `::`, `;`, or `as`
+
+error: could not compile `file_transfer` (bin "file_transfer") due to 1 previous error
+
+Exit code: exit code: 101
+----------------------------------------
+Command: cargo run
+STDERR:
+   Compiling file_transfer v0.1.0 (C:\Users\USER\Rust\Code_analyzer\sandbox\file_transfer)
+error: expected one of `::`, `;`, or `as`, found `,`
+ --> src\main.rs:6:37
+  |
+6 | use actix_multipart::form::Multipart,;
+  |                                     ^ expected one of `::`, `;`, or `as`
+
+error: could not compile `file_transfer` (bin "file_transfer") due to 1 previous error
+
+Exit code: exit code: 101
+----------------------------------------
+Command: powershell -ExecutionPolicy Bypass -File run_file_transfer.ps1
+STDERR:
+error: failed to parse manifest at `C:\Users\USER\Rust\Code_analyzer\sandbox\file_transfer\Cargo.toml`
+
+Caused by:
+  manifest is missing either a `[package]` or a `[workspace]`
+C:\Users\USER\Rust\Code_analyzer\sandbox\run_file_transfer.ps1 : Executable not 
+found at ./target/release/file_transfer.exe
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorExceptio 
+   n
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,r 
+   un_file_transfer.ps1
+ 
+
+Exit code: exit code: 0
+----------------------------------------

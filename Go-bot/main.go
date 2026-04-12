@@ -27,7 +27,7 @@ import (
 
 const (
 	maxMessageLength = 4096
-	execTimeout      = 300 * time.Second
+	execTimeout      = 900 * time.Second
 	ttsTimeout       = 300 * time.Second
 	maxWorkers       = 5
 	maxInputLength   = 2000
@@ -36,6 +36,7 @@ const (
 // ─── CHANGE THESE TO MATCH YOUR MACHINE ─────────────────────────────────────
 const analyzerExe = `C:\Users\USER\Rust\Code_analyzer\target\debug\Code_analyzer.exe`
 const analyzerDir = `C:\Users\USER\Rust\Code_analyzer`
+const planFile    = `C:\Users\USER\Rust\Code_analyzer\plans\plan.txt`
 
 // ─── PASTE YOUR NGROK URL HERE EVERY TIME YOU START COLAB ───────────────────
 // Example: "https://abcd-12-34-56-78.ngrok-free.app"
@@ -116,6 +117,44 @@ func runFilter(originalPrompt, aiOutput string) (string, error) {
 	}
 
 	return outputStr, nil
+}
+
+// sendPlanToWhatsApp reads plans/plan.txt from disk and sends it as a
+// WhatsApp document. Called BEFORE the main answer is delivered.
+func sendPlanToWhatsApp(ctx context.Context, client *whatsmeow.Client, evt *events.Message) {
+	data, err := os.ReadFile(planFile)
+	if err != nil {
+		// plan.txt might not exist yet on the very first run — silently skip
+		fmt.Printf("⚠️  plan.txt not found (%v), skipping plan delivery\n", err)
+		return
+	}
+	content := string(data)
+	if strings.TrimSpace(content) == "" {
+		return
+	}
+
+	logToAudit(fmt.Sprintf("[Plan sent]:\n%s", content))
+	fileData := []byte(content)
+	resp, err := client.Upload(ctx, fileData, whatsmeow.MediaDocument)
+	if err != nil {
+		fmt.Printf("❌ Failed to upload plan.txt: %v\n", err)
+		return
+	}
+
+	fileName := "plan.txt"
+	client.SendMessage(ctx, evt.Info.Chat, &waProto.Message{
+		DocumentMessage: &waProto.DocumentMessage{
+			URL:           &resp.URL,
+			DirectPath:    &resp.DirectPath,
+			MediaKey:      resp.MediaKey,
+			FileEncSHA256: resp.FileEncSHA256,
+			FileSHA256:    resp.FileSHA256,
+			FileLength:    &resp.FileLength,
+			Mimetype:      proto.String("text/plain"),
+			FileName:      &fileName,
+		},
+	})
+	fmt.Println("📋 plan.txt sent to WhatsApp")
 }
 
 // callColabTTS sends text to the Colab Flask API and returns
@@ -294,13 +333,16 @@ func processJob(job Job) {
 	}
 
 	fmt.Println("📩 Processing prompt:", clean)
-	sendText(ctx, client, evt, "⏳ Processing request...")
+	sendText(ctx, client, evt, "⏳ Enigma is processing your request...")
 
 	output, err := runAnalyzer(clean)
 	if err != nil {
 		sendText(ctx, client, evt, fmt.Sprintf("❌ %v", err))
 		return
 	}
+
+	// ── Send execution plan BEFORE the answer ────────────────────────────────
+	sendPlanToWhatsApp(ctx, client, evt)
 
 	// ── Voice note response via Colab TTS ────────────────────
 	if strings.Contains(strings.ToLower(clean), "voice note") {

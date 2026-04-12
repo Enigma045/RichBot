@@ -349,7 +349,7 @@ pub fn search_tracks_in_response(response: &str, query: &str) -> String {
 // ─── AI Intent Processing ──────────────────────────────────────────────────
 
 pub fn post_process_spotify(token: &str, prompt: &str, api_response: &str) {
-    let system_prompt = r#"
+    let _system_prompt = r#"
         You are 'Enigma Spotify Brain'. You have the extracted data from Spotify for the user's request.
         USER PROMPT: {PROMPT}
         SPOTIFY DATA: {RESPONSE}

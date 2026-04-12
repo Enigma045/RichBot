@@ -92,21 +92,24 @@ pub fn execute_ai_commands() {
 }
 
 pub fn execute_task(task: &str, context: &str) {
-    // Scan project file tree for local fallback
-    let local_tree = operations::unified_search(task, "");
+    // Scan project file tree for local fallback natively without AI search penalties
+    let local_tree = operations::see();
     let local_tree_json = serde_json::to_string(&local_tree).unwrap_or_else(|_| "[]".to_string());
 
     let prompt = format!(
         "You are 'Enigma Command Expert', a broad and extremely capable Windows PowerUser and DevOps Administrator.\n\
          Your goal is to fulfill the user's request using Windows CMD or PowerShell.\n\n\
          RESOURCES AT YOUR DISPOSAL:\n\
-         - Semantic Search Context (potential paths from indexed file system): {context}\n\
-         - Local Project Tree (fallback): {local_tree}\n\n\
+         - Semantic Search Context (indexed workspace paths): {context}\n\
+         - Local Project Tree (ephemeral sandbox): {local_tree}\n\n\
+         CONTEXT SELECTION RULES:\n\
+         - You can work in either the ephemeral './sandbox' or within absolute workspace paths found in the Search Context.\n\
+         - Use absolute paths for existing project files, and './sandbox' for new experiments or isolated tasks.\n\n\
          USER REQUEST: {task}\n\n\
          You can generate file content, multi-step command sequences, and complex scripts. Be as broad as a real terminal.\n\
          Respond with ONLY a valid JSON object (no markdown, no explainers) in this EXACT format:\n\
          {{\n\
-           \"workdir\": \".\",\n\
+           \"workdir\": \"./sandbox\",\n\
            \"files\": [\n\
              {{ \"path\": \"script.ps1\", \"content\": \"...\" }}\n\
            ],\n\
@@ -116,11 +119,10 @@ pub fn execute_task(task: &str, context: &str) {
          }}\n\n\
          CRITICAL RULES:\n\
          1. You have FULL POWER. You can install software, run git, manage services, and manipulate the file system.\n\
-         2. For finding/opening specific files (movies, documents, music), PRIORITIZE the 'Semantic Search Context' paths.\n\
+         2. PRIORITIZE the 'Semantic Search Context' paths for existing files. Use absolute paths for these.\n\
          3. NEVER use 'cd' as a command. Set the 'workdir' field instead.\n\
-         4. For media/UI apps, use: powershell -c \"Invoke-Item 'path'\"\n\
-         5. If the user's request is complex, write a PowerShell script in 'files' and execute it in 'commands'.\n\
-         6. Return ONLY the JSON object, nothing else.",
+         4. Use relative paths for files ONLY if they are intended for the 'workdir' you specify.\n\
+         5. Return ONLY the JSON object, nothing else.",
         context = context,
         local_tree = local_tree_json,
         task = task
@@ -146,8 +148,17 @@ pub fn execute_task(task: &str, context: &str) {
     };
 
     // --- Read workdir (default to ".") ---
-    let workdir_str = parsed["workdir"].as_str().unwrap_or(".").to_string();
-    let workdir = Path::new(&workdir_str);
+    let workdir_str = parsed["workdir"].as_str().unwrap_or("./sandbox").to_string();
+    let mut workdir = Path::new(&workdir_str).to_path_buf();
+
+    // Force relative paths into the sandbox
+    if workdir.is_relative() && !workdir_str.starts_with("./sandbox") && !workdir_str.starts_with("sandbox") {
+        workdir = Path::new("./sandbox").join(workdir);
+    }
+
+    if !workdir.exists() {
+        let _ = fs::create_dir_all(&workdir);
+    }
 
     // --- Step 1: Create files ---
     if let Some(files) = parsed["files"].as_array() {
@@ -160,7 +171,10 @@ pub fn execute_task(task: &str, context: &str) {
                 None => { eprintln!("⚠️  Skipping file entry with no path"); continue; }
             };
             let content = file_entry["content"].as_str().unwrap_or("");
-            let path = Path::new(path_str);
+            let mut path = Path::new(path_str).to_path_buf();
+            if path.is_relative() && !path_str.starts_with("./sandbox") && !path_str.starts_with("sandbox") {
+                path = Path::new("./sandbox").join(path);
+            }
 
             if let Some(parent) = path.parent() {
                 if !parent.as_os_str().is_empty() {
@@ -171,19 +185,15 @@ pub fn execute_task(task: &str, context: &str) {
                 }
             }
 
-            match fs::write(path, content) {
-                Ok(()) => println!("  ✅ Created: {}", path_str),
-                Err(e) => eprintln!("  ❌ Failed to write {}: {}", path_str, e),
+            match fs::write(&path, content) {
+                Ok(()) => println!("  ✅ Created: {}", path.display()),
+                Err(e) => eprintln!("  ❌ Failed to write {}: {}", path.display(), e),
             }
         }
     }
 
-    // --- Step 2: Validate workdir exists ---
-    if !workdir.exists() {
-        eprintln!("⚠️  workdir '{}' does not exist, falling back to '.'", workdir_str);
-    }
-    let effective_workdir = if workdir.exists() { workdir } else { Path::new(".") };
-    println!("\n📂 Working directory: {}", effective_workdir.display());
+    println!("\n📂 Working directory: {}", workdir.display());
+    let effective_workdir = &workdir;
 
     // --- Step 3: Run commands ---
     let commands: Vec<String> = match parsed["commands"].as_array() {
