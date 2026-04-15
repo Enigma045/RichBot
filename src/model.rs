@@ -6,7 +6,6 @@ use std::io;
 use std::time::{Duration, Instant};
 use colored::Colorize;
 use chrono::Local;
-use std::{thread, time};
 
 use crate::styles;
 
@@ -18,30 +17,73 @@ fn default_mode() -> String {
     "Brain".to_string()
 }
 
+pub(crate) fn default_retries() -> u8 { 1 }
+
 #[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct RequestTracker {
     #[serde(default)]
     pub(crate) gemini_flash: u32,
     #[serde(default)]
+    pub(crate) gemini_flash_2: u32,
+    #[serde(default)]
+    pub(crate) gemini_flash_3: u32,
+    #[serde(default)]
+    pub(crate) gemini_flash_4: u32,
+
+    #[serde(default)]
     pub(crate) gemini_flash_lite: u32,
+    #[serde(default)]
+    pub(crate) gemini_flash_lite_2: u32,
+    #[serde(default)]
+    pub(crate) gemini_flash_lite_3: u32,
+    #[serde(default)]
+    pub(crate) gemini_flash_lite_4: u32,
+
     #[serde(default)]
     pub(crate) gemini_pro: u32,
     #[serde(default)]
+    pub(crate) gemini_pro_2: u32,
+    #[serde(default)]
+    pub(crate) gemini_pro_3: u32,
+    #[serde(default)]
+    pub(crate) gemini_pro_4: u32,
+
+    #[serde(default)]
     pub(crate) groq: u32,
+    #[serde(default)]
+    pub(crate) groq_2: u32,
+    #[serde(default)]
+    pub(crate) groq_4: u32,
+
     #[serde(default)]
     pub(crate) cerebras: u32,
     #[serde(default)]
     pub(crate) mistral: u32,
     #[serde(default)]
     pub(crate) openrouter: u32,
+
     #[serde(default)]
     pub(crate) openrouter_gpt: u32,
+    #[serde(default)]
+    pub(crate) openrouter_gpt_2: u32,
+    #[serde(default)]
+    pub(crate) openrouter_gpt_4: u32,
+
     #[serde(default)]
     pub(crate) eyes_calls: u32,
     #[serde(default)]
     pub(crate) last_reset_date: String,
-    #[serde(default = "default_mode")]
+    #[serde(default)]
     pub(crate) task_mode: String,
+    #[serde(default)]
+    pub(crate) requests_per_prompt: u32,
+    /// Max decomposition steps Brain is allowed to plan (keyword: "steps N").
+    /// 0 means use the built-in default (16).
+    #[serde(default)]
+    pub(crate) max_steps: u32,
+    /// Max retry attempts by Brain reviewer (keyword: "retries N").
+    #[serde(default = "crate::model::default_retries")]
+    pub(crate) max_retries: u8,
     #[serde(skip)]
     pub(crate) persona: String,
     /// In-process timestamp of last Cerebras call (not persisted)
@@ -67,17 +109,20 @@ impl RequestTracker {
             }
         }
         RequestTracker {
-            gemini_flash: 0,
-            gemini_flash_lite: 0,
-            gemini_pro: 0,
-            groq: 0,
+            gemini_flash: 0, gemini_flash_2: 0, gemini_flash_3: 0, gemini_flash_4: 0,
+            gemini_flash_lite: 0, gemini_flash_lite_2: 0, gemini_flash_lite_3: 0, gemini_flash_lite_4: 0,
+            gemini_pro: 0, gemini_pro_2: 0, gemini_pro_3: 0, gemini_pro_4: 0,
+            groq: 0, groq_2: 0, groq_4: 0,
             cerebras: 0,
             mistral: 0,
             openrouter: 0,
-            openrouter_gpt: 0,
+            openrouter_gpt: 0, openrouter_gpt_2: 0, openrouter_gpt_4: 0,
             eyes_calls: 0,
             last_reset_date: Local::now().format("%Y-%m-%d").to_string(),
             task_mode: "Brain".to_string(),
+            requests_per_prompt: 0,
+            max_steps: 0,
+            max_retries: 1,
             persona: "Quick".to_string(),
             last_cerebras_call: None,
             last_mistral_call: None,
@@ -85,7 +130,7 @@ impl RequestTracker {
     }
 
     pub fn save(&self) {
-        if let Ok(data) = serde_json::to_string_pretty(self) {
+        if let Ok(data) = serde_json::to_string(self) {
             let _ = fs::write(TRACKER_FILE, data);
         }
     }
@@ -99,14 +144,14 @@ impl RequestTracker {
 
     fn reset_daily(&mut self, today: String) {
         eprintln!("🕒 A new day! Resetting API usage limits...");
-        self.gemini_flash = 0;
-        self.gemini_flash_lite = 0;
-        self.gemini_pro = 0;
-        self.groq = 0;
+        self.gemini_flash = 0; self.gemini_flash_2 = 0; self.gemini_flash_3 = 0; self.gemini_flash_4 = 0;
+        self.gemini_flash_lite = 0; self.gemini_flash_lite_2 = 0; self.gemini_flash_lite_3 = 0; self.gemini_flash_lite_4 = 0;
+        self.gemini_pro = 0; self.gemini_pro_2 = 0; self.gemini_pro_3 = 0; self.gemini_pro_4 = 0;
+        self.groq = 0; self.groq_2 = 0; self.groq_4 = 0;
         self.cerebras = 0;
         self.mistral = 0;
         self.openrouter = 0;
-        self.openrouter_gpt = 0;
+        self.openrouter_gpt = 0; self.openrouter_gpt_2 = 0; self.openrouter_gpt_4 = 0;
         self.eyes_calls = 0;
         self.last_reset_date = today;
         self.save();
@@ -115,20 +160,39 @@ impl RequestTracker {
     // Returns true if limit not yet hit
 
     fn can_use_gemini_flash(&self) -> bool {self.gemini_flash < 250}
-    fn can_use_gemini_flash_lite(&self) -> bool {self.gemini_flash_lite < 250}
+    fn can_use_gemini_flash_2(&self) -> bool {self.gemini_flash_2 < 250}
+    fn can_use_gemini_flash_3(&self) -> bool {self.gemini_flash_3 < 250}
+    fn can_use_gemini_flash_4(&self) -> bool {self.gemini_flash_4 < 250}
+
+    fn can_use_gemini_flash_lite(&self) -> bool {self.gemini_flash_lite < 1000}
+    fn can_use_gemini_flash_lite_2(&self) -> bool {self.gemini_flash_lite_2 < 1000}
+    fn can_use_gemini_flash_lite_3(&self) -> bool {self.gemini_flash_lite_3 < 1000}
+    fn can_use_gemini_flash_lite_4(&self) -> bool {self.gemini_flash_lite_4 < 1000}
+
     fn can_use_gemini_pro(&self) -> bool {self.gemini_pro < 250}
+    fn can_use_gemini_pro_2(&self) -> bool {self.gemini_pro_2 < 250}
+    fn can_use_gemini_pro_3(&self) -> bool {self.gemini_pro_3 < 250}
+    fn can_use_gemini_pro_4(&self) -> bool {self.gemini_pro_4 < 250}
+
     fn can_use_groq(&self) -> bool {self.groq < 250}
+    fn can_use_groq_2(&self) -> bool {self.groq_2 < 250}
+    fn can_use_groq_4(&self) -> bool {self.groq_4 < 250}
+
     fn can_use_cerebras(&self) -> bool {self.cerebras < 250}
     fn can_use_mistral(&self) -> bool {self.mistral < 250}
     fn can_use_openrouter(&self) -> bool {self.openrouter < 250}
+
     fn can_use_openrouter_gpt(&self) -> bool {self.openrouter_gpt < 250}
+    fn can_use_openrouter_gpt_2(&self) -> bool {self.openrouter_gpt_2 < 250}
+    fn can_use_openrouter_gpt_4(&self) -> bool {self.openrouter_gpt_4 < 250}
+
     pub fn can_use_eyes(&self) -> bool {self.eyes_calls < 50}
 }
 
-pub fn call_gemini(client: &Client, prompt: &str, model: &str) -> Result<String, String>{
+pub fn call_gemini(client: &Client, prompt: &str, model: &str, key: &str) -> Result<String, String>{
     let url = format!(
         "https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent?key={}",
-        model, GEMINI_KEY
+        model, key
     );
 
     let body = json!({
@@ -185,7 +249,7 @@ pub fn call_cerebras(client: &Client,prompt: &str) -> Result<String, String> {
     
     }
 
-pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
+pub fn call_groq(client: &Client, prompt: &str, key: &str) -> Result<String, String> {
     let body = json!({
         "model": "openai/gpt-oss-120b",
         "messages": [{ "role": "user", "content": prompt }]
@@ -193,7 +257,7 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
 
     let response = client
         .post("https://api.groq.com/openai/v1/chat/completions")
-        .header("Authorization", format!("Bearer {}", GROQ_KEY))
+        .header("Authorization", format!("Bearer {}", key))
         .header("Content-Type", "application/json")
         .json(&body)
         .send()
@@ -242,7 +306,7 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
            .to_string())
      }
 
-     pub fn call_openrouter(client: &Client, prompt: &str) -> Result<String, String> {
+     pub fn call_openrouter(client: &Client, prompt: &str, key: &str) -> Result<String, String> {
         let body = json!({
             "model": "nvidia/nemotron-3-super-120b-a12b:free",
             "messages": [{ "role": "user", "content": prompt }]
@@ -250,7 +314,7 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
 
         let response = client
             .post("https://openrouter.ai/api/v1/chat/completions")
-            .header("Authorization", format!("Bearer {}", OPEN_ROUTER_KEY))
+            .header("Authorization", format!("Bearer {}", key))
             .header("Content-Type", "application/json")
             .json(&body)
             .send()
@@ -268,7 +332,7 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
            .to_string())
      }
 
-     pub fn call_openrouter_gpt(client: &Client, prompt: &str) -> Result<String, String> {
+     pub fn call_openrouter_gpt(client: &Client, prompt: &str, key: &str) -> Result<String, String> {
         let body = json!({
             "model": "openai/gpt-oss-120b:free",
             "messages": [{ "role": "user", "content": prompt }]
@@ -276,7 +340,7 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
 
         let response = client
             .post("https://openrouter.ai/api/v1/chat/completions")
-            .header("Authorization", format!("Bearer {}", OPEN_ROUTER_KEY))
+            .header("Authorization", format!("Bearer {}", key))
             .header("Content-Type", "application/json")
             .json(&body)
             .send()
@@ -309,81 +373,156 @@ pub fn call_groq(client: &Client, prompt: &str) -> Result<String, String> {
             format!("{}{}{}", persona_instruction, voice_note_instruction, prompt)
         };
 
-    if tracker.can_use_openrouter(){
+        // Real-time tracking: increment requests for this prompt and save immediately
+        tracker.requests_per_prompt += 1;
+        tracker.save();
+
+    // 1. OpenRouter GPT-OSS (v1, v2, v4)
+    if tracker.can_use_openrouter_gpt() {
+        eprintln!("📡 Using: OpenAI GPT-OSS v1 ({}/250)", tracker.openrouter_gpt + 1);
+        match call_openrouter_gpt(client, &enriched_prompt, OPEN_ROUTER_KEY) {
+            Ok(r) => { tracker.openrouter_gpt += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v1 failed: {} - trying backups...", e),
+        }
+    }
+    if tracker.can_use_openrouter_gpt_2() {
+        eprintln!("📡 Using: OpenAI GPT-OSS v2 ({}/250)", tracker.openrouter_gpt_2 + 1);
+        match call_openrouter_gpt(client, &enriched_prompt, GPT_120_KEY2) {
+            Ok(r) => { tracker.openrouter_gpt_2 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v2 failed: {} - trying backups...", e),
+        }
+    }
+    if tracker.can_use_openrouter_gpt_4() {
+        eprintln!("📡 Using: OpenAI GPT-OSS v4 ({}/250)", tracker.openrouter_gpt_4 + 1);
+        match call_openrouter_gpt(client, &enriched_prompt, GPT_120_KEY4) {
+            Ok(r) => { tracker.openrouter_gpt_4 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v4 failed: {}", e),
+        }
+    }
+
+    // 2. OpenRouter Nemotron (v1)
+    if tracker.can_use_openrouter() {
         eprintln!("📡 Using: Nvidia Nemotron ({}/250)", tracker.openrouter + 1);
-        match call_openrouter(client, &enriched_prompt) {
-            Ok(response) => {
-                tracker.openrouter += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Nvidia Nemotron failed: {} — trying next...", e),
+        match call_openrouter(client, &enriched_prompt, OPEN_ROUTER_KEY) {
+            Ok(r) => { tracker.openrouter += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ Nemotron failed: {}", e),
         }
     }
 
-    if tracker.can_use_openrouter_gpt(){
-        eprintln!("📡 Using: OpenAI GPT-OSS ({}/250)", tracker.openrouter_gpt + 1);
-        match call_openrouter_gpt(client, &enriched_prompt) {
-            Ok(response) => {
-                tracker.openrouter_gpt += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  OpenAI GPT-OSS failed: {} — trying next...", e),
+    // 3. Groq (v1, v2, v4)
+    if tracker.can_use_groq() {
+        eprintln!("📡 Using: Groq v1 ({}/250)", tracker.groq + 1);
+        match call_groq(client, &enriched_prompt, GROQ_KEY) {
+            Ok(r) => { tracker.groq += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v1 failed: {} - trying backups...", e),
         }
     }
-        
-    if tracker.can_use_groq(){
-        eprintln!("📡 Using: Groq Llama 4 ({}/500)", tracker.groq + 1);
-        match call_groq(client, &enriched_prompt){
-            Ok(response) => {
-                tracker.groq += 1;
-                tracker.save();
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Groq failed: {} — trying next...", e),
+    if tracker.can_use_groq_2() {
+        eprintln!("📡 Using: Groq v2 ({}/250)", tracker.groq_2 + 1);
+        match call_groq(client, &enriched_prompt, GROQ_KEY2) {
+            Ok(r) => { tracker.groq_2 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v2 failed: {} - trying backups...", e),
+        }
+    }
+    if tracker.can_use_groq_4() {
+        eprintln!("📡 Using: Groq v4 ({}/250)", tracker.groq_4 + 1);
+        match call_groq(client, &enriched_prompt, GROQ_KEY4) {
+            Ok(r) => { tracker.groq_4 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v4 failed: {}", e),
         }
     }
 
-    
+    // 4. Gemini Flash-Lite (v1, v2, v3, v4)
+    let keys = [GEMINI_KEY, GEMINI_KEY2, GEMINI_KEY3, GEMINI_KEY4];
+    if tracker.can_use_gemini_flash_lite() {
+        eprintln!("📡 Using: Gemini Flash-Lite v1 ({}/1000)", tracker.gemini_flash_lite + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite", keys[0]) {
+            Ok(r) => { tracker.gemini_flash_lite += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v1 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_flash_lite_2() {
+        eprintln!("📡 Using: Gemini Flash-Lite v2 ({}/1000)", tracker.gemini_flash_lite_2 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite", keys[1]) {
+            Ok(r) => { tracker.gemini_flash_lite_2 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v2 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_flash_lite_3() {
+        eprintln!("📡 Using: Gemini Flash-Lite v3 ({}/1000)", tracker.gemini_flash_lite_3 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite", keys[2]) {
+            Ok(r) => { tracker.gemini_flash_lite_3 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v3 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_flash_lite_4() {
+        eprintln!("📡 Using: Gemini Flash-Lite v4 ({}/1000)", tracker.gemini_flash_lite_4 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite", keys[3]) {
+            Ok(r) => { tracker.gemini_flash_lite_4 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v4 failed: {}", e),
+        }
+    }
 
+    // 5. Gemini Flash (v1, v2, v3, v4)
     if tracker.can_use_gemini_flash() {
-            eprintln!("📡 Using: Gemini 2.5 Flash-Lite ({}/1000)", tracker.gemini_flash_lite + 1);
-            match call_gemini(client, &enriched_prompt, "gemini-2.5-flash-lite") {
-              Ok(response) => {
-                tracker.gemini_flash_lite += 1;
-                tracker.save();
-                return response;
-              }
-              Err(e) => eprintln!("⚠️  Gemini Flash-Lite failed: {} — trying next...", e),
-            }
-        }
-
-        if tracker.can_use_gemini_flash() {
-            eprintln!("📡 Using: Gemini 2.5 Flash ({}/250)", tracker.gemini_flash + 1);
-            match call_gemini(client, &enriched_prompt, "gemini-2.5-flash") {
-                Ok(response) => {
-                    tracker.gemini_flash += 1;
-                    tracker.save();
-                    return response;
-                },
-                Err(e) => eprintln!("⚠️  Gemini Flash failed: {} — trying next...", e),
-            }
-        }
-
-    if tracker.can_use_gemini_pro(){
-        eprintln!("📡 Using: Gemini 2.5 Pro ({}/100)", tracker.gemini_pro + 1);
-        match call_gemini(client, &enriched_prompt, "gemini-2.5-pro") {
-            Ok(response) => {
-                tracker.gemini_pro += 1;
-                tracker.save();
-
-                return response;
-            }
-            Err(e) => eprintln!("⚠️  Gemini Pro failed: {}", e),
+        eprintln!("📡 Using: Gemini Flash v1 ({}/250)", tracker.gemini_flash + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash", keys[0]) {
+            Ok(r) => { tracker.gemini_flash += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v1 failed: {}", e),
         }
     }
-        //lame
+    if tracker.can_use_gemini_flash_2() {
+        eprintln!("📡 Using: Gemini Flash v2 ({}/250)", tracker.gemini_flash_2 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash", keys[1]) {
+            Ok(r) => { tracker.gemini_flash_2 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v2 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_flash_3() {
+        eprintln!("📡 Using: Gemini Flash v3 ({}/250)", tracker.gemini_flash_3 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash", keys[2]) {
+            Ok(r) => { tracker.gemini_flash_3 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v3 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_flash_4() {
+        eprintln!("📡 Using: Gemini Flash v4 ({}/250)", tracker.gemini_flash_4 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-flash", keys[3]) {
+            Ok(r) => { tracker.gemini_flash_4 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v4 failed: {}", e),
+        }
+    }
+
+    // 6. Gemini Pro (v1, v2, v3, v4)
+    if tracker.can_use_gemini_pro() {
+        eprintln!("📡 Using: Gemini Pro v1 ({}/250)", tracker.gemini_pro + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-pro", keys[0]) {
+            Ok(r) => { tracker.gemini_pro += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v1 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_pro_2() {
+        eprintln!("📡 Using: Gemini Pro v2 ({}/250)", tracker.gemini_pro_2 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-pro", keys[1]) {
+            Ok(r) => { tracker.gemini_pro_2 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v2 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_pro_3() {
+        eprintln!("📡 Using: Gemini Pro v3 ({}/250)", tracker.gemini_pro_3 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-pro", keys[2]) {
+            Ok(r) => { tracker.gemini_pro_3 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v3 failed: {}", e),
+        }
+    }
+    if tracker.can_use_gemini_pro_4() {
+        eprintln!("📡 Using: Gemini Pro v4 ({}/250)", tracker.gemini_pro_4 + 1);
+        match call_gemini(client, &enriched_prompt, "gemini-2.5-pro", keys[3]) {
+            Ok(r) => { tracker.gemini_pro_4 += 1; tracker.save(); return r; }
+            Err(e) => eprintln!("⚠️ v4 failed: {}", e),
+        }
+    }
+
     if tracker.can_use_cerebras(){
         // Enforce 1 req/sec for Cerebras (60 RPM limit)
         throttle_if_needed(&tracker.last_cerebras_call, Duration::from_millis(1100), "Cerebras");

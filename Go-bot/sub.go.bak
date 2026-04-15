@@ -1,4 +1,8 @@
-/*package main
+//go:build ignore
+// +build ignore
+
+// sub.go — archived old version of main.go (kept for reference only, not compiled).
+/*
 
 import (
 	"context"

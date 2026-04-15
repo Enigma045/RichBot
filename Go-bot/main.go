@@ -14,6 +14,7 @@ import (
 	"sync"
 	"syscall"
 	"time"
+	"bufio"
 
 	"github.com/mdp/qrterminal/v3"
 	_ "github.com/mattn/go-sqlite3"
@@ -27,7 +28,7 @@ import (
 
 const (
 	maxMessageLength = 4096
-	execTimeout      = 900 * time.Second
+	execTimeout      = 1800 * time.Second
 	ttsTimeout       = 300 * time.Second
 	maxWorkers       = 5
 	maxInputLength   = 2000
@@ -67,30 +68,49 @@ func sanitizeInput(input string) (string, error) {
 	return input, nil
 }
 
-func runAnalyzer(msg string) (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), execTimeout)
-	defer cancel()
-
-	var stdoutBuf, stderrBuf bytes.Buffer
+func runAnalyzer(ctx context.Context, client *whatsmeow.Client, evt *events.Message, msg string) (string, error) {
+	// We use the context from the caller for timeout management
+	var stdoutBuf bytes.Buffer
 	cmd := exec.CommandContext(ctx, analyzerExe, "--prompt", msg, "--url", colabBaseURL)
 	cmd.Dir = analyzerDir
-	cmd.Stdout = &stdoutBuf
-	cmd.Stderr = &stderrBuf
 
-	err := cmd.Run()
-	outputStr := strings.TrimSpace(stdoutBuf.String())
-	stderrStr := strings.TrimSpace(stderrBuf.String())
-
-	logToInternalAudit(outputStr, stderrStr)
-
-	if ctx.Err() == context.DeadlineExceeded {
-		return "", fmt.Errorf("analyzer timed out after %v", execTimeout)
-	}
+	stdout, err := cmd.StdoutPipe()
 	if err != nil {
-		return "", fmt.Errorf("analyzer error: %v\nStderr:\n%s", err, stderrStr)
+		return "", fmt.Errorf("failed to create stdout pipe: %w", err)
+	}
+	cmd.Stderr = os.Stderr // Pipe stderr to Go console for debugging
+
+	if err := cmd.Start(); err != nil {
+		return "", fmt.Errorf("failed to start analyzer: %w", err)
 	}
 
-	return outputStr, nil
+	// Read stdout line by line in real-time
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		line := scanner.Text()
+		stdoutBuf.WriteString(line + "\n")
+		fmt.Println("[Analyzer Out]:", line)
+
+		// ── Real-time WhatsApp Forwarding ────────────────────────────────────
+		if strings.HasPrefix(line, "🚀 [STAGE]") || strings.HasPrefix(line, "📍 [STEP]") || strings.HasPrefix(line, "✅ [COMPLETE]") {
+			sendText(ctx, client, evt, line)
+		}
+
+		// ── Real-time Plan Delivery ──────────────────────────────────────────
+		if strings.Contains(line, "📋 Brain: Plan saved to") {
+			// Small delay to ensure disk has finished writing
+			time.Sleep(200 * time.Millisecond)
+			sendPlanToWhatsApp(ctx, client, evt)
+		}
+	}
+
+	if err := cmd.Wait(); err != nil {
+		// If it's a non-zero exit but we have output, we might still want to return it
+		// but usually analyzer error means failure.
+		return stdoutBuf.String(), fmt.Errorf("analyzer exited with error: %w", err)
+	}
+
+	return strings.TrimSpace(stdoutBuf.String()), nil
 }
 
 func runFilter(originalPrompt, aiOutput string) (string, error) {
@@ -120,11 +140,10 @@ func runFilter(originalPrompt, aiOutput string) (string, error) {
 }
 
 // sendPlanToWhatsApp reads plans/plan.txt from disk and sends it as a
-// WhatsApp document. Called BEFORE the main answer is delivered.
+// WhatsApp document.
 func sendPlanToWhatsApp(ctx context.Context, client *whatsmeow.Client, evt *events.Message) {
 	data, err := os.ReadFile(planFile)
 	if err != nil {
-		// plan.txt might not exist yet on the very first run — silently skip
 		fmt.Printf("⚠️  plan.txt not found (%v), skipping plan delivery\n", err)
 		return
 	}
@@ -135,9 +154,9 @@ func sendPlanToWhatsApp(ctx context.Context, client *whatsmeow.Client, evt *even
 
 	logToAudit(fmt.Sprintf("[Plan sent]:\n%s", content))
 	fileData := []byte(content)
-	resp, err := client.Upload(ctx, fileData, whatsmeow.MediaDocument)
+	resp, err := uploadWithRetry(ctx, client, fileData, whatsmeow.MediaDocument)
 	if err != nil {
-		fmt.Printf("❌ Failed to upload plan.txt: %v\n", err)
+		fmt.Printf("❌ Failed to upload plan.txt after retries: %v\n", err)
 		return
 	}
 
@@ -237,10 +256,27 @@ func sendText(ctx context.Context, client *whatsmeow.Client, evt *events.Message
 	})
 }
 
+func uploadWithRetry(ctx context.Context, client *whatsmeow.Client, data []byte, mediaType whatsmeow.MediaType) (whatsmeow.UploadResponse, error) {
+	const maxAttempts = 3
+	backoff := 2 * time.Second
+	var lastErr error
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		resp, err := client.Upload(ctx, data, mediaType)
+		if err == nil {
+			return resp, nil
+		}
+		lastErr = err
+		fmt.Printf("⚠️  Upload attempt %d/%d failed: %v. Retrying in %v...\n", attempt, maxAttempts, err, backoff)
+		time.Sleep(backoff)
+		backoff *= 2
+	}
+	return whatsmeow.UploadResponse{}, fmt.Errorf("upload failed after %d attempts: %w", maxAttempts, lastErr)
+}
+
 func sendDocument(ctx context.Context, client *whatsmeow.Client, evt *events.Message, content string) error {
 	logToAudit(fmt.Sprintf("[Document Sent (length: %d)]:\n%s", len(content), content))
 	fileData := []byte(content)
-	resp, err := client.Upload(ctx, fileData, whatsmeow.MediaDocument)
+	resp, err := uploadWithRetry(ctx, client, fileData, whatsmeow.MediaDocument)
 	if err != nil {
 		return fmt.Errorf("upload failed: %w", err)
 	}
@@ -335,14 +371,11 @@ func processJob(job Job) {
 	fmt.Println("📩 Processing prompt:", clean)
 	sendText(ctx, client, evt, "⏳ Enigma is processing your request...")
 
-	output, err := runAnalyzer(clean)
+	output, err := runAnalyzer(ctx, client, evt, clean)
 	if err != nil {
 		sendText(ctx, client, evt, fmt.Sprintf("❌ %v", err))
 		return
 	}
-
-	// ── Send execution plan BEFORE the answer ────────────────────────────────
-	sendPlanToWhatsApp(ctx, client, evt)
 
 	// ── Voice note response via Colab TTS ────────────────────
 	if strings.Contains(strings.ToLower(clean), "voice note") {

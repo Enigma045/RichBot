@@ -75,9 +75,9 @@ pub fn see() -> Vec<FileEntry> {
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|entry| {
-            let path_str = entry.path().to_string_lossy();
+            let path_str = entry.path().to_string_lossy().replace("\\", "/");
             !path_str.contains(".git") 
-                && !path_str.contains("target") 
+                && !path_str.contains("/target/")
                 && !path_str.contains("cmd_outputs.txt")
         })
         .map(|entry| FileEntry {

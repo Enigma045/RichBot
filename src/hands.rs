@@ -51,33 +51,76 @@ pub fn write_file(base: &Path, path: &str, content: &str) -> Result<(), FileErro
         .truncate(true)
         .open(safe)?;
 
-    file.write_all(content.as_bytes())?;
+    // Unescape common double-encoded JSON escape sequences.
+    // IMPORTANT: backslash must be first so we don't double-process other sequences.
+    let unescaped = content
+        .replace("\\\\", "\x00BACKSLASH\x00")  // placeholder for real backslash
+        .replace("\\n", "\n")
+        .replace("\\t", "\t")
+        .replace("\\r", "\r")
+        .replace("\\\"", "\"")
+        .replace("\\'", "'")
+        .replace("\x00BACKSLASH\x00", "\\");   // restore real backslash
+
+    file.write_all(unescaped.as_bytes())?;
     Ok(())
 }
 
 pub fn write_files_from_json(base: &Path, json: &str) -> Result<(), FileError> {
-    let start = json.find('[').ok_or_else(|| FileError::ParseError("No JSON array found".into()))?;
-    let end = json.rfind(']').ok_or_else(|| FileError::ParseError("No closing bracket found".into()))?;
-    let json_str = &json[start..=end];
+    // Find the last ']' once — it is the boundary of the JSON array
+    let end = match json.rfind(']') {
+        Some(e) => e,
+        None => return Err(FileError::ParseError("No closing ']' found in AI response.".into())),
+    };
 
-    let reqs: Vec<FileWriteRequest> = serde_json::from_str(json_str)
-        .map_err(|e| FileError::ParseError(e.to_string()))?;
+    // Scan forward for each '[' and try to parse from there to `end`
+    let mut search_idx = 0;
+    let mut last_error: Option<serde_json::Error> = None;
 
-    let mut failed = vec![];
+    while search_idx < end {
+        // Find next '[' within the bounds
+        if let Some(rel_start) = json[search_idx..=end].find('[') {
+            let abs_start = search_idx + rel_start;
 
-    for req in reqs {
-        match write_file(base, &req.path, &req.content) {
-            Ok(()) => println!("✓ Written: {}", req.path),
-            Err(e) => {
-                eprintln!("✗ Failed: {} — {:?}", req.path, e);
-                failed.push(req.path);
+            // Guard against non-UTF-8 boundaries (char_indices ensures valid slices)
+            let json_slice = match json.get(abs_start..=end) {
+                Some(s) => s,
+                None => { search_idx = abs_start + 1; continue; }
+            };
+
+            match serde_json::from_str::<Vec<FileWriteRequest>>(json_slice) {
+                Ok(reqs) => {
+                    if reqs.is_empty() {
+                        return Err(FileError::ParseError("AI returned an empty file list.".into()));
+                    }
+                    let mut failed = vec![];
+                    for req in reqs {
+                        match write_file(base, &req.path, &req.content) {
+                            Ok(()) => println!("✓ Written: {}", req.path),
+                            Err(e) => {
+                                eprintln!("✗ Failed: {} — {:?}", req.path, e);
+                                failed.push(req.path);
+                            }
+                        }
+                    }
+                    if !failed.is_empty() {
+                        eprintln!("Failed files: {:?}", failed);
+                    }
+                    return Ok(());
+                }
+                Err(e) => {
+                    last_error = Some(e);
+                    search_idx = abs_start + 1;
+                }
             }
+        } else {
+            break; // no more '[' before the last ']'
         }
     }
 
-    if !failed.is_empty() {
-        eprintln!("Failed files: {:?}", failed);
-    }
-
-    Ok(())
+    let err_msg = match last_error {
+        Some(e) => format!("JSON Parse Error: {}. Input snippet: {}", e, &json[..json.len().min(500)]),
+        None => "No valid JSON array found in AI response.".into(),
+    };
+    Err(FileError::ParseError(err_msg))
 }

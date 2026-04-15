@@ -160,7 +160,7 @@ fn auto_router(task: &str, persona: &str, is_headless: bool, base_url: &str) {
         if is_headless { eprintln!("🛠️ Enigma Action:"); } else { println!("🛠️ Enigma Action:"); }
         let search_results = operations::unified_search(task, base_url);
         let context = serde_json::to_string(&search_results).unwrap_or_default();
-        cmd_executor::execute_task(task, &context);
+        crate::cmd_executor::execute_task(task, &context, "./sandbox");
     } else if choice == 4 {
         if is_headless { eprintln!("✍️ Enigma Creation:"); } else { println!("✍️ Enigma Creation:"); }
         creation_task(task, persona, is_headless, base_url);
@@ -218,6 +218,11 @@ fn content_creator() {
 
 fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) {
     let mut tracker = model::RequestTracker::new();
+    
+    // Reset the per-prompt request counter for this new request
+    tracker.requests_per_prompt = 0;
+    tracker.save();
+
     let input_lower = input.to_lowercase();
     let mut mode_changed = false;
     let mut cleaned_input = input.to_string();
@@ -239,6 +244,109 @@ fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) 
         }
         mode_changed = true;
         cleaned_input = cleaned_input.replace("improvise mode", "").replace("Improvise mode", "").replace("Improvise Mode", "").trim().to_string();
+    }
+
+    // ── "steps N" keyword: set max decomposition steps ──────────────────────
+    // Syntax: "steps 5"  →  limit Brain to 5 steps
+    //         "steps 0" or "steps default"  →  reset to unlimited (16)
+    // The keyword is stripped from the prompt before execution.
+    {
+        let mut words = input_lower.split_whitespace().peekable();
+        while let Some(word) = words.next() {
+            if word == "steps" {
+                if let Some(next) = words.next() {
+                    let new_max: u32 = if next == "default" || next == "0" {
+                        0
+                    } else {
+                        next.parse::<u32>().unwrap_or(u32::MAX)
+                    };
+                    if new_max != u32::MAX {
+                        tracker.max_steps = new_max;
+                        tracker.save();
+                        let display = if new_max == 0 {
+                            "unlimited (default 16)".to_string()
+                        } else {
+                            format!("{}", new_max)
+                        };
+                        if !is_headless {
+                            println!("🔢 Brain max steps set to {}!", display.bold().cyan());
+                        } else {
+                            eprintln!("🔢 Brain max steps set to {}", display);
+                        }
+                        // Strip the "steps N" pair from the prompt
+                        let pattern_lower = format!("steps {}", next);
+                        cleaned_input = cleaned_input
+                            .to_lowercase()
+                            .replace(&pattern_lower, "")
+                            .trim()
+                            .to_string();
+                        // Re-apply original casing from input (keep original minus the matched segment)
+                        let pattern_orig_lower = format!("steps {}", next);
+                        cleaned_input = input
+                            .to_lowercase()
+                            .replace(&pattern_orig_lower, "")
+                            .trim()
+                            .to_string();
+                        if cleaned_input.is_empty() {
+                            mode_changed = true; // treat pure step-change as a config-only command
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    // ── "retries N" keyword: set max review retries ──────────────────────
+    // Syntax: "retries 3"  →  allow Brain to retry failed steps up to 3 times
+    //         "retries default"  →  reset to 1 retry
+    {
+        let mut words = input_lower.split_whitespace().peekable();
+        while let Some(word) = words.next() {
+            if word == "retries" {
+                if let Some(next) = words.next() {
+                    let new_max: u32 = if next == "default" {
+                        1
+                    } else {
+                        next.parse::<u32>().unwrap_or(u32::MAX)
+                    };
+                    if new_max != u32::MAX {
+                        tracker.max_retries = new_max as u8;
+                        tracker.save();
+                        let display = if new_max == 1 && next == "default" {
+                            "1 (default)".to_string()
+                        } else {
+                            format!("{}", new_max)
+                        };
+                        if !is_headless {
+                            println!("🔁 Brain max retries set to {}!", display.bold().cyan());
+                        } else {
+                            eprintln!("🔁 Brain max retries set to {}", display);
+                        }
+                        // Strip the "retries N" pair from the prompt
+                        let pattern_lower = format!("retries {}", next);
+                        cleaned_input = cleaned_input
+                            .to_lowercase()
+                            .replace(&pattern_lower, "")
+                            .trim()
+                            .to_string();
+                        // Re-apply original casing from input (keep original minus the matched segment)
+                        let pattern_orig_lower = format!("retries {}", next);
+                        cleaned_input = input
+                            .to_lowercase()
+                            .replace(&pattern_orig_lower, "")
+                            .trim()
+                            .to_string();
+                        if cleaned_input.is_empty() {
+                            mode_changed = true; // treat pure retry-change as a config-only command
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 
     // Check if it was ONLY a mode switch command
