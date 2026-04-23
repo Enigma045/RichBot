@@ -8,8 +8,15 @@ use std::path::{Path, PathBuf};
 #[derive(Deserialize)]
 pub struct FileWriteRequest {
     pub path: String,
-    pub content: String,
+    pub content: Option<String>,
+    #[serde(default = "default_op")]
+    pub op: String, // "overwrite", "append", "patch", "insert_at"
+    pub search: Option<String>,
+    pub replace: Option<String>,
+    pub line: Option<usize>,
 }
+
+fn default_op() -> String { "overwrite".into() }
 
 #[derive(Debug)]
 pub enum FileError {
@@ -31,38 +38,75 @@ fn safe_path(base: &Path, untrusted: &str) -> Result<PathBuf, FileError> {
         return Ok(untrusted_path.to_path_buf());
     }
 
-    // Otherwise, join it with the base.
-    // We don't strictly enforce 'starts_with' anymore as per user request to allow writing outside sandbox.
-    let joined = base.join(untrusted);
-    Ok(joined)
+    // Join with the base safely and NORMALIZE to prevent super-nesting or redundant dots.
+    let joined = base.join(untrusted_path);
+    let normalized = crate::operations::normalize_path(&joined);
+    
+    Ok(normalized)
 }
 
-pub fn write_file(base: &Path, path: &str, content: &str) -> Result<(), FileError> {
-    let safe = safe_path(base, path)?;
+pub fn write_file(base: &Path, req: &FileWriteRequest) -> Result<(), FileError> {
+    let safe = safe_path(base, &req.path)?;
 
     // Ensure parent directory exists
     if let Some(parent) = safe.parent() {
         std::fs::create_dir_all(parent)?;
     }
 
-    let mut file = OpenOptions::new()
-        .write(true)
-        .create(true)
-        .truncate(true)
-        .open(safe)?;
+    let unescaped = if let Some(content) = &req.content {
+        // Unescape common double-encoded JSON escape sequences.
+        content
+            .replace("\\\\", "\x00BACKSLASH\x00")
+            .replace("\\n", "\n")
+            .replace("\\t", "\t")
+            .replace("\\r", "\r")
+            .replace("\\\"", "\"")
+            .replace("\\'", "'")
+            .replace("\x00BACKSLASH\x00", "\\")
+    } else {
+        String::new()
+    };
 
-    // Unescape common double-encoded JSON escape sequences.
-    // IMPORTANT: backslash must be first so we don't double-process other sequences.
-    let unescaped = content
-        .replace("\\\\", "\x00BACKSLASH\x00")  // placeholder for real backslash
-        .replace("\\n", "\n")
-        .replace("\\t", "\t")
-        .replace("\\r", "\r")
-        .replace("\\\"", "\"")
-        .replace("\\'", "'")
-        .replace("\x00BACKSLASH\x00", "\\");   // restore real backslash
-
-    file.write_all(unescaped.as_bytes())?;
+    match req.op.as_str() {
+        "append" => {
+            let mut file = OpenOptions::new()
+                .append(true)
+                .create(true)
+                .open(safe)?;
+            file.write_all(unescaped.as_bytes())?;
+        }
+        "patch" => {
+            if let (Some(search), Some(replace)) = (&req.search, &req.replace) {
+                crate::operations::patch_file(&safe.to_string_lossy(), search, replace)
+                    .map_err(|e| FileError::IoError(std::io::Error::new(std::io::ErrorKind::Other, e.to_string())))?;
+            } else {
+                return Err(FileError::ParseError("Patch operation requires 'search' and 'replace' fields.".into()));
+            }
+        }
+        "insert_at" => {
+            if let Some(line_num) = req.line {
+                let content = std::fs::read_to_string(&safe)?;
+                let mut lines: Vec<String> = content.lines().map(|s| s.to_string()).collect();
+                if line_num <= lines.len() {
+                    lines.insert(line_num.saturating_sub(1), unescaped);
+                } else {
+                    lines.push(unescaped);
+                }
+                std::fs::write(&safe, lines.join("\n"))?;
+            } else {
+                return Err(FileError::ParseError("Insert_at operation requires 'line' field.".into()));
+            }
+        }
+        _ => {
+            // "overwrite" or default
+            let mut file = OpenOptions::new()
+                .write(true)
+                .create(true)
+                .truncate(true)
+                .open(safe)?;
+            file.write_all(unescaped.as_bytes())?;
+        }
+    }
     Ok(())
 }
 
@@ -95,8 +139,8 @@ pub fn write_files_from_json(base: &Path, json: &str) -> Result<(), FileError> {
                     }
                     let mut failed = vec![];
                     for req in reqs {
-                        match write_file(base, &req.path, &req.content) {
-                            Ok(()) => println!("✓ Written: {}", req.path),
+                        match write_file(base, &req) {
+                            Ok(()) => println!("✓ Updated: {}", req.path),
                             Err(e) => {
                                 eprintln!("✗ Failed: {} — {:?}", req.path, e);
                                 failed.push(req.path);

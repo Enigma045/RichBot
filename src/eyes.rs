@@ -1,8 +1,24 @@
 use serde::{Deserialize, Serialize};
 use std::fs;
+use std::sync::OnceLock;
 use crate::operations::{FileEntry, EntryType};
 use crate::api_keys::OPEN_ROUTER_KEY;
 use crate::model::RequestTracker;
+
+// Cache paths.json in memory — loaded from disk once, reused on every call.
+static PATHS_CACHE: OnceLock<Vec<String>> = OnceLock::new();
+
+fn load_paths() -> &'static Vec<String> {
+    PATHS_CACHE.get_or_init(|| {
+        match fs::read_to_string("paths.json") {
+            Ok(data) => serde_json::from_str(&data).unwrap_or_default(),
+            Err(e) => {
+                eprintln!("⚠️ eyes::search: Failed to read paths.json: {}", e);
+                Vec::new()
+            }
+        }
+    })
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 struct RerankRequest {
@@ -36,10 +52,9 @@ pub fn search(query: &str) -> Result<Vec<FileEntry>, Box<dyn std::error::Error>>
         return Err("AI call limit reached on eyes.rs".into());
     }
 
-    // Load paths from paths.json
-    let paths_content = fs::read_to_string("paths.json")?;
-    let all_paths: Vec<String> = serde_json::from_str(&paths_content)?;
-    eprintln!("🔍 eyes::search: Loaded {} paths from paths.json", all_paths.len());
+    // Use cached paths — loaded from disk only once for the entire process lifetime.
+    let all_paths = load_paths();
+    eprintln!("🔍 eyes::search: Using {} cached paths from paths.json", all_paths.len());
     
     let client = reqwest::blocking::Client::builder()
         .timeout(std::time::Duration::from_secs(300))

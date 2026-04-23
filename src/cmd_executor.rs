@@ -6,7 +6,6 @@ use std::time::Duration;
 use std::sync::{Arc, Mutex};
 
 use crate::model;
-use crate::operations;
 
 /// Per-command timeout: kill any single command that runs longer than this.
 const CMD_TIMEOUT_SECS: u64 = 300;
@@ -63,23 +62,29 @@ fn run_command(cmd_str: &str, workdir: &Path, log_file: &mut fs::File) -> String
     };
 
     // ── Watchdog thread: kill child if it outlives CMD_TIMEOUT_SECS ─────────
+    // Uses a channel so the watchdog exits IMMEDIATELY when the command finishes
+    // instead of sleeping for 300s and leaking an OS thread per command.
     let child_id = child.id();
     let timed_out = Arc::new(Mutex::new(false));
     let timed_out_clone = Arc::clone(&timed_out);
     let timeout = Duration::from_secs(CMD_TIMEOUT_SECS);
+    let (done_tx, done_rx) = std::sync::mpsc::channel::<()>();
     let watchdog = std::thread::spawn(move || {
-        std::thread::sleep(timeout);
-        *timed_out_clone.lock().unwrap() = true;
-        // Kill by pid; best-effort — ignore errors
-        #[cfg(target_os = "windows")]
-        { let _ = Command::new("taskkill").args(["/F", "/PID", &child_id.to_string()]).output(); }
-        #[cfg(not(target_os = "windows"))]
-        { let _ = Command::new("kill").args(["-9", &child_id.to_string()]).output(); }
+        if done_rx.recv_timeout(timeout).is_err() {
+            // Timed out — the command is still running, kill it
+            *timed_out_clone.lock().unwrap() = true;
+            #[cfg(target_os = "windows")]
+            { let _ = Command::new("taskkill").args(["/F", "/PID", &child_id.to_string()]).output(); }
+            #[cfg(not(target_os = "windows"))]
+            { let _ = Command::new("kill").args(["-9", &child_id.to_string()]).output(); }
+        }
+        // If recv_timeout returns Ok(()), the command finished — watchdog exits cleanly.
     });
 
     // Collect stdout / stderr AFTER child finishes
     let out = child.wait_with_output();
-    drop(watchdog); // watchdog thread detaches; it's daemon-like
+    let _ = done_tx.send(()); // Signal watchdog to exit immediately
+    let _ = watchdog.join();  // Reap the thread — no leaks
 
     match out {
         Ok(output) => {
@@ -153,23 +158,32 @@ pub fn execute_ai_commands() {
 
 pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String {
     // Scan project file tree for local fallback natively without AI search penalties
-    let local_tree = operations::see();
+    let local_tree = if default_workdir != "./sandbox" && default_workdir != "." {
+        crate::operations::list_cwd(default_workdir)
+    } else {
+        crate::operations::see()
+    };
     let local_tree_json = serde_json::to_string(&local_tree).unwrap_or_else(|_| "[]".to_string());
     let mut execution_summary = String::new();
 
+    // FIX 1: Use the actual default_workdir in the JSON format example instead of the
+    // hardcoded literal "./sandbox". The old example caused the AI to always copy
+    // "./sandbox" verbatim regardless of what default_workdir was, which then triggered
+    // the path-resolution branch that treated any "./sandbox"-prefixed value as
+    // root-anchored — regressing CWD back to sandbox on every step.
     let prompt = format!(
         "You are 'Enigma Command Expert', a broad and extremely capable Windows PowerUser and DevOps Administrator.\n\
          Your goal is to fulfill the user's request using Windows CMD or PowerShell.\n\n\
          RESOURCES AT YOUR DISPOSAL:\n\
          - Semantic Search Context (indexed workspace paths): {context}\n\
-         - Local Project Tree (ephemeral sandbox): {local_tree}\n\n\
+         - Local Project Tree (ephemeral sandbox or established workdir): {local_tree}\n\n\
          CONTEXT SELECTION RULES:\n\
          - You can work in either the ephemeral './sandbox' or within absolute workspace paths found in the Search Context.\n\
          - Use absolute paths for existing project files, and './sandbox' for new experiments or isolated tasks.\n\n\
          USER REQUEST: {task}\n\n\
          Respond with ONLY a valid JSON object in this EXACT format:\n\
          {{\n\
-           \"workdir\": \"./sandbox\",\n\
+           \"workdir\": \"{default_workdir}\",\n\
            \"files\": [\n\
              {{ \"path\": \"script.ps1\", \"content\": \"...\" }}\n\
            ],\n\
@@ -182,8 +196,8 @@ pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String 
          2. Use the 'files' array ONLY for temporary scripts or small configuration edits required for the command.\n\
          3. NEVER use 'cd' as a command. Set the 'workdir' field instead.\n\
          4. Use relative paths for files ONLY if they are intended for the 'workdir' you specify.\n\
-         5. Ignore large build artifacts (e.g., 'target/', 'dist/', 'bin/'), internal caches, or dependency lockfiles unless explicitly troubleshooting a build failure.
-         6. SPATIAL AWARENESS: Default to working in '{default_workdir}'. If you create a project (e.g., 'cargo new X'), you MUST specify 'X' as your 'workdir' for any related tasks in this step. Our system will automatically track this for future steps.
+         5. Ignore large build artifacts (e.g., 'target/', 'dist/', 'bin/'), internal caches, or dependency lockfiles unless explicitly troubleshooting a build failure.\n\
+         6. SPATIAL AWARENESS: Default to working in '{default_workdir}'. If you create a project (e.g., 'cargo new X'), you MUST specify 'X' as your 'workdir' for any related tasks in this step. Our system will automatically track this for future steps.\n\
          7. Return ONLY the JSON object, nothing else.",
         context = context,
         local_tree = local_tree_json,
@@ -210,14 +224,62 @@ pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String 
         }
     };
 
-    // --- Read workdir (default to provided default_workdir) ---
-    let workdir_str = parsed["workdir"].as_str().unwrap_or(default_workdir).to_string();
-    let mut workdir = Path::new(&workdir_str).to_path_buf();
+    // ── Workdir Resolution ───────────────────────────────────────────────────
+    //
+    // FIX 2: Replaced the old starts_with("./sandbox") root-anchor heuristic with
+    // a three-case normalised comparison. The old logic had two failure modes:
+    //
+    //   A) AI returns "./sandbox" (ancestor of default_workdir) → old code used it
+    //      directly, regressing CWD from e.g. "./sandbox/myproject" back to root.
+    //
+    //   B) AI correctly returns the full path (e.g. "./sandbox/myproject") → joining
+    //      it with default_workdir caused double-nesting.
+    //
+    // New rules (applied after normalising both sides):
+    //   1. AI returned an absolute path          → use it directly.
+    //   2. AI returned a path that is a prefix   → AI regressed; ignore, keep default.
+    //      of (or equal to) default_workdir
+    //   3. AI returned a path that starts with   → full path given; use directly to
+    //      default_workdir (i.e. already rooted)   avoid double-nesting.
+    //   4. Everything else (bare relative subdir) → join with default_workdir (normal).
 
-    // Force relative paths into the sandbox
-    if workdir.is_relative() && !workdir_str.starts_with("./sandbox") && !workdir_str.starts_with("sandbox") {
-        workdir = Path::new("./sandbox").join(workdir);
+    let default_norm = crate::operations::normalize_path(Path::new(default_workdir));
+    let mut workdir = default_norm.clone();
+
+    if let Some(req_str) = parsed["workdir"].as_str() {
+        let req_str = req_str.trim();
+        if !req_str.is_empty() && req_str != "." {
+            let req_path = Path::new(req_str);
+
+            if req_path.is_absolute() {
+                // Case 1: Absolute path — trust it directly.
+                workdir = crate::operations::normalize_path(req_path);
+            } else {
+                let req_norm = crate::operations::normalize_path(req_path);
+
+                if default_norm.starts_with(&req_norm) {
+                    // Case 2: AI returned an ancestor of (or equal to) our current
+                    // default_workdir — this is a regression. Stay where we are.
+                    eprintln!(
+                        "⚠️  Workdir guard: AI returned '{}' which is a parent of '{}'. Keeping default.",
+                        req_str, default_workdir
+                    );
+                    workdir = default_norm.clone();
+                } else if req_norm.starts_with(&default_norm) {
+                    // Case 3: AI returned a full path already rooted under
+                    // default_workdir — use directly to avoid double-nesting.
+                    workdir = req_norm;
+                } else {
+                    // Case 4: Bare relative subdirectory — join with default_workdir.
+                    workdir = default_norm.join(req_str);
+                    workdir = crate::operations::normalize_path(&workdir);
+                }
+            }
+        }
     }
+
+    let workdir_str = workdir.to_string_lossy().to_string();
+    println!("📂 Working directory: {}", workdir_str);
 
     if !workdir.exists() {
         let _ = fs::create_dir_all(&workdir);
@@ -235,7 +297,9 @@ pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String 
             };
             let content = file_entry["content"].as_str().unwrap_or("");
             let mut path = Path::new(path_str).to_path_buf();
-            if path.is_relative() && !path_str.starts_with("./sandbox") && !path_str.starts_with("sandbox") {
+
+            // Resolve relative file paths against the resolved workdir, not sandbox root.
+            if path.is_relative() {
                 path = workdir.join(path);
             }
 
@@ -258,7 +322,7 @@ pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String 
     println!("\n📂 Working directory: {}", workdir.display());
     let effective_workdir = &workdir;
 
-    // --- Step 3: Run commands ---
+    // --- Step 2: Run commands ---
     let commands: Vec<String> = match parsed["commands"].as_array() {
         Some(arr) => arr.iter()
             .filter_map(|v| v.as_str().map(|s| s.to_string()))
@@ -291,27 +355,43 @@ pub fn execute_task(task: &str, context: &str, default_workdir: &str) -> String 
     }
 
     println!("\n✅ Done. Full output saved to cmd_outputs.txt");
-    
+
     // --- Auto-Discovery: Check if a new project was created ---
+    // GUARD: Only scan for sub-projects when we're still in a container directory
+    // (e.g. "./sandbox"). If we're already inside a project, scanning subdirs can
+    // incorrectly navigate into nested crates/test workspaces/etc.
+    let ew_str = effective_workdir.to_string_lossy();
+    let is_container_dir = ew_str == "./sandbox"
+        || ew_str == "sandbox"
+        || ew_str.ends_with("/sandbox")
+        || ew_str.ends_with("\\sandbox");
+
     let mut final_cwd = effective_workdir.to_path_buf();
-    if let Ok(entries) = fs::read_dir(effective_workdir) {
-        for entry in entries.flatten() {
-            if let Ok(ft) = entry.file_type() {
-                if ft.is_dir() {
-                    let path = entry.path();
-                    // Look for project markers in the subdirectory
-                    if path.join("Cargo.toml").exists() || path.join("package.json").exists() || 
-                       path.join("go.mod").exists() || path.join("requirements.txt").exists() ||
-                       path.join(".git").exists() {
-                        println!("✨ Auto-Discovery: Detected new project at {}", path.display());
-                        final_cwd = path;
-                        break;
+    if is_container_dir {
+        if let Ok(entries) = fs::read_dir(effective_workdir) {
+            for entry in entries.flatten() {
+                if let Ok(ft) = entry.file_type() {
+                    if ft.is_dir() {
+                        let path = entry.path();
+                        // Look for project markers in the subdirectory
+                        if path.join("Cargo.toml").exists() || path.join("package.json").exists() ||
+                           path.join("go.mod").exists() || path.join("requirements.txt").exists() ||
+                           path.join(".git").exists() {
+                            println!("✨ Auto-Discovery: Detected new project at {}", path.display());
+                            final_cwd = path;
+                            break;
+                        }
                     }
                 }
             }
         }
     }
 
-    execution_summary.push_str(&format!("\nSET_CWD: {}\n", final_cwd.display()));
+    let mut cwd_str = final_cwd.display().to_string();
+    if cwd_str.starts_with(r"\\?\") {
+        cwd_str = cwd_str[4..].to_string();
+    }
+
+    execution_summary.push_str(&format!("\nSET_CWD: {}\n", cwd_str));
     execution_summary
 }

@@ -44,15 +44,19 @@ def clean_filename(path: str) -> str:
         name = name.replace(char, " ")
     return name.strip()
 
-# ── Helper: search files ─────────────────────────────────────
+# ── Pre-compute all path embeddings ONCE at startup ───────────
+# This avoids re-encoding thousands of paths on every search request.
+print("⏳ Pre-computing path embeddings (one-time)...")
+clean_names = [clean_filename(p) for p in file_paths]
+path_embeddings = search_model.encode(clean_names, convert_to_tensor=True, batch_size=256, show_progress_bar=True)
+print(f"✅ Embeddings cached for {len(file_paths)} paths.")
+
+# ── Helper: search files (now just a single matrix op) ────────
 def search_files(query: str):
     query_embedding = search_model.encode(query, convert_to_tensor=True)
-    scores = []
-    for path in file_paths:
-        filename = clean_filename(path)
-        doc_embedding = search_model.encode(filename, convert_to_tensor=True)
-        score = float(util.cos_sim(query_embedding, doc_embedding))
-        scores.append((score, path))
+    # util.cos_sim returns a (1 x N) tensor — get the 1D scores
+    scores_tensor = util.cos_sim(query_embedding, path_embeddings)[0]
+    scores = [(float(scores_tensor[i]), file_paths[i]) for i in range(len(file_paths))]
     scores.sort(reverse=True)
     return scores[:TOP_K]
 

@@ -273,13 +273,6 @@ fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) 
                         } else {
                             eprintln!("🔢 Brain max steps set to {}", display);
                         }
-                        // Strip the "steps N" pair from the prompt
-                        let pattern_lower = format!("steps {}", next);
-                        cleaned_input = cleaned_input
-                            .to_lowercase()
-                            .replace(&pattern_lower, "")
-                            .trim()
-                            .to_string();
                         // Re-apply original casing from input (keep original minus the matched segment)
                         let pattern_orig_lower = format!("steps {}", next);
                         cleaned_input = input
@@ -324,13 +317,6 @@ fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) 
                         } else {
                             eprintln!("🔁 Brain max retries set to {}", display);
                         }
-                        // Strip the "retries N" pair from the prompt
-                        let pattern_lower = format!("retries {}", next);
-                        cleaned_input = cleaned_input
-                            .to_lowercase()
-                            .replace(&pattern_lower, "")
-                            .trim()
-                            .to_string();
                         // Re-apply original casing from input (keep original minus the matched segment)
                         let pattern_orig_lower = format!("retries {}", next);
                         cleaned_input = input
@@ -342,6 +328,98 @@ fn dispatch_task(input: &str, persona: &str, base_url: &str, is_headless: bool) 
                             mode_changed = true; // treat pure retry-change as a config-only command
                         }
                         break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    // ── "rollback N" keyword: set max rollback jumps ──────────────────────
+    // Syntax: "rollback 2"  →  allow Brain to rollback to previous steps up to 2 times
+    //         "rollback default" or "rollback 0"  →  disable rollbacks
+    {
+        let mut words = input_lower.split_whitespace().peekable();
+        while let Some(word) = words.next() {
+            if word == "rollback" {
+                if let Some(next) = words.next() {
+                    let new_max: u32 = if next == "default" || next == "0" {
+                        0
+                    } else {
+                        next.parse::<u32>().unwrap_or(u32::MAX)
+                    };
+                    if new_max != u32::MAX {
+                        tracker.max_rollbacks = new_max;
+                        tracker.save();
+                        let display = if new_max == 0 {
+                            "0 (disabled)".to_string()
+                        } else {
+                            format!("{}", new_max)
+                        };
+                        if !is_headless {
+                            println!("⏪ Brain max rollbacks set to {}!", display.bold().cyan());
+                        } else {
+                            eprintln!("⏪ Brain max rollbacks set to {}", display);
+                        }
+                        // Re-apply original casing from input 
+                        let pattern_orig_lower = format!("rollback {}", next);
+                        cleaned_input = input
+                            .to_lowercase()
+                            .replace(&pattern_orig_lower, "")
+                            .trim()
+                            .to_string();
+                        if cleaned_input.is_empty() {
+                            mode_changed = true; 
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    // ── "validate" keywords: check API key health ──────────────────────────
+    // Syntax: "validate on"   →  enable health-skipping + run check
+    //         "validate off"  →  disable health-skipping
+    //         "validate now"  →  force a re-check of all keys
+    {
+        let mut words = input_lower.split_whitespace().peekable();
+        while let Some(word) = words.next() {
+            if word == "validate" {
+                if let Some(next) = words.next() {
+                    match next {
+                        "on" => {
+                            tracker.validate_mode = true;
+                            let client = reqwest::blocking::Client::builder()
+                                .timeout(std::time::Duration::from_secs(30))
+                                .build()
+                                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+                            tracker.check_key_health(&client);
+                            tracker.save();
+                            if !is_headless { println!("🛡️ API Validation {}!", "ON".bold().green()); }
+                            mode_changed = true;
+                        }
+                        "off" => {
+                            tracker.validate_mode = false;
+                            tracker.save();
+                            if !is_headless { println!("🛡️ API Validation {}!", "OFF".bold().red()); }
+                            mode_changed = true;
+                        }
+                        "now" => {
+                            let client = reqwest::blocking::Client::builder()
+                                .timeout(std::time::Duration::from_secs(30))
+                                .build()
+                                .unwrap_or_else(|_| reqwest::blocking::Client::new());
+                            tracker.check_key_health(&client);
+                            tracker.save();
+                            mode_changed = true;
+                        }
+                        _ => {}
+                    }
+                    if mode_changed {
+                        let pattern = format!("validate {}", next);
+                        cleaned_input = input.to_lowercase().replace(&pattern, "").trim().to_string();
                     }
                 }
                 break;

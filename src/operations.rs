@@ -1,10 +1,34 @@
 use std::fs;
 use std::fs::OpenOptions;
 use std::io::Write;
-use std::path::Path;
+use std::path::{Path, PathBuf, Component};
 use std::time::Duration;
 use walkdir::WalkDir;
 use serde::{Deserialize, Serialize};
+
+/// Normalizes a path by collapsing '.' and '..' and removing redundant 'sandbox' segments.
+pub fn normalize_path(path: &Path) -> PathBuf {
+    let mut components = Vec::new();
+
+    for component in path.components() {
+        match component {
+            Component::CurDir => continue,
+            Component::ParentDir => {
+                components.pop();
+            }
+            Component::Normal(c) => {
+                // Deduplicate redundant 'sandbox' components
+                if c == "sandbox" && components.last() == Some(&Component::Normal(std::ffi::OsStr::new("sandbox"))) {
+                    continue;
+                }
+                components.push(Component::Normal(c));
+            }
+            _ => components.push(component),
+        }
+    }
+
+    components.iter().collect()
+}
 
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -78,6 +102,36 @@ pub fn see() -> Vec<FileEntry> {
             let path_str = entry.path().to_string_lossy().replace("\\", "/");
             !path_str.contains(".git") 
                 && !path_str.contains("/target/")
+                && !path_str.contains("cmd_outputs.txt")
+        })
+        .map(|entry| FileEntry {
+            path: entry.path().display().to_string(),
+            depth: entry.depth(),
+            entry_type: if entry.file_type().is_dir() {
+                EntryType::Directory
+            } else {
+                EntryType::File
+            },
+        })
+        .collect()
+}
+
+pub fn list_cwd(cwd: &str) -> Vec<FileEntry> {
+    let p = Path::new(cwd);
+    if !p.exists() {
+        return vec![];
+    }
+    WalkDir::new(p)
+        .max_depth(3)
+        .follow_links(false)
+        .into_iter()
+        .filter_map(|e| e.ok())
+        .filter(|entry| {
+            let path_str = entry.path().to_string_lossy().replace("\\", "/");
+            !path_str.contains(".git") 
+                && !path_str.contains("/target/")
+                && !path_str.contains("/node_modules/")
+                && !path_str.contains("/build/")
                 && !path_str.contains("cmd_outputs.txt")
         })
         .map(|entry| FileEntry {
@@ -213,6 +267,32 @@ pub struct FileContent {
     pub content: String,
 }
 
+pub fn read_file_list(paths: Vec<String>) -> Vec<FileContent> {
+    paths.into_iter().filter_map(|p| {
+        let normalized = p.replace("\\", "/");
+        read_file(&normalized).ok().map(|content| FileContent {
+            name: Path::new(&normalized)
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .to_string(),
+            content,
+        })
+    }).collect()
+}
+
+pub fn patch_file(path: &str, search: &str, replace: &str) -> Result<(), FileError> {
+    let content = read_file(path)?;
+    if !content.contains(search) {
+        return Err(FileError::Io(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            format!("Search string not found in file '{}'", path),
+        )));
+    }
+    let new_content = content.replace(search, replace);
+    write_file(path, &new_content)
+}
+
 pub fn read_files_from_json(ai_response: &str) -> Result<Vec<FileContent>, FileError> {
     // extract only the JSON array from the response
     let start = ai_response.find('[').ok_or_else(|| {
@@ -230,9 +310,6 @@ pub fn read_files_from_json(ai_response: &str) -> Result<Vec<FileContent>, FileE
     })?;
 
     let json_str = &ai_response[start..=end];
-
-    // ADD THIS — remove once fixed
-    // eprintln!("DEBUG JSON:\n{}", json_str);
 
     let entries: Vec<FileEntry> = serde_json::from_str(json_str).map_err(|e| {
         FileError::Io(std::io::Error::new(std::io::ErrorKind::InvalidData, e))

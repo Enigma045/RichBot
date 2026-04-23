@@ -1,7 +1,23 @@
 use std::fs;
+use std::sync::OnceLock;
 use fuzzy_matcher::FuzzyMatcher;
 use fuzzy_matcher::skim::SkimMatcherV2;
 use crate::operations::{FileEntry, EntryType};
+
+// Cache paths.json in memory — parsed once, reused on every search call.
+static PATHS_CACHE: OnceLock<Vec<String>> = OnceLock::new();
+
+fn load_paths() -> &'static Vec<String> {
+    PATHS_CACHE.get_or_init(|| {
+        match fs::read_to_string("paths.json") {
+            Ok(data) => serde_json::from_str(&data).unwrap_or_default(),
+            Err(e) => {
+                eprintln!("⚠️ search_model: Failed to read paths.json: {}", e);
+                Vec::new()
+            }
+        }
+    })
+}
 
 fn fuzzy_search(query_keywords: &[String], paths: &[String]) -> Vec<(String, i64)> {
     let matcher = SkimMatcherV2::default();
@@ -64,40 +80,29 @@ pub fn search(query: &str) -> Vec<FileEntry> {
         return Vec::new();
     }
 
-    // Read paths.json
-    let paths_data = match fs::read_to_string("paths.json") {
-        Ok(data) => data,
-        Err(e) => {
-            eprintln!("⚠️ search_model: Failed to read paths.json: {}", e);
-            return Vec::new();
-        }
-    };
-    
-    let paths: Vec<String> = match serde_json::from_str(&paths_data) {
-        Ok(p) => p,
-        Err(e) => {
-            eprintln!("⚠️ search_model: Failed to parse paths.json: {}", e);
-            return Vec::new();
-        }
-    };
-    
+    // Use cached paths — loaded from disk only once for the entire process lifetime.
+    let paths = load_paths();
+    if paths.is_empty() {
+        return Vec::new();
+    }
+
     eprintln!("🧠 search_model: Generating keywords for '{}'...", query);
     let prompt1 = format!(
-        "Return ONLY a JSON array of search keyword fragments to help our file ranking engine find the target path. Break the user's request '{}' down into independent atomic concepts (e.g., base names, module identifiers, component tags, specific dates/versions, or relevant file extensions). For example, 'auth controller python test' converts to [\"auth\", \"controller\", \"test\", \".py\"]; 'show title year 2 vol 2' converts to [\"show title\", \"year 2\", \"volume 2\", \"Y2\", \"Vol 2\", \"V2\"]. Provide ~15-25 variations/abbreviations of these identifying fragments. No markdown, no explanations, ONLY the JSON array.", 
+        "Return ONLY a JSON array of search keyword fragments to help our file ranking engine find the target path. Break the user's request '{}' down into independent atomic concepts (e.g., base names, module identifiers, component tags, specific dates/versions, or relevant file extensions). For example, 'auth controller python test' converts to [\"auth\", \"controller\", \"test\", \".py\"]; 'show title year 2 vol 2' converts to [\"show title\", \"year 2\", \"volume 2\", \"Y2\", \"Vol 2\", \"V2\"]. Provide ~15-25 variations/abbreviations of these identifying fragments. No markdown, no explanations, ONLY the JSON array.",
         query
     );
-    
+
     let keywords_json = crate::model::set_control_with_persona(&prompt1, "Quick");
     let keywords = extract_json_array(&keywords_json);
-    
+
     if keywords.is_empty() {
         eprintln!("⚠️ search_model: AI failed to generate keywords. Raw: {}", keywords_json);
         return Vec::new();
     }
-    
+
     eprintln!("🔍 search_model: Keywords: {:?}", keywords);
-    
-    let matched = fuzzy_search(&keywords, &paths);
+
+    let matched = fuzzy_search(&keywords, paths);
     let top_paths: Vec<String> = matched.into_iter().take(20).map(|(p, _)| p).collect();
     
     if top_paths.is_empty() {

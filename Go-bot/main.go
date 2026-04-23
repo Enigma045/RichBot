@@ -31,7 +31,7 @@ const (
 	execTimeout      = 1800 * time.Second
 	ttsTimeout       = 300 * time.Second
 	maxWorkers       = 5
-	maxInputLength   = 2000
+	maxInputLength   = 3000
 )
 
 // ─── CHANGE THESE TO MATCH YOUR MACHINE ─────────────────────────────────────
