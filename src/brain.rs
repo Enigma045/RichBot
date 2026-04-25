@@ -340,8 +340,16 @@ pub fn execute_plan(
                 .join("\n---\n");
 
             let capped = if raw.len() > MAX_PRIOR_CTX_CHARS {
-                // Keep the tail (most recent context is most valuable)
-                let start = raw.len() - MAX_PRIOR_CTX_CHARS;
+                // Keep the tail (most recent context is most valuable).
+                // raw.len() is a byte count, so `start` may land inside a
+                // multi-byte UTF-8 sequence (e.g. an em-dash '—' is 3 bytes).
+                // Advance to the next char boundary to avoid a slice panic.
+                let byte_start = raw.len() - MAX_PRIOR_CTX_CHARS;
+                let start = raw[byte_start..]
+                    .char_indices()
+                    .next()
+                    .map(|(i, _)| byte_start + i)
+                    .unwrap_or(raw.len());
                 format!("[…prior context truncated…]\n{}", &raw[start..])
             } else {
                 raw
